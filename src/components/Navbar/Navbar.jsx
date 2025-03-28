@@ -3,11 +3,11 @@ import "./Navbar.scss";
 import { FaRegUser } from "react-icons/fa6";
 
 import { Context } from "../../context/Context";
-import { HiLogout } from "react-icons/hi";
+import { HiLogin, HiLogout } from "react-icons/hi";
 import { baseUrl } from "../../main";
 import { toast } from "sonner";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const { user } = useContext(Context);
@@ -38,11 +38,18 @@ const Navbar = () => {
       </div>
       <div className="navbar-right">
         <div className="sidebar-button">
-          {user && (
+          {user ? (
             <button onClick={handleLogout}>
               Logout
               <HiLogout className="login-icon" />
             </button>
+          ) : (
+            <Link to={"/login"}>
+              <button onClick={handleLogout}>
+                Login
+                <HiLogin className="login-icon" />
+              </button>
+            </Link>
           )}
         </div>
       </div>
