@@ -1,0 +1,118 @@
+@use "../../styles/responsive.scss" as *;
+
+.login {
+  height: 100vh;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .login-logo {
+    margin: 40px 0px 40px 0px;
+    img {
+      width: 300px;
+    }
+  }
+  .login-box {
+    background-color: $primary-color;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(255, 165, 0, 0.3);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+
+    h1 {
+      margin-bottom: 20px;
+      font-size: 50px;
+      color: #fff;
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+      text-align: left;
+
+      label {
+        display: block;
+        margin-bottom: 5px;
+        color: #fff;
+      }
+      input {
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        font-size: 16px;
+        outline: none;
+        border: none;
+      }
+
+      .input-group-botom {
+        display: flex;
+        align-items: center;
+
+        background-color: #fff;
+        border-radius: 5px;
+
+        .viewIcon {
+          font-size: 25px;
+          margin-right: 10px;
+          color: $primary-color;
+        }
+        input {
+          border: none;
+
+          &:focus {
+            outline: none;
+            box-shadow: none;
+          }
+        }
+      }
+
+     
+    }
+
+    .login-button {
+      margin-top: 10px;
+      width: 100%;
+      padding: 10px;
+      background-color: #fff;
+      border: none;
+      border-radius: 5px;
+      color: $primary-color;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      border: 1px solid transparent;
+
+      &:hover {
+       border: 1px solid #fff;
+       background: $primary-color;
+       color: #fff;
+      }
+    }
+
+    .signup-link {
+      margin-top: 15px;
+      color: #fff;
+
+      a {
+        color: #000;
+        text-decoration: none;
+        font-weight: bold;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .login {
+    .login-box {
+      padding: 20px;
+    }
+  }
+}

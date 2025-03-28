@@ -1,0 +1,122 @@
+.single-page {
+  .single-page-top {
+    text-align: center;
+  }
+
+  .single-page-content {
+    width: 100%;
+    max-width: 700px;
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: auto;
+    margin-top: 30px;
+
+    .single-page-form-title {
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+      text-align: center;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #007bff;
+    }
+
+    .single-page-form-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+
+      .single-page-form-item {
+        display: flex;
+        justify-content: space-between;
+        // align-items: center;
+        padding: 10px 15px;
+        border-bottom: 1px solid #eee;
+        transition: background-color 0.3s ease;
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        &:hover {
+          background-color: #f9f9f9;
+        }
+
+        .single-page-form-label {
+          font-weight: bold;
+          color: #555;
+          flex: 1;
+        }
+
+        .single-page-form-value {
+          color: #333;
+          flex: 2;
+          text-align: right;
+
+          &[data-label="Message"] {
+            text-align: justify;
+          }
+        }
+      }
+    }
+  }
+
+  .single-page-btns {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    gap: 10px;
+
+    button {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+  }
+}
+
+.approve-card {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .approve-desc {
+    background: #fff;
+    padding: 15px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 5px;
+
+    h3 {
+      font-size: 22px;
+      color: #333;
+      font-weight: 600;
+    }
+
+    .approve-note {
+      margin: 10px 0;
+      font-size: 14px;
+      color: #555;
+      background: #f1f1f1;
+      padding: 10px;
+      border-left: 4px solid #28a745;
+      border-radius: 4px;
+    }
+
+    .approve-btns {
+      display: flex;
+      gap: 20px;
+    }
+  }
+}

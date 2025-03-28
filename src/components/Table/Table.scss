@@ -1,0 +1,84 @@
+.table {
+  width: 100%;
+  background: white;
+  box-shadow: rgba(0, 70, 253, 0.2) 0px 8px 16px,
+    rgba(0, 70, 253, 0.2) 0px -4px 10px;
+  border-radius: 10px;
+  padding: 20px;
+  overflow-x: auto;
+  margin-top: 10px;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+
+    th {
+      background: #0046fd;
+      color: white;
+      padding: 12px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    td {
+      padding: 12px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    tr:hover {
+      background: rgba(0, 70, 253, 0.1);
+    }
+  }
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  align-items: center;
+
+  .page {
+    margin: 0px 20px;
+  }
+
+  button {
+    background: #0046fd;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    margin: 0 5px;
+    border-radius: 5px;
+    cursor: pointer;
+
+    &:disabled {
+      background: #aaa;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.status {
+  padding: 4px 8px;
+  border-radius: 5px;
+  font-weight: bold;
+
+  &.active {
+    background: #d4edda;
+    color: #155724;
+  }
+
+  &.inactive {
+    background: #f8d7da;
+    color: #721c24;
+  }
+
+  &.pending {
+    background: #fff3cd;
+    color: #856404;
+  }
+}

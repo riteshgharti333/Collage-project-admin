@@ -1,0 +1,36 @@
+@use "../../styles/responsive.scss" as *;
+
+.layout {
+  padding: 20px;
+  max-width: 1600px;
+  margin: auto;
+
+  .layout-container {
+    display: grid;
+    grid-template-columns: 270px auto;
+    gap: 20px;
+
+    .layout-right {
+      padding: 0px 20px;
+    }
+
+    .layout-right .layout-nav,
+    .layout-right .layout-content {
+      // background: $layout-bg;
+      // box-shadow: $layout-shadow;
+      // border-radius: $layout-radius;
+    }
+
+    .layout-left {
+      background: #0046fd;
+      border-radius: $layout-radius;
+    }
+
+    .layout-right {
+      min-height: 100vh;
+      .layout-content {
+        margin-top: 20px;
+      }
+    }
+  }
+}

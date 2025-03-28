@@ -1,0 +1,56 @@
+@use "../../styles/responsive.scss" as *;
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .navbar-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    p {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    span {
+      color: #585858;
+    }
+    .user-icon {
+      background: #0046fd;
+      color: #fff;
+      padding: 10px;
+      font-size: 40px;
+      border-radius: 50%;
+    }
+  }
+
+  .navbar-right {
+    button {
+      width: 100%;
+      color: #0046fd;
+      border: none;
+      background: #fff;
+      padding: 10px;
+      font-size: 16px;
+      font-weight: 500;
+      border-radius: 10px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: center;
+      transition: all 0.3s ease-in-out;
+      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
+      &:hover {
+        transform: translateY(-5px);
+      }
+
+      .login-icon {
+      }
+    }
+  }
+}

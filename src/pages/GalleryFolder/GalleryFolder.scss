@@ -1,0 +1,64 @@
+@use "../../styles/responsive.scss" as *;
+
+.galleryFolder {
+  .galleryFolder-top {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .galleryFolder-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-top: 40px;
+    .galleryFolder-card {
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
+      border-radius: 5px;
+
+      img {
+        height: 200px;
+        width: 100%;
+        display: block;
+        object-fit: cover;
+        cursor: pointer;
+        border-radius: 5px 5px 0px 0px;
+      }
+
+      p {
+        font-size: 20px;
+        font-weight: 600;
+        background: $primary-color;
+        color: #fff;
+        padding: 5px 0px;
+        border-radius: 0px 0px 5px 5px;
+        text-align: center;
+      }
+
+      button {
+        display: flex;
+        justify-content: center;
+        margin: auto;
+        margin-top: 10px;
+        font-size: 14px;
+        padding: 5px 10px;
+
+        &:disabled {
+          pointer-events: none; 
+          opacity: 0.6;      
+          cursor: not-allowed;  
+        }
+      }
+    }
+  }
+}
+
+.deleteImage {
+  .deleteImage-desc {
+    width: 350px;
+    h3 {
+      font-size: 20px;
+      text-align: center;
+    }
+  }
+}
