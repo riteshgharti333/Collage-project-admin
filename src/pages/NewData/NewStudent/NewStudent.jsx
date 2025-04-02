@@ -55,7 +55,7 @@ const NewStudent = () => {
   return (
     <div className="update-student-page">
       <div className="single-page-top">
-        <h1>Add New Student</h1>
+        <h1>Add New Certificate</h1>
       </div>
 
       <div className="single-page-content">
@@ -137,7 +137,7 @@ const NewStudent = () => {
           onClick={handleNewStudent}
           disabled={loading}
         >
-          {loading ? "Adding..." : "Add Student"}
+          {loading ? "Adding..." : "Add Certificate"}
         </button>
       </div>
     </div>

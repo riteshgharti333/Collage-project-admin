@@ -61,7 +61,7 @@ const SingleStudent = () => {
         <Link onClick={() => navigate(-1)} className="back-icon">
           <MdKeyboardBackspace size={35} />
         </Link>
-        <h1>Student</h1>
+        <h1>Certificate</h1>
       </div>
 
       {openDeleteCard && (

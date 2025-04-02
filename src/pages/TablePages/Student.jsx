@@ -56,7 +56,7 @@ const Student = () => {
     <div className="student">
       <div className="student-top">
         <h1>Students</h1>
-        <Link to={"/new-student"} className="success-btn">Add New Student</Link>
+        <Link to={"/new-student"} className="success-btn">Add New Certificate</Link>
       </div>
       <Table data={admissionData} columns={columns} path="student" />
     </div>
