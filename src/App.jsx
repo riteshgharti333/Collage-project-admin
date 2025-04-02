@@ -42,7 +42,7 @@ function App() {
 
           <Route element={<Layout />}>
             <Route path="/" element={<Dashboard />} />
-            <Route path="/founding-members" element={<Member />} />
+            <Route path="/mentor" element={<Member />} />
             <Route path="/staff" element={<Staff />} />
             <Route path="/admission" element={<Admission />} />
             <Route path="/enquiry" element={<Enquiry />} />
@@ -64,7 +64,7 @@ function App() {
             {/* new */}
             <Route path="/new-gallery" element={<NewGallery />} />
             <Route path="/new-staff-member" element={<NewStaff />} />
-            <Route path="/new-founding-member" element={<NewFounding />} />
+            <Route path="/new-mentor" element={<NewFounding />} />
             <Route path="/new-gallery-folder" element={<NewGalleryFolder />} />
             <Route path="/new-alumni" element={<NewAlumni />} />
             <Route path="/new-student" element={<NewStudent />} />
@@ -72,7 +72,7 @@ function App() {
 
 
             {/* update */}
-            <Route path="/founding-member/:id" element={<UpdateFounding />} />
+            <Route path="/mentor/:id" element={<UpdateFounding />} />
             <Route path="/staff-member/:id" element={<UpdateStaff />} />
             <Route path="/update-student/:id" element={<UpdateStudent />} />
             <Route path="/update-alumni/:id" element={<UpdateAlumni />} />

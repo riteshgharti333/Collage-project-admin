@@ -44,6 +44,7 @@ const SingleEnquiry = () => {
     district,
     city,
     approved,
+    message,
   } = singleData;
 
   const enquiryDetails = [
@@ -55,13 +56,14 @@ const SingleEnquiry = () => {
     { label: "State", value: selectState },
     { label: "District", value: district },
     { label: "City", value: city },
+    { label: "Message", value: message },
+
     {
       label: "Approved",
       value: approved ? "Approved" : "Not Approved",
     },
   ];
 
-  // ✅ Approve Enquiry Handler
   const handleApprove = async () => {
     if (approved) {
       toast.info("Enquiry is already approved.");

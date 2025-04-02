@@ -121,14 +121,16 @@ const Staff = () => {
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
             >
-              <img
-                src={item.image}
-                alt={`Image ${index}`}
-                loading="lazy"
-                className={`staff-img ${
-                  hoveredIndex === index ? "add-filter" : ""
-                }`}
-              />
+              <div className="member-img-round">
+                <img
+                  src={item.image}
+                  alt={`Image ${index}`}
+                  loading="lazy"
+                  className={`staff-img ${
+                    hoveredIndex === index ? "add-filter" : ""
+                  }`}
+                />
+              </div>
 
               <div className="staff-details">
                 <h3>{item.name}</h3>

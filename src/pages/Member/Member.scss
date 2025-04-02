@@ -19,9 +19,6 @@
       transition: transform 0.3s ease, box-shadow 0.3s ease;
       cursor: pointer;
       position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
 
       .member-img-desc {
         position: absolute;
@@ -55,22 +52,27 @@
       &:hover {
         transform: translateY(-5px);
       }
-      img {
-        object-fit: cover;
-        width: 250px;
-        height: 250px;
-        position: relative;
-        background: #b22222;
-        border-radius: 50%;
-        object-position: top;
-        margin: auto;
+      .member-img-round {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        img {
+          object-fit: cover;
+          width: 250px;
+          height: 250px;
+          position: relative;
+          background: #dddddd;
+          border-radius: 50%;
+          object-position: top;
+          display: block;
 
-        &.add-filter {
-          filter: brightness(0.5);
-        }
+          &.add-filter {
+            filter: brightness(0.5);
+          }
 
-        &.staff-img {
-          border-radius: 5px;
+          &.staff-img {
+            border-radius: 5px;
+          }
         }
       }
 
@@ -84,7 +86,6 @@
           display: flex;
           align-items: center;
           gap: 5px;
-          margin-top: 5px;
 
           .location-icon {
             color: $primary-color;
@@ -104,6 +105,7 @@
 
         p {
           color: #333;
+          text-align: center;
         }
       }
     }

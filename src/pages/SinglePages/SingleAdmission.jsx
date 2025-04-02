@@ -33,6 +33,8 @@ const SingleAdmission = () => {
     getSingleData();
   }, [id]);
 
+  console.log(singleData);
+
   const {
     _id,
     name,
@@ -44,6 +46,7 @@ const SingleAdmission = () => {
     district,
     city,
     approved,
+    message,
   } = singleData;
 
   const admissionDetails = [
@@ -55,6 +58,8 @@ const SingleAdmission = () => {
     { label: "State", value: selectState },
     { label: "District", value: district },
     { label: "City", value: city },
+    { label: "Message", value: message },
+
     {
       label: "Approved",
       value: approved ? "Approved" : "Not Approved",
@@ -161,7 +166,7 @@ const SingleAdmission = () => {
             </p>
             <div className="approve-btns">
               <button className="success-btn" onClick={handleApprove}>
-              {approving ? "Approving..." : "Yes"}
+                {approving ? "Approving..." : "Yes"}
               </button>
               <button
                 className="delete-btn"

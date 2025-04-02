@@ -55,7 +55,7 @@ const NewFounding = () => {
         }
       );
       toast.success(data.message);
-      navigate("/founding-members");
+      navigate("/mentor");
     } catch (error) {
       console.error("Error creating staff:", error);
       toast.error("Failed to add staff member.");
@@ -70,7 +70,7 @@ const NewFounding = () => {
         <Link onClick={() => navigate(-1)} className="back-link">
           <h1>
             <RiArrowLeftWideFill className="member-icon" />
-            New Founding Member
+            New Mentor
           </h1>
         </Link>
       </div>
@@ -92,7 +92,7 @@ const NewFounding = () => {
               aria-label="Upload Staff Image"
             >
               <img src={AddImg} alt="Add Staff" className="add-member-img" />
-              <p>Add Founding Member Image</p>
+              <p>Add Mentor Image</p>
             </div>
           )}
 
@@ -135,7 +135,7 @@ const NewFounding = () => {
               className="success-btn"
               onClick={handleSubmit}
             >
-              {loading ? "Adding member..." : "Add Member"}
+              {loading ? "Adding mentor..." : "Add mentor"}
             </button>
           </div>
         </div>

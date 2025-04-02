@@ -28,7 +28,7 @@ const Dashboard = () => {
         setMemberCount(members.data.founders.length || 0);
       } catch (error) {
         console.error("Error fetching data:", error);
-        toast.error("Failed to load dashboard data.");
+        toast.error(error.response.data.message);
       } finally {
         setLoading(false);
       }

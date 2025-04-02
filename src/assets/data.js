@@ -42,8 +42,8 @@ export const sidebarItems = [
   },
   {
     icon: MdOutlineStars,
-    title: "Founding Members",
-    link: "founding-members",
+    title: "Mentor",
+    link: "mentor",
   },
   {
     icon: MdOutlineGroup,

@@ -47,8 +47,7 @@ const Sidebar = () => {
               banner.type.includes("admission") ||
               banner.type.includes("gallery") ||
               banner.type.includes("contact") ||
-              banner.type.includes("founding") ||
-              banner.type.includes("digital") ||
+              banner.type.includes("mentor") ||
               banner.type.includes("alumni") ||
               banner.type.includes("ug") ||
               banner.type.includes("pg")

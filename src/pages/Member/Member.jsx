@@ -33,8 +33,8 @@ const Member = () => {
           setAllData(data.founders);
         }
       } catch (error) {
-        console.error("Error fetching founding members:", error);
-        toast.error("Failed to fetch founding members");
+        console.error("Error fetching mentor:", error);
+        toast.error(error.response.data.message);
       }
     };
     getAllData();
@@ -54,8 +54,8 @@ const Member = () => {
 
       toast.success(data.message);
     } catch (error) {
-      console.error("Error deleting founding member:", error);
-      toast.error("Failed to delete founding member!");
+      console.error("Error deleting mentor:", error);
+      toast.error("Failed to delete mentor");
     }
   };
 
@@ -105,9 +105,9 @@ const Member = () => {
   return (
     <div className="member">
       <div className="member-top">
-        <h1>Founding Members</h1>
-        <Link to={"/new-founding-member"}>
-          <button className="success-btn">Add New Founding Member</button>
+        <h1>Mentors</h1>
+        <Link to={"/new-mentor"}>
+          <button className="success-btn">Add New Mentor</button>
         </Link>
       </div>
 
@@ -120,12 +120,15 @@ const Member = () => {
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
             >
+              <div className="member-img-round">
               <img
                 src={item.image}
                 alt={`Image ${index}`}
                 loading="lazy"
                 className={`${hoveredIndex === index ? "add-filter" : ""}`}
               />
+              </div>
+            
 
               <div className="member-details">
                 <h3>{item.name}</h3>
@@ -134,8 +137,7 @@ const Member = () => {
 
               {hoveredIndex === index && (
                 <div className="member-img-desc ">
-                
-                  <Link to={`/founding-member/${item._id}`}>
+                  <Link to={`/mentor/${item._id}`}>
                     <FaRegEdit
                       className="galley-icon edit-icon"
                       onClick={() => setSelectedImg(item.img)}

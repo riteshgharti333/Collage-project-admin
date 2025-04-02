@@ -82,7 +82,6 @@ const GalleryFolder = () => {
             className="delete-btn"
             disabled={loading}
             onClick={handleDelete}
-
           >
             {loading ? "Deleting..." : "Yes"}
           </button>
