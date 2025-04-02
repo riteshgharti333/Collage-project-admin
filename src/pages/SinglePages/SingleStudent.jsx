@@ -4,8 +4,9 @@ import DeleteCard from "../../components/DeleteCard/DeleteCard";
 import { AiOutlineCheckCircle, AiOutlineCloseCircle } from "react-icons/ai";
 import axios from "axios";
 import { baseUrl } from "../../main";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { MdKeyboardBackspace } from "react-icons/md";
 
 const SingleStudent = () => {
   const [openDeleteCard, setDeleteCard] = useState(false);
@@ -49,12 +50,17 @@ const SingleStudent = () => {
     { label: "Certificate No", value: certificateNo },
     { label: "Course", value: course },
     { label: "Duration", value: `${duration} Year` },
-    { label: "Date", value: formatDate(date) }, // ✅ Formatted date
+    { label: "Date", value: formatDate(date) },
   ];
+
+  const navigate = useNavigate();
 
   return (
     <div className="single-page">
       <div className="single-page-top">
+        <Link onClick={() => navigate(-1)} className="back-icon">
+          <MdKeyboardBackspace size={35} />
+        </Link>
         <h1>Student</h1>
       </div>
 

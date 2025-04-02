@@ -12,7 +12,7 @@ export const sidebarItems = [
   {
     icon: MdOutlineDashboardCustomize,
     title: "Dashboard",
-    link: "",
+    link: "dashboard",
   },
   {
     icon: PiStudentBold,

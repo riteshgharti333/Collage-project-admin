@@ -1,6 +1,13 @@
 .update-student-page {
   .single-page-top {
     text-align: center;
+    position: relative;
+
+    .back-icon {
+      position: absolute;
+      left: 0;
+      top: 10%;
+    }
   }
 
   .single-page-content {

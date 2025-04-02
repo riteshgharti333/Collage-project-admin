@@ -33,7 +33,6 @@ const Sidebar = () => {
         const { data } = await axios.get(`${baseUrl}/banner/all-banners`);
 
         if (data.result === 1) {
-          // Categorize banners into top and courses
           const top = [];
           const courses = [];
 
@@ -78,12 +77,13 @@ const Sidebar = () => {
 
         <div className="sidebar-items">
           {sidebarItems.map((item, index) => {
-            const isActive = location.pathname === `/${item.link}`;
             return (
               <Link
                 to={`/${item.link}`}
                 key={index}
-                className={`sidebar-item ${isActive ? "active" : ""}`}
+                className={`sidebar-item ${
+                  location.pathname.startsWith(`/${item.link}`) ? "active" : ""
+                }`}
               >
                 <item.icon className="sidebar-icon" />
                 <span>{item.title}</span>

@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import "./UpdateStudent.scss";
 import axios from "axios";
 import { baseUrl } from "../../../main";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { toast } from "sonner";
+import { MdKeyboardBackspace } from "react-icons/md";
 
 const UpdateStudent = () => {
   const [formData, setFormData] = useState({
@@ -78,9 +79,13 @@ const UpdateStudent = () => {
     }
   };
 
+
   return (
     <div className="update-student-page">
       <div className="single-page-top">
+      <Link onClick={() => navigate(-1)} className="back-icon">
+          <MdKeyboardBackspace size={35} />
+        </Link>
         <h1>Update Student</h1>
       </div>
 

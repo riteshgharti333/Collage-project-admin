@@ -11,15 +11,16 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 30px;
     margin-top: 30px;
+    
 
     .alumini-img {
-      max-width: 250px;
       background: #ffffff;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       overflow: hidden;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
       border: 1px solid #ddd;
       border-radius: 10px;
+      max-width: 300px;
 
       .alumini-img-desc {
         position: absolute;
@@ -55,10 +56,9 @@
       }
       img {
         width: 100%;
-        height: 200px;
+        height: 250px;
         object-fit: cover;
         display: block;
-        object-position: top;
 
         &.add-filter {
           filter: brightness(0.5);
@@ -68,33 +68,24 @@
       .alumini-details {
         display: flex;
         flex-direction: column;
-        align-items: center;
-        margin: 20px 0px;
+        margin: 20px 20px;
+        gap: 10px;
 
-        span {
+        p {
+          color: #333;
+          font-size: 14px;
+          font-weight: 500;
           display: flex;
           align-items: center;
-          gap: 5px;
-          margin-top: 5px;
+          gap: 10px;
 
-          .location-icon {
-            color: $primary-color;
+          .alumni-icon{
+          color: $primary-color;
+          width: 15px;
+          height: 15px;
+          flex-shrink: 0;
+          display: inline-block;
           }
-        }
-
-        p {
-          color: #333;
-          font-size: 18px;
-        }
-      }
-      .alumini-details {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-top: 20px;
-
-        p {
-          color: #333;
         }
       }
     }

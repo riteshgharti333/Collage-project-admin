@@ -7,6 +7,9 @@ import { toast } from "sonner";
 import { Link } from "react-router-dom";
 
 import { FaRegEdit } from "react-icons/fa";
+import { FaLocationDot } from "react-icons/fa6";
+import { FaBuilding } from "react-icons/fa";
+import { FaUserTie } from "react-icons/fa";
 
 const Alumini = () => {
   const [selectedImg, setSelectedImg] = useState(null);
@@ -14,7 +17,7 @@ const Alumini = () => {
   const [deleteImg, setDeleteImg] = useState(false);
   const [allData, setAllData] = useState([]);
   const [deleteData, setDeleteData] = useState();
-
+  const [loading, setLoading] = useState(false);
   // Tooltip state
   const [tooltip, setTooltip] = useState({
     visible: false,
@@ -35,7 +38,7 @@ const Alumini = () => {
         }
       } catch (error) {
         console.error("Error fetching alumni:", error);
-        toast.error("Failed to fetch alumni");
+        toast.error(error.response.data.message);
       }
     };
     getAllData();
@@ -43,7 +46,7 @@ const Alumini = () => {
 
   const deleteImage = async (id) => {
     if (!id) return;
-
+    setLoading(true);
     try {
       const { data } = await axios.delete(`${baseUrl}/alumni/${id}`);
 
@@ -57,6 +60,8 @@ const Alumini = () => {
     } catch (error) {
       console.error("Error deleting alumni:", error);
       toast.error("Failed to delete alumni!");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -92,8 +97,12 @@ const Alumini = () => {
       <div className="deleteImage-desc" ref={cardRef}>
         <h3>Delete Alumni</h3>
         <div className="deleteImage-btns">
-          <button className="delete-btn" onClick={() => deleteImage(id)}>
-            Yes
+          <button
+            className="delete-btn"
+            onClick={() => deleteImage(id)}
+            disabled={loading}
+          >
+            {loading ? "Deleting..." : "Yes"}
           </button>
           <button className="success-btn" onClick={onClose}>
             No
@@ -131,7 +140,18 @@ const Alumini = () => {
 
               <div className="alumini-details">
                 <h3>{item.name}</h3>
-                <p>Placed at {item.company}</p>
+                <p>
+                  <FaUserTie className="alumni-icon" />
+                  {item.designation}
+                </p>
+                <p>
+                  <FaBuilding className="alumni-icon" />
+                  {item.company}
+                </p>
+                <p>
+                  <FaLocationDot className="alumni-icon" />
+                  {item.location}
+                </p>
               </div>
 
               {hoveredIndex === index && (

@@ -33,11 +33,14 @@ const NewStudent = () => {
     setLoading(true);
 
     try {
-      const { data } = await axios.post(`${baseUrl}/student/new-student`, formData);  // ✅ No ID in the route
+      const { data } = await axios.post(
+        `${baseUrl}/student/new-student`,
+        formData
+      ); // ✅ No ID in the route
 
       if (data.result === 1) {
         toast.success(data.message);
-        navigate(-1); 
+        navigate(-1);
       } else {
         toast.error(data.message || "Failed to add student.");
       }

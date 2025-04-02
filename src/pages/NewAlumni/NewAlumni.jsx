@@ -16,9 +16,11 @@ const NewAlumni = () => {
   const [file, setFile] = useState(null);
   const [name, setName] = useState("");
   const [company, setCompany] = useState("");
+  const [designation, setDesignation] = useState("");
+  const [location, setLocation] = useState("");
+
   const [loading, setLoading] = useState(false);
 
-  // ✅ Handle image selection
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -27,12 +29,10 @@ const NewAlumni = () => {
     }
   };
 
-  // ✅ Trigger file input
   const handleButtonClick = () => fileInputRef.current.click();
 
-  // ✅ Handle form submission
   const handleSubmit = async () => {
-    if (!name || !company || !file) {
+    if (!name || !company || !designation || !location || !file) {
       toast.error("All fields are required!");
       return;
     }
@@ -40,9 +40,12 @@ const NewAlumni = () => {
     const formData = new FormData();
     formData.append("name", name);
     formData.append("company", company);
+    formData.append("designation", designation);
+    formData.append("location", location);
     formData.append("image", file);
 
     setLoading(true);
+
 
     try {
       const { data } = await axios.post(
@@ -58,7 +61,7 @@ const NewAlumni = () => {
       navigate("/alumni");
     } catch (error) {
       console.error("Error creating alumni:", error);
-      toast.error("Failed to add alumni.");
+      toast.error(error.response.data.message);
     } finally {
       setLoading(false);
     }
@@ -108,12 +111,32 @@ const NewAlumni = () => {
             </div>
 
             <div className="update-content">
+              <span>Designation : </span>
+              <input
+                type="text"
+                placeholder="Enter designation..."
+                value={designation}
+                onChange={(e) => setDesignation(e.target.value)}
+              />
+            </div>
+
+            <div className="update-content">
               <span>Comapany : </span>
               <input
                 type="text"
                 placeholder="Enter company name..."
                 value={company}
                 onChange={(e) => setCompany(e.target.value)}
+              />
+            </div>
+
+            <div className="update-content">
+              <span>Location : </span>
+              <input
+                type="text"
+                placeholder="Enter location..."
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
               />
             </div>
           </div>
