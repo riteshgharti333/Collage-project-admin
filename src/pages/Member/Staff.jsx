@@ -116,8 +116,8 @@ const Staff = () => {
         {allData?.length > 0 &&
           allData.map((item, index) => (
             <div
+              key={index}
               className="member-img"
-              key={item.imageId}
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
             >

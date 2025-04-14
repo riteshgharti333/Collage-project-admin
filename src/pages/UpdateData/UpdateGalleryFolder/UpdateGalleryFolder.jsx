@@ -1,4 +1,5 @@
 import "./UpdateGalleryFolder.scss";
+
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { RiArrowLeftWideFill } from "react-icons/ri";
 import { useState, useRef, useEffect } from "react";
@@ -6,10 +7,11 @@ import addImg from "../../../assets/images/addImg.svg";
 import { baseUrl } from "../../../main";
 import { toast } from "sonner";
 import axios from "axios";
+import { MdKeyboardBackspace } from "react-icons/md";
 
 const UpdateGalleryFolder = () => {
   const [folderImage, setFolderImage] = useState(null);
-  const [galleryImages, setGalleryImages] = useState([]);  // New images
+  const [galleryImages, setGalleryImages] = useState([]); // New images
   const [existingImages, setExistingImages] = useState([]); // Existing images
   const [imagesToRemove, setImagesToRemove] = useState([]); // Images to remove
 
@@ -65,21 +67,21 @@ const UpdateGalleryFolder = () => {
       toast.error("No changes made. Add or remove images.");
       return;
     }
-  
+
     setLoading(true);
-  
+
     const formData = new FormData();
-  
+
     // ✅ Append new images properly
     galleryImages.forEach((img) => {
       formData.append("galleryImages", img.file);
     });
-  
+
     // ✅ Append imagesToRemove as an array correctly
     imagesToRemove.forEach((imgUrl) => {
-      formData.append("imagesToRemove[]", imgUrl);  // ✅ Send as array
+      formData.append("imagesToRemove[]", imgUrl); // ✅ Send as array
     });
-  
+
     try {
       const response = await axios.put(
         `${baseUrl}/gallery-folder/${id}`,
@@ -90,7 +92,7 @@ const UpdateGalleryFolder = () => {
           },
         }
       );
-  
+
       if (response.data.result === 1) {
         toast.success("Gallery images updated successfully!");
         navigate("/gallery-folder");
@@ -102,17 +104,14 @@ const UpdateGalleryFolder = () => {
       setLoading(false);
     }
   };
-  
-  
+
   return (
     <div className="updateGalleryFolder">
       <div className="newGallery-top">
-        <Link onClick={() => navigate(-1)} className="back-link">
-          <h1>
-            <RiArrowLeftWideFill className="newGallery-icon" />
-            Update Gallery Images
-          </h1>
+        <Link onClick={() => navigate(-1)} className="back-icon">
+          <MdKeyboardBackspace size={35} />
         </Link>
+        <h1>Update Gallery Images</h1>
       </div>
 
       <div className="newGallery-content">

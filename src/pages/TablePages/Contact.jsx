@@ -47,7 +47,7 @@ const Contact = () => {
         },
       },
     ],
-    []
+    [],
   );
 
   return (

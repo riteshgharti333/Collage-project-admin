@@ -16,7 +16,7 @@ const GalleryFolder = () => {
   const getAllFolder = useCallback(async () => {
     try {
       const { data } = await axios.get(
-        `${baseUrl}/gallery-folder/all-gallery-folders`
+        `${baseUrl}/gallery-folder/all-gallery-folders`,
       );
       setFolders(data.folders);
     } catch (error) {
@@ -37,13 +37,13 @@ const GalleryFolder = () => {
 
     try {
       const { data } = await axios.delete(
-        `${baseUrl}/gallery-folder/${selectedFolderId}`
+        `${baseUrl}/gallery-folder/${selectedFolderId}`,
       );
 
       if (data.result === 1) {
         toast.success("Folder deleted successfully!");
         setFolders((prev) =>
-          prev.filter((folder) => folder._id !== selectedFolderId)
+          prev.filter((folder) => folder._id !== selectedFolderId),
         );
       }
     } catch (error) {
@@ -108,7 +108,7 @@ const GalleryFolder = () => {
             <div className="galleryFolder-card" key={item._id}>
               <Link
                 to={`/gallery-folder/${item._id}?title=${encodeURIComponent(
-                  item.folderTitle
+                  item.folderTitle,
                 )}`}
               >
                 <img src={item.folderImage} alt={item.folderTitle} />

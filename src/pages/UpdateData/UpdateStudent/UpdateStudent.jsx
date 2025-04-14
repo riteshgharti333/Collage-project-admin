@@ -37,7 +37,7 @@ const UpdateStudent = () => {
             certificateNo: data.student.certificateNo || "",
             course: data.student.course || "",
             duration: data.student.duration || "",
-            date: formattedDate,  // Set formatted date
+            date: formattedDate, // Set formatted date
           });
         }
       } catch (error) {
@@ -79,11 +79,10 @@ const UpdateStudent = () => {
     }
   };
 
-
   return (
     <div className="update-student-page">
       <div className="single-page-top">
-      <Link onClick={() => navigate(-1)} className="back-icon">
+        <Link onClick={() => navigate(-1)} className="back-icon">
           <MdKeyboardBackspace size={35} />
         </Link>
         <h1>Update Student</h1>
@@ -147,7 +146,7 @@ const UpdateStudent = () => {
             <li className="single-page-form-item">
               <label>Date (MM/DD/YYYY):</label>
               <input
-                type="date"  
+                type="date"
                 name="date"
                 value={formData.date}
                 onChange={handleInputChange}

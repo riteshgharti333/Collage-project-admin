@@ -6,7 +6,6 @@ import { useEffect, useMemo, useState } from "react";
 import { baseUrl } from "../../main";
 
 const Enquiry = () => {
-
   const [enquiryData, setEnquiryData] = useState([]);
 
   useEffect(() => {
@@ -14,10 +13,10 @@ const Enquiry = () => {
       const { data } = await axios.get(`${baseUrl}/enquiry/all-enquiry`);
       setEnquiryData(data.enquiry);
     };
-    
+
     getAllData();
   }, []);
-  
+
   const columns = useMemo(
     () => [
       {
@@ -50,7 +49,7 @@ const Enquiry = () => {
         },
       },
     ],
-    []
+    [],
   );
 
   return (

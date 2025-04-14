@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { baseUrl } from "../../main";
 import { useContext, useState } from "react";
-import {toast} from "sonner";
+import { toast } from "sonner";
 import axios from "axios";
 import { Context } from "../../context/Context";
 
@@ -17,6 +17,7 @@ const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const { dispatch } = useContext(Context);
+  const [loading, setLoading] = useState(false);
 
   const [formData, setFormData] = useState({
     email: "",
@@ -29,9 +30,9 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+    setLoading(true);
     dispatch({ type: "LOGIN_START" });
-  
+
     try {
       const response = await axios.post(
         `${baseUrl}/auth/login`,
@@ -39,24 +40,25 @@ const Login = () => {
           email: formData.email,
           password: formData.password,
         },
-        { withCredentials: true }
+        { withCredentials: true },
       );
-  
+
       dispatch({ type: "LOGIN_SUCCESS", payload: response?.data });
-  
+
       if (response?.data) {
         toast.success(response?.data?.message || "Login successful!");
       }
-  
+
       navigate("/");
     } catch (error) {
       dispatch({ type: "LOGIN_FAILURE" });
-     
+
       toast.error(error.response.data.message);
       console.error("Login Error:", error);
+    } finally {
+      setLoading(false);
     }
   };
-  
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -106,13 +108,10 @@ const Login = () => {
               )}
             </div>
           </div>
-          <button type="submit" className="login-button">
-            Login
+          <button type="submit" className="login-button" disabled={loading}>
+            {loading ? "Loading..." : "Login"}
           </button>
         </form>
-        <p className="signup-link">
-          Don't have an account? <Link to="/register">Sign up</Link>
-        </p>
       </div>
     </div>
   );

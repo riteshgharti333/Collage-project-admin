@@ -32,7 +32,7 @@ const No = () => {
         cell: (info) => new Date(info.getValue()).toLocaleDateString(),
       },
     ],
-    []
+    [],
   );
 
   return (

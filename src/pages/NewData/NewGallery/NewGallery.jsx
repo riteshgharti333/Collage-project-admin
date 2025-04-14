@@ -70,7 +70,7 @@ const NewGallery = () => {
           headers: {
             "Content-Type": "application/json",
           },
-        }
+        },
       );
 
       if (response.data) {

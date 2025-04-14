@@ -14,9 +14,20 @@ a {
 }
 
 .app {
-  background: #ECECEB;
+  background: #000;
   button,
   input {
     font-family: "Poppins", sans-serif;
+  }
+
+  h1{
+    color: #fff;
+  }
+
+  .back-icon {
+    position: absolute;
+    left: 0;
+    top: 10%;
+    color: #fff;
   }
 }

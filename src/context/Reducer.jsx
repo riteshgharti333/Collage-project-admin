@@ -38,7 +38,7 @@ const Reducer = (state, action) => {
 
       return {
         ...state,
-        user: action.payload,  // Update the context state
+        user: action.payload, // Update the context state
         isFetching: false,
         error: false,
       };

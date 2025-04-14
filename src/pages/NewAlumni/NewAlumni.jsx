@@ -7,6 +7,7 @@ import AddImg from "../../assets/images/addImg.svg";
 import axios from "axios";
 import { baseUrl } from "../../main";
 import { toast } from "sonner";
+import { MdKeyboardBackspace } from "react-icons/md";
 
 const NewAlumni = () => {
   const fileInputRef = useRef(null);
@@ -23,7 +24,15 @@ const NewAlumni = () => {
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
+
     if (file) {
+      const maxSize = 2 * 1024 * 1024;
+
+      if (file.size > maxSize) {
+        toast.error("Image must be less than 2MB!");
+        return;
+      }
+
       setSelectedImage(URL.createObjectURL(file));
       setFile(file);
     }
@@ -45,7 +54,6 @@ const NewAlumni = () => {
     formData.append("image", file);
 
     setLoading(true);
-
 
     try {
       const { data } = await axios.post(
@@ -70,12 +78,10 @@ const NewAlumni = () => {
   return (
     <div className="newAlumni">
       <div className="newAlumni-top">
-        <Link onClick={() => navigate(-1)} className="back-link">
-          <h1>
-            <RiArrowLeftWideFill className="alumni-icon" />
-            New Alumni
-          </h1>
+        <Link onClick={() => navigate(-1)} className="back-icon">
+          <MdKeyboardBackspace size={35} />
         </Link>
+        <h1>New Alumni</h1>
       </div>
 
       <div className="newAlumni-contents">

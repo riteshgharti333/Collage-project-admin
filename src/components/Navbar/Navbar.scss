@@ -6,18 +6,18 @@
   align-items: center;
 
   .navbar-left {
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    .user-link {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
 
     p {
       font-size: 18px;
       font-weight: 600;
+      color: #fff;
     }
 
-    span {
-      color: #585858;
-    }
     .user-icon {
       background: #0046fd;
       color: #fff;

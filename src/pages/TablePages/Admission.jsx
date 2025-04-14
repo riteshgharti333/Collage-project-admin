@@ -48,7 +48,7 @@ const Admission = () => {
         },
       },
     ],
-    []
+    [],
   );
 
   return (

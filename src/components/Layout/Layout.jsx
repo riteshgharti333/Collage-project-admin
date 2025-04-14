@@ -16,7 +16,6 @@ const Layout = () => {
             <Navbar />
           </div>
 
-
           <div className="layout-content">
             <Outlet />
           </div>

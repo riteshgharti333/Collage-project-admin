@@ -21,6 +21,15 @@ const Banner = () => {
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
+      const maxSizeInBytes = 2 * 1024 * 1024;
+
+      if (file.size > maxSizeInBytes) {
+        toast.error("Banner size should not exceed 2MB!");
+        setSelectedFile(null);
+        setPreview("");
+        return;
+      }
+
       setSelectedFile(file);
       setPreview(URL.createObjectURL(file));
     }
@@ -31,7 +40,7 @@ const Banner = () => {
     const getBanner = async () => {
       try {
         const { data } = await axios.get(
-          `${baseUrl}/banner/${bannerType}/${id}`
+          `${baseUrl}/banner/${bannerType}/${id}`,
         );
         if (data && data.image) {
           setSingleBanner(data.image);
@@ -65,7 +74,7 @@ const Banner = () => {
           headers: {
             "Content-Type": "multipart/form-data", // Required for FormData
           },
-        }
+        },
       );
 
       if (data) {

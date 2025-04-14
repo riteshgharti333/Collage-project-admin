@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import "./Gallery.scss";
-import { MdFullscreen } from "react-icons/md";
+import { MdFullscreen, MdKeyboardBackspace } from "react-icons/md";
 import axios from "axios";
 import { baseUrl } from "../../main";
 import { toast } from "sonner";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 const Gallery = () => {
   const [selectedImg, setSelectedImg] = useState(null);
@@ -54,10 +54,16 @@ const Gallery = () => {
     setTooltip({ visible: false, text: "", x: 0, y: 0 });
   };
 
+  const navigate = useNavigate();
+
   return (
     <div className="gallery">
       <div className="gallery-top">
-        <h1>{gallery.folderTitle}</h1>
+        <Link onClick={() => navigate(-1)} className="top-link">
+          <h1>
+            <MdKeyboardBackspace size={35} /> {gallery.folderTitle}
+          </h1>
+        </Link>
         <Link to={`/update-gallery-folder/${gallery._id}`}>
           <button className="success-btn">Update Gallery Images</button>
         </Link>

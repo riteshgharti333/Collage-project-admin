@@ -121,14 +121,13 @@ const Member = () => {
               onMouseLeave={() => setHoveredIndex(null)}
             >
               <div className="member-img-round">
-              <img
-                src={item.image}
-                alt={`Image ${index}`}
-                loading="lazy"
-                className={`${hoveredIndex === index ? "add-filter" : ""}`}
-              />
+                <img
+                  src={item.image}
+                  alt={`Image ${index}`}
+                  loading="lazy"
+                  className={`${hoveredIndex === index ? "add-filter" : ""}`}
+                />
               </div>
-            
 
               <div className="member-details">
                 <h3>{item.name}</h3>

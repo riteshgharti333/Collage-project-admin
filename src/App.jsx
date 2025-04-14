@@ -30,17 +30,26 @@ import Alumini from "./pages/Alumini/Alumini";
 import NewAlumni from "./pages/NewAlumni/NewAlumni";
 import UpdateAlumni from "./pages/UpdateData/UpdateAlumni/UpdateAlumni";
 import NewStudent from "./pages/NewData/NewStudent/NewStudent";
+import Profile from "./pages/Profile/Profile";
+import UpdatePassword from "./pages/UpdatePassword/UpdatePassword";
+import { useContext } from "react";
+import { Context } from "./context/Context";
 
 function App() {
+  const { user } = useContext(Context);
+
   return (
     <div className="app">
-      <BrowserRouter>
+      <BrowserRouter basename="/admin">
         <Toaster position="top-center" richColors />
         <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          <Route
+            path="/login"
+            element={user ? <Navigate to="/" /> : <Login />}
+          />
+          {/* <Route path="/register" element={<Register />} /> */}
 
-          <Route element={<Layout />}>
+          <Route element={user ? <Layout /> : <Navigate to="/login" />}>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/" element={<Dashboard />} />
 
@@ -52,6 +61,8 @@ function App() {
             <Route path="/gallery-folder" element={<GalleryFolder />} />
             <Route path="/student" element={<Student />} />
             <Route path="/alumni" element={<Alumini />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/update-password" element={<UpdatePassword />} />
 
             {/* Single Page */}
             <Route path="/admission/:id" element={<SingleAdmission />} />
@@ -71,8 +82,6 @@ function App() {
             <Route path="/new-alumni" element={<NewAlumni />} />
             <Route path="/new-student" element={<NewStudent />} />
 
-
-
             {/* update */}
             <Route path="/mentor/:id" element={<UpdateFounding />} />
             <Route path="/staff-member/:id" element={<UpdateStaff />} />
@@ -84,7 +93,7 @@ function App() {
               element={<UpdateGalleryFolder />}
             />
 
-            {/* <Route path="*" element={<Navigate to="/" />} /> */}
+            <Route path="*" element={<Navigate to="/" />} />
           </Route>
         </Routes>
       </BrowserRouter>

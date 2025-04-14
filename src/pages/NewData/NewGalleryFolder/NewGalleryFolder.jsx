@@ -1,4 +1,5 @@
 import "./NewGalleryFolder.scss";
+
 import { Link, useNavigate } from "react-router-dom";
 import { RiArrowLeftWideFill } from "react-icons/ri";
 import { useState, useRef, useCallback } from "react";
@@ -6,6 +7,7 @@ import addImg from "../../../assets/images/addImg.svg";
 import { baseUrl } from "../../../main";
 import { toast } from "sonner";
 import axios from "axios";
+import { MdKeyboardBackspace } from "react-icons/md";
 
 const NewGalleryFolder = () => {
   const [folderTitle, setFolderTitle] = useState("");
@@ -87,12 +89,10 @@ const NewGalleryFolder = () => {
     <div className="newGalleryFolder">
       {/* Top Section */}
       <div className="newGallery-top">
-        <Link onClick={() => navigate(-1)} className="back-link">
-          <h1>
-            <RiArrowLeftWideFill className="newGallery-icon" />
-            Add New Gallery Folder
-          </h1>
+        <Link onClick={() => navigate(-1)} className="back-icon">
+          <MdKeyboardBackspace size={35} />
         </Link>
+        <h1>Add New Gallery Folder</h1>
       </div>
 
       {/* Content Section */}

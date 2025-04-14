@@ -3,17 +3,13 @@
 .updateGalleryFolder {
   margin-top: 20px;
   .newGallery-top {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    h1 {
-      display: flex;
-      align-items: center;
-      cursor: pointer;
+    text-align: center;
+    position: relative;
 
-      .newGallery-icon {
-        font-size: 30px;
-      }
+    .back-icon {
+      position: absolute;
+      left: 0;
+      top: 10%;
     }
   }
 

@@ -4,8 +4,9 @@ import DeleteCard from "../../components/DeleteCard/DeleteCard";
 import { AiOutlineCheckCircle, AiOutlineCloseCircle } from "react-icons/ai";
 import axios from "axios";
 import { baseUrl } from "../../main";
-import { useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
+import { MdKeyboardBackspace } from "react-icons/md";
 
 const SingleContact = () => {
   const [openDeleteCard, setDeleteCard] = useState(false);
@@ -50,7 +51,7 @@ const SingleContact = () => {
   // ✅ Approve Contact Handler
   const handleApprove = async () => {
     if (approved) {
-      toast.info("Form is already approved.");  // ✅ Toast if already approved
+      toast.info("Form is already approved."); // ✅ Toast if already approved
       return;
     }
 
@@ -79,9 +80,14 @@ const SingleContact = () => {
     }
   };
 
+  const navigate = useNavigate();
+
   return (
     <div className="single-page">
       <div className="single-page-top">
+        <Link onClick={() => navigate(-1)} className="back-icon">
+          <MdKeyboardBackspace size={35} />
+        </Link>
         <h1>Contact Form</h1>
       </div>
 
@@ -119,7 +125,7 @@ const SingleContact = () => {
           className="success-btn"
           onClick={() => {
             if (approved) {
-              toast.info("Form is already approved.");  
+              toast.info("Form is already approved.");
             } else {
               setApproveCard(true);
             }
@@ -127,7 +133,11 @@ const SingleContact = () => {
           disabled={approving}
         >
           <AiOutlineCheckCircle className="btn-icon" />
-          {approved ? "Already Approved" : approving ? "Approving..." : "Approve Form"}
+          {approved
+            ? "Already Approved"
+            : approving
+            ? "Approving..."
+            : "Approve Form"}
         </button>
 
         <button

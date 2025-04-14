@@ -7,6 +7,7 @@ import AddImg from "../../../assets/images/addImg.svg";
 import axios from "axios";
 import { baseUrl } from "../../../main";
 import { toast } from "sonner";
+import { MdKeyboardBackspace } from "react-icons/md";
 
 const NewStaff = () => {
   const fileInputRef = useRef(null);
@@ -19,10 +20,17 @@ const NewStaff = () => {
   const [location, setLocation] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // ✅ Handle image selection
   const handleFileChange = (event) => {
     const file = event.target.files[0];
+
     if (file) {
+      const maxSize = 2 * 1024 * 1024;
+
+      if (file.size > maxSize) {
+        toast.error("Image must be less than 2MB!");
+        return;
+      }
+
       setSelectedImage(URL.createObjectURL(file));
       setFile(file);
     }
@@ -47,11 +55,15 @@ const NewStaff = () => {
     setLoading(true);
 
     try {
-      const { data } = await axios.post(`${baseUrl}/staff/new-staff`, formData ,{
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const { data } = await axios.post(
+        `${baseUrl}/staff/new-staff`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       toast.success(data.message);
       navigate(-1);
     } catch (error) {
@@ -65,12 +77,10 @@ const NewStaff = () => {
   return (
     <div className="newMember">
       <div className="newMember-top">
-        <Link onClick={() => navigate(-1)} className="back-link">
-          <h1>
-            <RiArrowLeftWideFill className="member-icon" />
-            New Staff Member
-          </h1>
+        <Link onClick={() => navigate(-1)} className="back-icon">
+          <MdKeyboardBackspace size={35} />
         </Link>
+        <h1>New Staff Member</h1>
       </div>
 
       <div className="newMember-contents">

@@ -4,6 +4,7 @@
   .alumini-top {
     display: flex;
     justify-content: space-between;
+
   }
 
   .alumini-imgs {
@@ -11,13 +12,14 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 30px;
     margin-top: 30px;
-    
 
     .alumini-img {
       background: #ffffff;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
       overflow: hidden;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
       border: 1px solid #ddd;
       border-radius: 10px;
       max-width: 300px;
@@ -79,12 +81,12 @@
           align-items: center;
           gap: 10px;
 
-          .alumni-icon{
-          color: $primary-color;
-          width: 15px;
-          height: 15px;
-          flex-shrink: 0;
-          display: inline-block;
+          .alumni-icon {
+            color: $primary-color;
+            width: 15px;
+            height: 15px;
+            flex-shrink: 0;
+            display: inline-block;
           }
         }
       }

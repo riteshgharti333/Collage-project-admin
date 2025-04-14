@@ -7,6 +7,7 @@ import AddImg from "../../../assets/images/addImg.svg";
 import axios from "axios";
 import { baseUrl } from "../../../main";
 import { toast } from "sonner";
+import { MdKeyboardBackspace } from "react-icons/md";
 
 const NewFounding = () => {
   const fileInputRef = useRef(null);
@@ -18,10 +19,17 @@ const NewFounding = () => {
   const [position, setPosition] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // ✅ Handle image selection
   const handleFileChange = (event) => {
     const file = event.target.files[0];
+
     if (file) {
+      const maxSize = 2 * 1024 * 1024;
+
+      if (file.size > maxSize) {
+        toast.error("Image must be less than 2MB!");
+        return;
+      }
+
       setSelectedImage(URL.createObjectURL(file));
       setFile(file);
     }
@@ -67,12 +75,10 @@ const NewFounding = () => {
   return (
     <div className="newMember">
       <div className="newMember-top">
-        <Link onClick={() => navigate(-1)} className="back-link">
-          <h1>
-            <RiArrowLeftWideFill className="member-icon" />
-            New Mentor
-          </h1>
+        <Link onClick={() => navigate(-1)} className="back-icon">
+          <MdKeyboardBackspace size={35} />
         </Link>
+        <h1>New Mentor</h1>
       </div>
 
       <div className="newMember-contents">

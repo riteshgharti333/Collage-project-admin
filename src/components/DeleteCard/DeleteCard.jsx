@@ -59,7 +59,7 @@ const DeleteCard = ({ onClose, id, path, onDeleteSuccess }) => {
             : "Are you sure you want to delete this form?"}
         </h3>
         <p className="deleteCard-note">
-          Note : 
+          Note :
           {path === "student"
             ? " Deleting this student will permanently remove their record from the database."
             : " Deleting this form will permanently remove it from the database."}

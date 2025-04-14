@@ -1,9 +1,9 @@
 @use "../../styles/responsive.scss" as *;
 
 .banner {
-  position:fixed;
-  h1{
-    text-transform:capitalize;
+  position: fixed;
+  h1 {
+    text-transform: capitalize;
   }
   .banner-content {
     display: flex;
@@ -12,10 +12,10 @@
     align-items: center;
     gap: 30px;
     margin-top: 30px;
-  
 
     img {
       width: 400px;
+      height: 300px;
       object-fit: contain;
       display: block;
     }
