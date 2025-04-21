@@ -20,7 +20,7 @@ a {
     font-family: "Poppins", sans-serif;
   }
 
-  h1{
+  h1 {
     color: #fff;
   }
 
@@ -29,5 +29,11 @@ a {
     left: 0;
     top: 10%;
     color: #fff;
+  }
+  button {
+    &:disabled {
+      background: #ccc !important;
+      cursor: not-allowed !important;
+    }
   }
 }

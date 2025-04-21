@@ -10,13 +10,14 @@
     color: #fff;
   }
   .sidebar-top {
-    padding: 10px;
     .sidebar-logo {
       padding: 10px;
       border-radius: 10px;
       background: #fff;
+      margin: 10px;
       img {
         width: 100%;
+        display: block;
       }
     }
 

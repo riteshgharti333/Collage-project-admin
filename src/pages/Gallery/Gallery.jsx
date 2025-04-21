@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from "react";
 import "./Gallery.scss";
+
+import { useEffect, useRef, useState } from "react";
 import { MdFullscreen, MdKeyboardBackspace } from "react-icons/md";
 import axios from "axios";
 import { baseUrl } from "../../main";

@@ -1,6 +1,6 @@
 import "./Sidebar.scss";
 import logo from "../../assets/images/logo.png";
-import { sidebarItems } from "../../assets/data";
+import { coursesLink, sidebarItems } from "../../assets/data";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { MdOutlineViewComfy, MdKeyboardArrowRight } from "react-icons/md";
 import { useContext, useEffect, useState } from "react";
@@ -8,6 +8,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import axios from "axios";
 import { baseUrl } from "../../main";
 import { Context } from "../../context/Context";
+import { IoMdBook } from "react-icons/io";
 
 const Sidebar = () => {
   const location = useLocation();
@@ -15,6 +16,8 @@ const Sidebar = () => {
   const [openCourseDropdown, setOpenCourseDropdown] = useState(false);
   const [topBanners, setTopBanners] = useState([]);
   const [courseBanners, setCourseBanners] = useState([]);
+
+  const [courses, setCourses] = useState(false);
 
   const { user, dispatch } = useContext(Context);
 
@@ -92,7 +95,43 @@ const Sidebar = () => {
           })}
         </div>
 
-        <p className="sidebar-desc">Banners</p>
+        <div className="sidebar-dropdown">
+          <div
+            className="sidebar-dropdown-link"
+            onClick={() => setCourses(!courses)}
+          >
+            <div className="sidebar-dropdown-link-left">
+              <IoMdBook className="sidebar-icon" />
+              <span>Courses</span>
+            </div>
+            <MdKeyboardArrowRight
+              className={`right-arrow ${courses ? "rotate" : ""}`}
+            />
+          </div>
+
+          <AnimatePresence>
+            {courses && (
+              <motion.div
+                className="dropdown-links"
+                initial="hidden"
+                animate="visible"
+                exit="hidden"
+              >
+                {coursesLink.map((item, index) => (
+                  <motion.div
+                    key={index}
+                    variants={dropdownVariants}
+                    custom={index}
+                  >
+                    <Link to={`/${item.link}`} className="dropdown-link">
+                      {item.title}
+                    </Link>
+                  </motion.div>
+                ))}
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
 
         {/* Top Banners */}
         <div className="sidebar-dropdown">
@@ -118,48 +157,6 @@ const Sidebar = () => {
                 exit="hidden"
               >
                 {topBanners.map((item, index) => (
-                  <motion.div
-                    key={item.id}
-                    variants={dropdownVariants}
-                    custom={index}
-                  >
-                    <Link
-                      to={`banner/${item.type}/${item.id}`}
-                      className="dropdown-link"
-                    >
-                      {item.type.replace(/-/g, " ").toUpperCase()}
-                    </Link>
-                  </motion.div>
-                ))}
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
-
-        {/* Course Banners */}
-        <div className="sidebar-dropdown">
-          <div
-            className="sidebar-dropdown-link"
-            onClick={() => setOpenCourseDropdown(!openCourseDropdown)}
-          >
-            <div className="sidebar-dropdown-link-left">
-              <MdOutlineViewComfy className="sidebar-icon" />
-              <span>Courses Banner</span>
-            </div>
-            <MdKeyboardArrowRight
-              className={`right-arrow ${openCourseDropdown ? "rotate" : ""}`}
-            />
-          </div>
-
-          <AnimatePresence>
-            {openCourseDropdown && (
-              <motion.div
-                className="dropdown-links"
-                initial="hidden"
-                animate="visible"
-                exit="hidden"
-              >
-                {courseBanners.map((item, index) => (
                   <motion.div
                     key={item.id}
                     variants={dropdownVariants}

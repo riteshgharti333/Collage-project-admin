@@ -57,6 +57,22 @@ export const sidebarItems = [
   },
 ];
 
+
+/////////////////////
+export const coursesLink = [
+  {
+    title  : "Main Courses",
+    link : "courses/main-courses"
+  },
+  {
+    title  : "UG Courses",
+    link : "courses/ug-courses"
+  }, {
+    title  : "PG Courses",
+    link : "courses/pg-courses"
+  },
+]
+
 //////////////
 export const Staffdata = [
   {

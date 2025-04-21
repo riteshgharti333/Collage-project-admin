@@ -1,0 +1,198 @@
+$primary-color: #2c3e50;
+$secondary-color: #f1c40f;
+$light-gray: #f8f9fa;
+$border-color: #e0e0e0;
+$text-color: #333;
+$error-color: #e74c3c;
+
+.updateCourse {
+  .updateCourse-top {
+    position: relative;
+    text-align: center;
+  }
+  .updateCourse-container {
+    margin-top: 20px;
+    .updateCourse-banner {
+      background: #fff;
+      height: 400px;
+      position: relative;
+
+      img {
+        width: 100%;
+        height: 100%;
+        display: block;
+        object-fit: cover;
+      }
+
+      .updateCourse-banner-desc {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .add-image-icon {
+          font-size: 100px;
+        }
+
+        p {
+          font-size: 20px;
+          font-weight: 500;
+          margin-top: 10px;
+        }
+      }
+    }
+
+    .updateCourse-banner-btn {
+      display: flex;
+      justify-content: center;
+      margin-top: 15px;
+      button {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+    }
+
+    .updateCourse-title {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+      gap: 20px;
+      label {
+        color: #fff;
+        font-size: 18px;
+      }
+      input {
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid #fff;
+        font-size: 18px;
+        color: #fff;
+        outline: none;
+      }
+    }
+  }
+
+  .course-info {
+    margin-top: 20px;
+
+    h1 {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .course-form {
+      margin: 0 auto;
+      padding: 2rem;
+      background: linear-gradient(145deg, #1c1c1e, #2a2a2c);
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      font-family: "Segoe UI", Helvetica, sans-serif;
+
+      .form-group {
+        margin-bottom: 1.5rem;
+
+        label {
+          display: block;
+          margin-bottom: 0.5rem;
+          font-weight: 600;
+          color: $primary-color;
+        }
+
+        select {
+          width: 100%;
+          padding: 0.75rem;
+          border: 1px solid $border-color;
+          border-radius: 4px;
+          font-size: 1rem;
+          transition: border 0.3s;
+          outline: none;
+        }
+
+        input[type="text"],
+        textarea {
+          width: 100%;
+          padding: 0.75rem;
+          border: 1px solid $border-color;
+          border-radius: 4px;
+          font-size: 1rem;
+          transition: border 0.3s;
+
+          &:focus {
+            outline: none;
+            border-color: $secondary-color;
+            box-shadow: 0 0 0 2px rgba($secondary-color, 0.2);
+          }
+        }
+
+        textarea {
+          min-height: 100px;
+          resize: vertical;
+        }
+      }
+
+      .highlight-fields {
+        .highlight-item {
+          background: $light-gray;
+          padding: 1rem;
+          border-radius: 4px;
+          margin-bottom: 1rem;
+
+          .bin-icon {
+            color: #e74c3c;
+            font-size: 20px;
+            margin-top: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+
+            &:hover {
+              scale: 1.2;
+            }
+          }
+
+          input,
+          textarea {
+            background: white;
+          }
+
+          textarea {
+            min-height: 80px;
+            margin-top: 0.5rem;
+          }
+        }
+      }
+
+      .add-highlight {
+        background: none;
+        border: 1px dashed $border-color;
+        color: $primary-color;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: all 0.3s;
+
+        &:hover {
+          background: $light-gray;
+          border-color: $primary-color;
+        }
+      }
+
+      .submit-btn {
+        background: $primary-color;
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background 0.3s;
+
+        &:hover {
+          background: darken($primary-color, 10%);
+        }
+      }
+    }
+  }
+}

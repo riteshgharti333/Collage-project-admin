@@ -34,6 +34,12 @@ import Profile from "./pages/Profile/Profile";
 import UpdatePassword from "./pages/UpdatePassword/UpdatePassword";
 import { useContext } from "react";
 import { Context } from "./context/Context";
+import Course1 from "./pages/Courses/Course1";
+import NewCourse from "./pages/NewCourse/NewCourse";
+import SingleCourse from "./pages/SingleCourse/SingleCourse";
+import Course2 from "./pages/Courses/Course2";
+import Course3 from "./pages/Courses/Course3";
+import UpdateCourse from "./pages/UpdateCourse/UpdateCourse";
 
 function App() {
   const { user } = useContext(Context);
@@ -74,6 +80,18 @@ function App() {
             {/* banner */}
             <Route path="/banner/:bannerType/:id" element={<Banner />} />
 
+            {/* courses */}
+            <Route path="/courses/main-courses" element={<Course1 />} />
+            <Route path="/courses/ug-courses" element={<Course2 />} />
+            <Route path="/courses/pg-courses" element={<Course3 />} />
+
+            <Route path="/courses/new-course" element={<NewCourse />} />
+            <Route path="/course/:id/:course-name" element={<SingleCourse />} />
+            <Route
+              path="/course/update-course/:id/:course-name"
+              element={<UpdateCourse />}
+            />
+
             {/* new */}
             <Route path="/new-gallery" element={<NewGallery />} />
             <Route path="/new-staff-member" element={<NewStaff />} />
@@ -93,7 +111,7 @@ function App() {
               element={<UpdateGalleryFolder />}
             />
 
-            <Route path="*" element={<Navigate to="/" />} />
+            {/* <Route path="*" element={<Navigate to="/" />} /> */}
           </Route>
         </Routes>
       </BrowserRouter>
