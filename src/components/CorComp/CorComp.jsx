@@ -9,7 +9,7 @@ const CorComp = ({ courses }) => {
     <div className="course-comp">
       <div className="course-cards">
         {courses.map((item, index) => (
-          <Link to={`/course/${item._id}/${item.courseTitle}`} className="course-card" key={index}>
+          <Link to={`/course/${item._id}/${item.bannerTitle}`} className="course-card" key={index}>
             <img src={course_img} alt="" />
             <h3>{item.courseTitle}</h3>
           </Link>

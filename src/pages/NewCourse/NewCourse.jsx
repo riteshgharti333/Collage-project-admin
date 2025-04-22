@@ -21,8 +21,26 @@ const NewCourse = () => {
   const [courseType, setCourseType] = useState("UG Course");
   const [courseTitle, setCourseTitle] = useState("");
   const [courseDescription, setCourseDescription] = useState("");
+
+  const [courseOfCoursesTitle, setCourseOfCoursesTitle] = useState("");
+
+  const [topicTitle, setTopicTitle] = useState("");
+
+  const [careerTitle, setCareerTitle] = useState("");
+
+  const [overviewTitle, setOverviewTitle] = useState("");
+
+  const [overviewDesc, setOverviewDesc] = useState("");
+
   const [courseListTitle, setCourseListTitle] = useState("");
   const [courseListDesc, setCourseListDesc] = useState("");
+
+  const [courseOfCoursesItems, setCourseOfCoursesItems] = useState([
+    { item: "" },
+  ]);
+  const [topicItems, setTopicItems] = useState([{ item: "" }]);
+  const [careerItems, setCareerItems] = useState([{ item: "" }]);
+
   const [highlights, setHighlights] = useState([
     { title: "", description: "" },
   ]);
@@ -31,20 +49,71 @@ const NewCourse = () => {
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
+    const maxSize = 2 * 1024 * 1024; 
+  
     if (file) {
+      if (file.size > maxSize) {
+        toast.error("Image must be less than 2MB!");
+        return;
+      }
+  
       setSelectedFile(file);
       const imageUrl = URL.createObjectURL(file);
       setBannerImage(imageUrl);
     }
   };
 
+  
   const openFilePicker = () => {
     fileInputRef.current.click();
   };
 
-
   const deleteHighlight = (indexToRemove) => {
     setHighlights((prev) => prev.filter((_, i) => i !== indexToRemove));
+  };
+
+  const deleteCourseOfCoursesItem = (indexToRemove) => {
+    setCourseOfCoursesItems((prev) =>
+      prev.filter((_, i) => i !== indexToRemove)
+    );
+  };
+
+  const deleteTopicItem = (indexToRemove) => {
+    setTopicItems((prev) => prev.filter((_, i) => i !== indexToRemove));
+  };
+
+  const deleteCareerItem = (indexToRemove) => {
+    setCareerItems((prev) => prev.filter((_, i) => i !== indexToRemove));
+  };
+
+  const handleCourseOfCoursesChange = (index, value) => {
+    const updated = [...courseOfCoursesItems];
+    updated[index].item = value;
+    setCourseOfCoursesItems(updated);
+  };
+
+  const handleTopicChange = (index, value) => {
+    const updated = [...topicItems];
+    updated[index].item = value;
+    setTopicItems(updated);
+  };
+
+  const handleCareerChange = (index, value) => {
+    const updated = [...careerItems];
+    updated[index].item = value;
+    setCareerItems(updated);
+  };
+
+  const addCourseOfCoursesItem = () => {
+    setCourseOfCoursesItems([...courseOfCoursesItems, { item: "" }]);
+  };
+
+  const addTopicItem = () => {
+    setTopicItems([...topicItems, { item: "" }]);
+  };
+
+  const addCareerItem = () => {
+    setCareerItems([...careerItems, { item: "" }]);
   };
 
   const handleHighlightChange = (index, field, value) => {
@@ -63,7 +132,7 @@ const NewCourse = () => {
 
     const sanitizedHighlights = highlights.map((h) => ({
       title: h.title,
-      desc: h.description, // match backend schema
+      desc: h.description,
     }));
 
     const formData = new FormData();
@@ -72,6 +141,22 @@ const NewCourse = () => {
     formData.append("courseType", courseType);
     formData.append("courseTitle", courseTitle);
     formData.append("courseDescription", courseDescription);
+
+    formData.append("courseOfCoursesTitle", courseOfCoursesTitle);
+    formData.append(
+      "courseOfCoursesLists",
+      JSON.stringify(courseOfCoursesItems)
+    );
+
+    formData.append("topicTitle", topicTitle);
+    formData.append("topicLists", JSON.stringify(topicItems));
+
+    formData.append("careerTitle", careerTitle);
+    formData.append("careerLists", JSON.stringify(careerItems));
+
+    formData.append("overviewTitle", overviewTitle);
+    formData.append("overviewDesc", overviewDesc);
+
     formData.append("courseListTitle", courseListTitle);
     formData.append("courseListDesc", courseListDesc);
     formData.append("courseLists", JSON.stringify(sanitizedHighlights));
@@ -81,7 +166,6 @@ const NewCourse = () => {
         `${baseUrl}/course/new-course`,
         formData
       );
-      console.log(data);
       if (data) {
         toast.success(data.message);
         navigate(`/course/${data.course._id}/${data.course.bannerTitle}`);
@@ -157,7 +241,6 @@ const NewCourse = () => {
             <select
               value={courseType}
               onChange={(e) => setCourseType(e.target.value)}
-              required
             >
               <option value="Main Course">Main Course</option>
               <option value="UG Course">UG Course</option>
@@ -172,7 +255,6 @@ const NewCourse = () => {
               placeholder="e.g. B.Com (Bachelor of Commerce)"
               value={courseTitle}
               onChange={(e) => setCourseTitle(e.target.value)}
-              required
             />
           </div>
 
@@ -184,30 +266,137 @@ const NewCourse = () => {
               placeholder="description..."
               value={courseDescription}
               onChange={(e) => setCourseDescription(e.target.value)}
-              required
             ></textarea>
           </div>
+          {/* /////////////////////////////////////////////// */}
 
+          {/* Courses Section */}
           <div className="form-group">
-            <label>Program Points Title</label>
+            <label>Courses</label>
+            <input
+              type="text"
+              placeholder="course"
+              value={courseOfCoursesTitle}
+              onChange={(e) => setCourseOfCoursesTitle(e.target.value)}
+            />
+
+            <div className="highlight-fields" style={{ marginTop: "10px" }}>
+              {courseOfCoursesItems.map((item, index) => (
+                <div className="highlight-item" key={index}>
+                  <input
+                    type="text"
+                    placeholder="Courses"
+                    value={item.item}
+                    onChange={(e) =>
+                      handleCourseOfCoursesChange(index, e.target.value)
+                    }
+                  />
+                  <IoTrashBin
+                    className="bin-icon"
+                    onClick={() => deleteCourseOfCoursesItem(index)}
+                  />
+                </div>
+              ))}
+            </div>
+
+            <button
+              type="button"
+              className="add-highlight"
+              onClick={addCourseOfCoursesItem}
+            >
+              + Add Another Course
+            </button>
+          </div>
+
+          {/* Key Topics Section */}
+          <div className="form-group">
+            <label>Key Topics</label>
+            <input
+              type="text"
+              placeholder="Key Topic"
+              value={topicTitle}
+              onChange={(e) => setTopicTitle(e.target.value)}
+            />
+
+            <div className="highlight-fields" style={{ marginTop: "10px" }}>
+              {topicItems.map((item, index) => (
+                <div className="highlight-item" key={index}>
+                  <input
+                    type="text"
+                    placeholder="Key Topic Items"
+                    value={item.item}
+                    onChange={(e) => handleTopicChange(index, e.target.value)}
+                  />
+                  <IoTrashBin
+                    className="bin-icon"
+                    onClick={() => deleteTopicItem(index)}
+                  />
+                </div>
+              ))}
+            </div>
+
+            <button
+              type="button"
+              className="add-highlight"
+              onClick={addTopicItem}
+            >
+              + Add Another Key Topic
+            </button>
+          </div>
+
+          {/* Career Opportunities Section */}
+          <div className="form-group">
+            <label>Career Opportunities</label>
+            <input
+              type="text"
+              placeholder="Career Opportunities"
+              value={careerTitle}
+              onChange={(e) => setCareerTitle(e.target.value)}
+            />
+
+            <div className="highlight-fields" style={{ marginTop: "10px" }}>
+              {careerItems.map((item, index) => (
+                <div className="highlight-item" key={index}>
+                  <input
+                    type="text"
+                    placeholder="Career Opportunities Item"
+                    value={item.item}
+                    onChange={(e) => handleCareerChange(index, e.target.value)}
+                  />
+                  <IoTrashBin
+                    className="bin-icon"
+                    onClick={() => deleteCareerItem(index)}
+                  />
+                </div>
+              ))}
+            </div>
+
+            <button
+              type="button"
+              className="add-highlight"
+              onClick={addCareerItem}
+            >
+              + Add Another Career Opportunities
+            </button>
+          </div>
+
+          {/* ////////////////////////// */}
+          <div className="form-group">
+            <label>Course List Title</label>
             <input
               type="text"
               placeholder="e.g. Key Highlights"
               value={courseListTitle}
               onChange={(e) => setCourseListTitle(e.target.value)}
-              required
             />
 
-            <label style={{ marginTop: "20px" }}>
-              Program Points Description
-            </label>
+            <label style={{ marginTop: "20px" }}>Course List Description</label>
             <textarea
               rows="4"
               style={{ height: "100px" }}
               placeholder="description..."
               value={courseListDesc}
               onChange={(e) => setCourseListDesc(e.target.value)}
-              required
             ></textarea>
 
             <div className="highlight-fields">
@@ -232,7 +421,10 @@ const NewCourse = () => {
                       )
                     }
                   ></textarea>
-                   <IoTrashBin className="bin-icon"   onClick={() => deleteHighlight(index)}/>
+                  <IoTrashBin
+                    className="bin-icon"
+                    onClick={() => deleteHighlight(index)}
+                  />
                 </div>
               ))}
             </div>
@@ -246,8 +438,31 @@ const NewCourse = () => {
             </button>
           </div>
 
+          {/* ////////////////////////////////////////////// */}
+
+          <div className="form-group">
+            <label>Overview Title</label>
+            <input
+              type="text"
+              placeholder="Overview Title"
+              value={overviewTitle}
+              onChange={(e) => setOverviewTitle(e.target.value)}
+            />
+          </div>
+
+          <div className="form-group">
+            <label>Overview Description</label>
+            <textarea
+              rows="4"
+              style={{ height: "300px" }}
+              placeholder="Overview Description"
+              value={overviewDesc}
+              onChange={(e) => setOverviewDesc(e.target.value)}
+            ></textarea>
+          </div>
+
           <button type="submit" className="submit-btn" disabled={loading}>
-            {loading ? "Saving..." : "Save Course"}
+            {loading ? "Adding..." : "Add Course"}
           </button>
         </form>
       </div>

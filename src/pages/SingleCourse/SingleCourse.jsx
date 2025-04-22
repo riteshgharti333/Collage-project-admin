@@ -1,5 +1,7 @@
-import { useEffect, useRef, useState } from "react";
 import "./SingleCourse.scss";
+
+import { useEffect, useRef, useState } from "react";
+
 
 import { MdKeyboardBackspace } from "react-icons/md";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -41,6 +43,7 @@ const SingleCourse = () => {
     try {
       setLoading(true);
       const { data } = await axios.delete(`${baseUrl}/course/${id}`);
+
       if (data) {
         toast.success(data?.message || "Course deleted successfully");
         navigate(-1);
@@ -75,12 +78,20 @@ const SingleCourse = () => {
     courseLists,
     courseTitle,
     courseType,
+    courseOfCoursesTitle,
+    courseOfCoursesLists,
+    topicTitle,
+    topicLists,
+    careerTitle,
+    careerLists,
+    overviewTitle,
+    overviewDesc,
   } = course;
 
   const DeleteCourse = ({ id, onClose }) => (
     <div className="deleteImage">
       <div className="deleteImage-desc" ref={cardRef}>
-        <h3>Delete this image?</h3>
+        <h3>Delete this course?</h3>
         <div className="deleteImage-btns">
           <button
             className="delete-btn"
@@ -107,11 +118,12 @@ const SingleCourse = () => {
         </Link>
         <div className="singleCourse-btns">
           <Link
-            to={`/course/update-course/${course._id}/${courseTitle}`}
+            to={`/course/update-course/${course._id}/${course.bannerTitle || ""}`}
             className="success-btn"
           >
             Update Course
           </Link>
+
           <button
             className="delete-btn"
             onClick={() => {
@@ -140,20 +152,56 @@ const SingleCourse = () => {
       <div className="singleCourse-content">
         <div className="singleCourse-content-left">
           <h2>{courseTitle}</h2>
-          <p style={{ whiteSpace: 'pre-line' }}>{courseDescription}</p>
+          <p style={{ whiteSpace: "pre-line" }}>{courseDescription}</p>
+
+
+          <h3>{courseOfCoursesTitle}</h3>
+
+          {courseOfCoursesLists?.some((item) => item.item?.trim() !== "") && (
+            <ul>
+              {courseOfCoursesLists
+                .filter((item) => item.item?.trim() !== "")
+                .map((item, index) => (
+                  <li key={index}>{item.item}</li>
+                ))}
+            </ul>
+          )}
+
+          <h3>{topicTitle}</h3>
+          {topicLists?.some((item) => item.item?.trim() !== "") && (
+            <ul>
+              {topicLists?.map((item, index) => (
+                <li key={index}>{item.item}</li>
+              ))}
+            </ul>
+          )}
+
+          <h3>{careerTitle}</h3>
+          {careerLists?.some((item) => item.item?.trim() !== "") && (
+            <ul>
+              {careerLists?.map((item, index) => (
+                <li key={index}>{item.item}</li>
+              ))}
+            </ul>
+          )}
 
           <h3>{courseListTitle}</h3>
           <p>{courseListDesc}</p>
 
-          <ul>
-            {courseLists?.map((item, index) => (
-              <li key={index}>
-                <span>{item.title}</span>
-                <br />
-                {item.desc}
-              </li>
-            ))}
-          </ul>
+          {courseLists?.some((item) => item.title?.trim() !== "") && (
+            <ul>
+              {courseLists?.map((item, index) => (
+                <li key={index}>
+                  <span>{item.title}</span>
+                  <br />
+                  {item.desc}
+                </li>
+              ))}
+            </ul>
+          )}
+
+          <h3>{overviewTitle}</h3>
+          <p style={{ whiteSpace: "pre-line" }}>{overviewDesc}</p>
         </div>
       </div>
 
