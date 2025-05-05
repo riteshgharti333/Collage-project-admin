@@ -1,5 +1,6 @@
-import { useEffect, useRef, useState } from "react";
 import "./Member.scss";
+
+import { useEffect, useRef, useState } from "react";
 import { MdDeleteOutline } from "react-icons/md";
 import axios from "axios";
 import { baseUrl } from "../../main";

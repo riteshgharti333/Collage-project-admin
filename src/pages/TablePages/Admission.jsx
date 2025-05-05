@@ -1,6 +1,7 @@
 import Table from "../../components/Table/Table";
 import "./TablePage.scss";
 import { useEffect, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 
 import axios from "axios";
 import { baseUrl } from "../../main";
@@ -25,7 +26,7 @@ const Admission = () => {
       },
       {
         accessorKey: "profile",
-        header: "Profile",
+        header: "Qualification ",
         cell: (info) => info.getValue(),
       },
       {
@@ -48,12 +49,15 @@ const Admission = () => {
         },
       },
     ],
-    [],
+    []
   );
 
   return (
-    <div className="staff">
-      <h1>Admissions</h1>
+    <div className="admission">
+      <div className="admission-top">
+        <h1>Admissions</h1>
+        <Link to={"/new-admission"} className="success-btn">Add new admission</Link>
+      </div>
       <Table data={admissionData} columns={columns} path="admission" />
     </div>
   );

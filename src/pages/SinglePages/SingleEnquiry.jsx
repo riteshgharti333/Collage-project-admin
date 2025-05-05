@@ -52,7 +52,7 @@ const SingleEnquiry = () => {
     { label: "Name", value: name },
     { label: "Email", value: email },
     { label: "Phone Number", value: phoneNumber },
-    { label: "Profile", value: profile },
+    { label: "Qualification", value: profile },
     { label: "Course", value: selectCourse },
     { label: "State", value: selectState },
     { label: "District", value: district },

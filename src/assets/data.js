@@ -9,32 +9,32 @@ import { PiStudentBold } from "react-icons/pi";
 import { LiaUniversitySolid } from "react-icons/lia";
 
 export const sidebarItems = [
-  {
-    icon: MdOutlineDashboardCustomize,
-    title: "Dashboard",
-    link: "dashboard",
-  },
-  {
-    icon: PiStudentBold,
-    title: "Student",
-    link: "student",
-  },
+  // {
+  //   icon: MdOutlineDashboardCustomize,
+  //   title: "Dashboard",
+  //   link: "dashboard",
+  // },
+  // {
+  //   icon: PiStudentBold,
+  //   title: "Student",
+  //   link: "student",
+  // },
 
-  {
-    icon: FaRegAddressCard,
-    title: "Admission",
-    link: "admission",
-  },
-  {
-    icon: LuMailQuestion,
-    title: "Enquiry",
-    link: "enquiry",
-  },
-  {
-    icon: MdOutlineQuestionAnswer,
-    title: "Contact",
-    link: "contact",
-  },
+  // {
+  //   icon: FaRegAddressCard,
+  //   title: "Admission",
+  //   link: "admission",
+  // },
+  // {
+  //   icon: LuMailQuestion,
+  //   title: "Enquiry",
+  //   link: "enquiry",
+  // },
+  // {
+  //   icon: MdOutlineQuestionAnswer,
+  //   title: "Contact",
+  //   link: "contact",
+  // },
   {
     icon: LuGalleryHorizontalEnd,
     title: "Gallery Folder",
@@ -57,21 +57,21 @@ export const sidebarItems = [
   },
 ];
 
-
 /////////////////////
 export const coursesLink = [
   {
-    title  : "Main Courses",
-    link : "courses/main-courses"
+    title: "Main Courses",
+    link: "courses/main-courses",
   },
   {
-    title  : "UG Courses",
-    link : "courses/ug-courses"
-  }, {
-    title  : "PG Courses",
-    link : "courses/pg-courses"
+    title: "UG Courses",
+    link: "courses/ug-courses",
   },
-]
+  {
+    title: "PG Courses",
+    link: "courses/pg-courses",
+  },
+];
 
 //////////////
 export const Staffdata = [
@@ -531,3 +531,56 @@ export const bannerData = {
     title: "M.B.A Banner",
   },
 };
+
+
+export const formCourse = [
+  {
+    name: "Fashion Design",
+  },
+  {
+    name: "Interior Design",
+  },
+  {
+    name: "Architecture Design",
+  },
+  {
+    name: "Graphic Design",
+  },
+  {
+    name: "Web Design & Development",
+  },
+  {
+    name: "B.A",
+  },
+  {
+    name: "B.Com",
+  },
+  {
+    name: "B.Sc",
+  },
+  {
+    name: "B.B.A",
+  },
+  {
+    name: "B.Lib",
+  },
+  {
+    name: "M.A",
+  },
+  {
+    name: "M.Com",
+  },
+  {
+    name: "M.Sc",
+  },
+  {
+    name: "M.B.A",
+  },
+  {
+    name: "M.Lib",
+  },
+  {
+    name: "Digital Marketing",
+  },
+];
+

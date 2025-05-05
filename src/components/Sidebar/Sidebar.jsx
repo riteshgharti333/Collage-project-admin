@@ -10,12 +10,19 @@ import { baseUrl } from "../../main";
 import { Context } from "../../context/Context";
 import { IoMdBook } from "react-icons/io";
 
+import { PiStudentBold } from "react-icons/pi";
+import { studentData } from "../../assets/studentData";
+
+import { MdOutlineDashboardCustomize } from "react-icons/md";
+
 const Sidebar = () => {
   const location = useLocation();
   const [openDropdown, setOpenDropdown] = useState(false);
   const [openCourseDropdown, setOpenCourseDropdown] = useState(false);
   const [topBanners, setTopBanners] = useState([]);
   const [courseBanners, setCourseBanners] = useState([]);
+
+  const [openStudent, setOpenStudent] = useState(false);
 
   const [courses, setCourses] = useState(false);
 
@@ -46,13 +53,10 @@ const Sidebar = () => {
               banner.type.includes("staff") ||
               banner.type.includes("enquiry") ||
               banner.type.includes("placement") ||
-              banner.type.includes("admission") ||
               banner.type.includes("gallery") ||
               banner.type.includes("contact") ||
               banner.type.includes("mentor") ||
-              banner.type.includes("alumni") ||
-              banner.type.includes("ug") ||
-              banner.type.includes("pg")
+              banner.type.includes("alumni")
             ) {
               top.push(banner);
             } else {
@@ -77,6 +81,58 @@ const Sidebar = () => {
         <div className="sidebar-logo">
           <img src={logo} alt="Logo" />
         </div>
+
+        <div className="sidebar-dropdown ">
+          <div className="sidebar-items dash-top">
+            <Link
+              to={"/"}
+              className={`sidebar-item ${
+                location.pathname.startsWith(`/`) ? "active" : ""
+              }`}
+            >
+              <MdOutlineDashboardCustomize className="sidebar-icon" />
+              <span>Dashboard</span>
+            </Link>
+          </div>
+
+          <div
+            className="sidebar-dropdown-link"
+            onClick={() => setOpenStudent(!openStudent)}
+          >
+            <div className="sidebar-dropdown-link-left">
+              <PiStudentBold className="sidebar-icon" />
+              <span>Student</span>
+            </div>
+            <MdKeyboardArrowRight
+              className={`right-arrow ${courses ? "rotate" : ""}`}
+            />
+          </div>
+
+          <AnimatePresence>
+            {openStudent && (
+              <motion.div
+                className="dropdown-links"
+                initial="hidden"
+                animate="visible"
+                exit="hidden"
+              >
+                {studentData.map((item, index) => (
+                  <motion.div
+                    key={index}
+                    variants={dropdownVariants}
+                    custom={index}
+                  >
+                    <Link to={`/${item.link}`} className="dropdown-link">
+                      {item.title}
+                    </Link>
+                  </motion.div>
+                ))}
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+
+        <div className="sidebar-desc">Web Changes</div>
 
         <div className="sidebar-items">
           {sidebarItems.map((item, index) => {

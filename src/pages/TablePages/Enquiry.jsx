@@ -26,7 +26,7 @@ const Enquiry = () => {
       },
       {
         accessorKey: "profile",
-        header: "Profile",
+        header: "Qualification",
         cell: (info) => info.getValue(),
       },
       {

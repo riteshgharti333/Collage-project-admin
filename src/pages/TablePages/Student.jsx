@@ -49,13 +49,13 @@ const Student = () => {
         },
       },
     ],
-    [],
+    []
   );
 
   return (
     <div className="student">
       <div className="student-top">
-        <h1>Students</h1>
+        <h1>Certificate</h1>
         <Link to={"/new-student"} className="success-btn">
           Add New Certificate
         </Link>

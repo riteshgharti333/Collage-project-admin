@@ -40,6 +40,7 @@ import SingleCourse from "./pages/SingleCourse/SingleCourse";
 import Course2 from "./pages/Courses/Course2";
 import Course3 from "./pages/Courses/Course3";
 import UpdateCourse from "./pages/UpdateCourse/UpdateCourse";
+import AdmissionForm from "./pages/AdmissionForm/AdmissionForm";
 
 function App() {
   const { user } = useContext(Context);
@@ -65,7 +66,7 @@ function App() {
             <Route path="/enquiry" element={<Enquiry />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/gallery-folder" element={<GalleryFolder />} />
-            <Route path="/student" element={<Student />} />
+            <Route path="/certificate" element={<Student />} />
             <Route path="/alumni" element={<Alumini />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/update-password" element={<UpdatePassword />} />
@@ -99,6 +100,8 @@ function App() {
             <Route path="/new-gallery-folder" element={<NewGalleryFolder />} />
             <Route path="/new-alumni" element={<NewAlumni />} />
             <Route path="/new-student" element={<NewStudent />} />
+            <Route path="/new-admission" element={<AdmissionForm />} />
+
 
             {/* update */}
             <Route path="/mentor/:id" element={<UpdateFounding />} />

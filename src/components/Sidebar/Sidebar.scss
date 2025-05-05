@@ -8,6 +8,7 @@
     margin-top: 20px;
     margin-left: 20px;
     color: #fff;
+    margin-bottom: 15px;
   }
   .sidebar-top {
     .sidebar-logo {
@@ -25,8 +26,11 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 50px 0px 0px 0px;
       gap: 8px;
+
+      &.dash-top{
+        margin-top: 50px;
+      }
 
       .sidebar-item {
         color: #fff;

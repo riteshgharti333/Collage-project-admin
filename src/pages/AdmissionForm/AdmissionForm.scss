@@ -1,0 +1,131 @@
+@use "../../styles/responsive.scss" as *;
+
+$background-color: #f9f9f9;
+$border-color: #ddd;
+$box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+$transition-speed: 0.3s;
+
+.admissionForm {
+  .admissionForm-top {
+    text-align: center;
+    position: relative;
+
+    .back-icon {
+      position: absolute;
+      left: 0;
+       top: 10%;
+    }
+  }
+  .admission-wrapper {
+    background: #fff;
+    padding: 20px 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+    margin: 30px auto;
+    border: 1px solid $primary-color;
+
+    @include md {
+      width: 95%;
+      padding: 20px;
+    }
+
+    @include sm {
+      padding: 20px 10px;
+    }
+
+    h3 {
+      font-size: 27px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: #666;
+      margin-bottom: 30px;
+    }
+
+    form {
+      width: 100%;
+      border-radius: 5px;
+      transition:
+        transform $transition-speed ease,
+        box-shadow $transition-speed ease;
+      margin: auto;
+
+      .form-group {
+        position: relative;
+        margin-bottom: 30px;
+
+        select {
+          width: 100%;
+          padding: 10px 0px;
+          color: $secondary-color;
+          font-size: 16px;
+          line-height: 1.2;
+          // appearance: none;
+          background: #fff;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          cursor: pointer;
+          outline: none;
+        }
+
+        input,
+        textarea {
+          font-size: 20px;
+          width: 100%;
+          border: none;
+          border-bottom: 2px solid #ccc;
+          padding: 5px 0;
+          background-color: transparent;
+          outline: none;
+
+          &:focus ~ label,
+          &:valid ~ label {
+            top: -20px;
+            font-size: 16px;
+            color: $primary-color;
+          }
+
+          &:focus ~ .underline,
+          &:valid ~ .underline {
+            transform: scaleX(1);
+          }
+        }
+
+        textarea {
+          &:focus ~ .underline,
+          &:valid ~ .underline {
+            transform: scaleX(0);
+          }
+        }
+
+        label {
+          position: absolute;
+          top: 0;
+          left: 0;
+          color: $secondary-color;
+          transition: all 0.3s ease;
+          pointer-events: none;
+        }
+
+        .underline {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          height: 2px;
+          width: 100%;
+          background-color: $primary-color;
+          transform: scaleX(0);
+          transition: all 0.3s ease;
+        }
+      }
+
+      button {
+        width: 100%;
+      }
+    }
+  }
+}

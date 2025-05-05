@@ -1,5 +1,6 @@
-import { useContext } from "react";
 import "./Navbar.scss";
+
+import { useContext } from "react";
 import { FaRegUser } from "react-icons/fa6";
 
 import { Context } from "../../context/Context";
