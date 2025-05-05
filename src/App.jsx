@@ -47,7 +47,7 @@ function App() {
 
   return (
     <div className="app">
-      <BrowserRouter >
+      <BrowserRouter basename="/admin/">
         <Toaster position="top-center" richColors />
         <Routes>
           <Route
