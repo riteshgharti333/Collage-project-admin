@@ -10,7 +10,7 @@ import { LiaUniversitySolid } from "react-icons/lia";
 
 export const sidebarItems = [
   // {
-  //   icon: MdOutlineDashboardCustomize,
+  //   icon: MdOutlineDashboardCustomize
   //   title: "Dashboard",
   //   link: "dashboard",
   // },
