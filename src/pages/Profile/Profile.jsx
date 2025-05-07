@@ -1,14 +1,35 @@
 import "./Profile.scss";
 import { Context } from "../../context/Context";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 import { Link, useNavigate } from "react-router-dom";
 import { MdKeyboardBackspace } from "react-icons/md";
+
+import { useState } from "react";
+import { baseUrl } from "../../main";
 
 const Profile = () => {
   const { user } = useContext(Context);
 
   const navigate = useNavigate();
+  const [profile, setProfile] = useState(null);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const { data } = await axios.get(`${baseUrl}/auth/profile`, {
+          withCredentials: true,
+        });
+        setProfile(data.user);
+      } catch (error) {
+        console.error("Error fetching profile", error);
+      }
+    };
+
+    fetchProfile();
+  }, []);
+
+  const displayUser = profile || user?.user;
 
   return (
     <div className="profile">
@@ -24,11 +45,11 @@ const Profile = () => {
           <div className="right">
             <div className="right-item">
               <p>Name : </p>
-              <h3>{user?.user?.name}</h3>
+              <h3>{displayUser?.name}</h3>
             </div>
             <div className="right-item">
               <p>Email : </p>
-              <h3>{user?.user?.email}</h3>
+              <h3>{displayUser?.email}</h3>
             </div>
           </div>
           <div className="password-change">

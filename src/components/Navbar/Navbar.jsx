@@ -1,6 +1,6 @@
 import "./Navbar.scss";
 
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { FaRegUser } from "react-icons/fa6";
 
 import { Context } from "../../context/Context";
@@ -34,13 +34,32 @@ const Navbar = () => {
     }
   };
 
+  const [profile, setProfile] = useState(null);
+
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        const { data } = await axios.get(`${baseUrl}/auth/profile`, {
+          withCredentials: true,
+        });
+        setProfile(data?.user);
+      } catch (error) {
+        console.error("Error fetching profile", error);
+      }
+    };
+
+    fetchProfile();
+  }, []);
+
+  const displayUser = profile || user?.user;
+
   return (
     <div className="navbar">
       <div className="navbar-left">
         <Link to={"/profile"} className="user-link">
           <FaRegUser className="user-icon" />
           <div className="user">
-            <p>{user?.user?.name}</p>
+            <p>{displayUser?.name}</p>
           </div>
         </Link>
       </div>

@@ -1,3 +1,5 @@
+@use "../../styles/responsive.scss" as *;
+
 .single-page {
   .single-page-top {
     text-align: center;
@@ -6,10 +8,17 @@
     .back-icon {
       position: absolute;
       left: 0;
-       top: 10%;
+      top: 10%;
     }
   }
 
+  .document-item {
+    transition: all 0.3s ease;
+
+    &:hover {
+      color: $primary-color;
+    }
+  }
   .single-page-content {
     width: 100%;
     max-width: 700px;
@@ -19,6 +28,12 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin: auto;
     margin-top: 30px;
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
 
     .single-page-form-title {
       font-size: 24px;
@@ -42,6 +57,11 @@
         padding: 10px 15px;
         border-bottom: 1px solid #eee;
         transition: background-color 0.3s ease;
+
+        img {
+          width: 300px;
+          height: 300px;
+        }
 
         &:last-child {
           border-bottom: none;
@@ -80,6 +100,10 @@
       display: flex;
       align-items: center;
       gap: 10px;
+    }
+
+    .update-ad {
+      background: $primary-color;
     }
   }
 }

@@ -1,6 +1,5 @@
 import "./NewMember.scss";
 import { Link, useNavigate } from "react-router-dom";
-import { RiArrowLeftWideFill } from "react-icons/ri";
 import { FaPlus } from "react-icons/fa6";
 import { useRef, useState } from "react";
 import AddImg from "../../../assets/images/addImg.svg";
@@ -8,6 +7,7 @@ import axios from "axios";
 import { baseUrl } from "../../../main";
 import { toast } from "sonner";
 import { MdKeyboardBackspace } from "react-icons/md";
+import ImageCropModal from "../../../components/ImageCropModel/ImageCropModel"; // Import ImageCropModal
 
 const NewFounding = () => {
   const fileInputRef = useRef(null);
@@ -19,26 +19,42 @@ const NewFounding = () => {
   const [position, setPosition] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const [showCropModal, setShowCropModal] = useState(false); // State to control modal visibility
+  const [cropSrc, setCropSrc] = useState(null); // To store the image source for cropping
+
+  // Handle file selection
   const handleFileChange = (event) => {
-    const file = event.target.files[0];
+    const selectedFile = event.target.files[0];
 
-    if (file) {
-      const maxSize = 2 * 1024 * 1024;
+    if (selectedFile) {
+      const maxSize = 2 * 1024 * 1024; // 2MB
 
-      if (file.size > maxSize) {
+      if (selectedFile.size > maxSize) {
         toast.error("Image must be less than 2MB!");
         return;
       }
 
-      setSelectedImage(URL.createObjectURL(file));
-      setFile(file);
+      // Display the file in the modal for cropping
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setCropSrc(reader.result);
+        setShowCropModal(true); // Show the cropping modal
+      };
+      reader.readAsDataURL(selectedFile);
     }
   };
 
-  // ✅ Trigger file input
+  // Handle crop completion and store the cropped image
+  const handleCropDone = ({ blob, url }) => {
+    setSelectedImage(url); // Set cropped image preview
+    setFile(new File([blob], "cropped.jpg", { type: "image/jpeg" })); // Save the cropped image
+    setShowCropModal(false); // Close the modal
+  };
+
+  // Trigger file input when the button is clicked
   const handleButtonClick = () => fileInputRef.current.click();
 
-  // ✅ Handle form submission
+  // Handle form submission
   const handleSubmit = async () => {
     if (!name || !position || !file) {
       toast.error("All fields are required!");
@@ -66,7 +82,7 @@ const NewFounding = () => {
       navigate("/mentor");
     } catch (error) {
       console.error("Error creating staff:", error);
-      toast.error("Failed to add staff member.");
+      toast.error("Failed to add mentor.");
     } finally {
       setLoading(false);
     }
@@ -74,6 +90,15 @@ const NewFounding = () => {
 
   return (
     <div className="newMember">
+      {/* Display the crop modal if needed */}
+      {showCropModal && (
+        <ImageCropModal
+          src={cropSrc}
+          onClose={() => setShowCropModal(false)}
+          onCropDone={handleCropDone}
+        />
+      )}
+
       <div className="newMember-top">
         <Link onClick={() => navigate(-1)} className="back-icon">
           <MdKeyboardBackspace size={35} />
@@ -95,7 +120,7 @@ const NewFounding = () => {
               onClick={handleButtonClick}
               role="button"
               tabIndex={0}
-              aria-label="Upload Staff Image"
+              aria-label="Upload Mentor Image"
             >
               <img src={AddImg} alt="Add Staff" className="add-member-img" />
               <p>Add Mentor Image</p>
@@ -104,7 +129,7 @@ const NewFounding = () => {
 
           <div className="newMember-contents-card-desc">
             <div className="update-content">
-              <span>Name : </span>
+              <span>Name: </span>
               <input
                 type="text"
                 placeholder="Enter name..."
@@ -114,7 +139,7 @@ const NewFounding = () => {
             </div>
 
             <div className="update-content">
-              <span>Position : </span>
+              <span>Position: </span>
               <input
                 type="text"
                 placeholder="Enter position..."
@@ -123,6 +148,10 @@ const NewFounding = () => {
               />
             </div>
           </div>
+
+          <p className="rec-size" style={{ color: "#000", marginTop: "20px" }}>
+            Recommended size: 400 x 400
+          </p>
 
           <div className="member-btn">
             <button onClick={handleButtonClick} className="second-btn">
@@ -141,7 +170,7 @@ const NewFounding = () => {
               className="success-btn"
               onClick={handleSubmit}
             >
-              {loading ? "Adding mentor..." : "Add mentor"}
+              {loading ? "Adding mentor..." : "Add Mentor"}
             </button>
           </div>
         </div>

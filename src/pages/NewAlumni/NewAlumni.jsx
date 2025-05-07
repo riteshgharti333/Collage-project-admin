@@ -8,6 +8,7 @@ import axios from "axios";
 import { baseUrl } from "../../main";
 import { toast } from "sonner";
 import { MdKeyboardBackspace } from "react-icons/md";
+import ImageCropModal from "../../components/ImageCropModel/ImageCropModel";  // Import the image crop modal
 
 const NewAlumni = () => {
   const fileInputRef = useRef(null);
@@ -21,25 +22,39 @@ const NewAlumni = () => {
   const [location, setLocation] = useState("");
 
   const [loading, setLoading] = useState(false);
+  const [showCropModal, setShowCropModal] = useState(false);
+  const [cropSrc, setCropSrc] = useState(null);
 
+  // Handle image file input
   const handleFileChange = (event) => {
     const file = event.target.files[0];
+    if (!file) return;
 
-    if (file) {
-      const maxSize = 2 * 1024 * 1024;
-
-      if (file.size > maxSize) {
-        toast.error("Image must be less than 2MB!");
-        return;
-      }
-
-      setSelectedImage(URL.createObjectURL(file));
-      setFile(file);
+    const maxSize = 2 * 1024 * 1024; // Max size 2MB
+    if (file.size > maxSize) {
+      toast.error("Image must be less than 2MB!");
+      return;
     }
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setCropSrc(reader.result);
+      setShowCropModal(true);  // Show crop modal
+    };
+    reader.readAsDataURL(file);
   };
 
+  // Handle cropping action
+  const handleCropDone = ({ blob, url }) => {
+    setSelectedImage(url);  // Set the cropped image
+    setFile(new File([blob], "cropped.jpg", { type: "image/jpeg" }));
+    setShowCropModal(false);  // Close crop modal
+  };
+
+  // Handle image upload button click
   const handleButtonClick = () => fileInputRef.current.click();
 
+  // Handle form submission
   const handleSubmit = async () => {
     if (!name || !company || !designation || !location || !file) {
       toast.error("All fields are required!");
@@ -77,6 +92,14 @@ const NewAlumni = () => {
 
   return (
     <div className="newAlumni">
+      {showCropModal && (
+        <ImageCropModal
+          src={cropSrc}
+          onClose={() => setShowCropModal(false)}
+          onCropDone={handleCropDone}
+        />
+      )}
+
       <div className="newAlumni-top">
         <Link onClick={() => navigate(-1)} className="back-icon">
           <MdKeyboardBackspace size={35} />
@@ -89,7 +112,7 @@ const NewAlumni = () => {
           {selectedImage ? (
             <img
               src={selectedImage}
-              alt="Selected Staff alumni"
+              alt="Selected Alumni"
               className="alumni-img"
             />
           ) : (
@@ -98,9 +121,9 @@ const NewAlumni = () => {
               onClick={handleButtonClick}
               role="button"
               tabIndex={0}
-              aria-label="Upload Staff Image"
+              aria-label="Upload Alumni Image"
             >
-              <img src={AddImg} alt="Add Staff" className="add-alumni-img" />
+              <img src={AddImg} alt="Add Alumni" className="add-alumni-img" />
               <p>Add New Alumni Image</p>
             </div>
           )}
@@ -127,7 +150,7 @@ const NewAlumni = () => {
             </div>
 
             <div className="update-content">
-              <span>Comapany : </span>
+              <span>Company : </span>
               <input
                 type="text"
                 placeholder="Enter company name..."
@@ -146,6 +169,10 @@ const NewAlumni = () => {
               />
             </div>
           </div>
+
+          <p className="rec-size" style={{ color: "#000", marginTop: "20px" }}>
+            Recommended size: 400 x 400
+          </p>
 
           <div className="alumni-btn">
             <button onClick={handleButtonClick} className="second-btn">

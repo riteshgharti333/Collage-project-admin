@@ -27,11 +27,11 @@ const DeleteCard = ({ onClose, id, path, onDeleteSuccess }) => {
         navigate(-1);
         onClose();
       } else {
-        toast.error(data.message || `Failed to ${action}!`);
+        toast.error(data.message);
       }
     } catch (error) {
-      console.error(`Error during ${action}:`, error);
-      toast.error(`Failed to ${action}. Please try again.`);
+      console.error(`Error:`, error);
+      toast.error(`Failed to delete. Please try again.`);
     } finally {
       setLoading(false);
     }

@@ -69,6 +69,22 @@
         width: 600px;
         margin: 0 auto;
 
+        .folder-title {
+          color: #fff;
+          text-align: center;
+          margin-top: 10px;
+          font-weight: bold;
+        }
+        .foler-note{
+          color: #fff;
+          text-align: center;
+          margin-top: 10px;
+          font-size: 12px;
+          span{
+            color: red;
+          }
+        }
+
         .gallery-folder-input {
           display: flex;
           gap: 30px;
@@ -144,4 +160,5 @@
 //
 .title-top {
   margin-top: 20px;
+  color: #fff;
 }

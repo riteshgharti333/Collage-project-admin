@@ -4,7 +4,7 @@ import DeleteCard from "../../components/DeleteCard/DeleteCard";
 import { AiOutlineCheckCircle, AiOutlineCloseCircle } from "react-icons/ai";
 import axios from "axios";
 import { baseUrl } from "../../main";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, Links, useNavigate, useParams } from "react-router-dom";
 import { toast } from "sonner";
 import { MdKeyboardBackspace } from "react-icons/md";
 
@@ -48,7 +48,11 @@ const SingleAdmission = () => {
     city,
     approved,
     message,
+    photo,
+    document,
   } = singleData;
+
+  console.log(singleData);
 
   const admissionDetails = [
     { label: "Name", value: name },
@@ -60,7 +64,21 @@ const SingleAdmission = () => {
     { label: "District", value: district },
     { label: "City", value: city },
     { label: "Message", value: message },
-
+    { label: "Photo", value: <img src={photo} alt="Student" /> },
+    {
+      label: "Documents",
+      value: (
+        <ul>
+          {document?.map((docUrl, i) => (
+            <li key={i} className="document-item">
+              <a href={docUrl} target="_blank" rel="noopener noreferrer">
+                View Document {i + 1}
+              </a>
+            </li>
+          ))}
+        </ul>
+      ),
+    },
     {
       label: "Approved",
       value: approved ? "Approved" : "Not Approved",
@@ -152,6 +170,9 @@ const SingleAdmission = () => {
           {approved ? "Already Approved" : "Approve Form"}
         </button>
 
+        <Link to={`/update-admission/${_id}`} className="success-btn update-ad">
+          Update
+        </Link>
         <button
           className="delete-btn"
           onClick={() => setDeleteCard(!openDeleteCard)}
@@ -174,6 +195,7 @@ const SingleAdmission = () => {
               <button className="success-btn" onClick={handleApprove}>
                 {approving ? "Approving..." : "Yes"}
               </button>
+
               <button
                 className="delete-btn"
                 onClick={() => setApproveCard(false)}

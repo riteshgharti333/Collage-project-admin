@@ -1,14 +1,14 @@
-import "./AdmissionForm.scss";
+import "./UpdateAdmissionForm.scss";
 import { formCourse } from "../../assets/data";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import { baseUrl } from "../../main";
 import { toast } from "sonner";
 import { states } from "../../assets/state";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { MdKeyboardBackspace, MdCloudUpload, MdClose } from "react-icons/md";
 
-const AdmissionForm = () => {
+const UpdateAdmissionForm = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -20,11 +20,50 @@ const AdmissionForm = () => {
     city: "",
   });
 
+  const { id } = useParams();
   const [passportPhoto, setPassportPhoto] = useState(null);
+  const [existingPhoto, setExistingPhoto] = useState("");
   const [documents, setDocuments] = useState([]);
+  const [existingDocuments, setExistingDocuments] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [fetching, setFetching] = useState(true);
   const passportRef = useRef();
   const documentsRef = useRef();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchAdmissionDetails = async () => {
+      try {
+        setFetching(true);
+        const { data } = await axios.get(`${baseUrl}/admission/${id}`);
+        const admission = data?.admission;
+
+        if (admission) {
+          setFormData({
+            name: admission.name || "",
+            email: admission.email || "",
+            phoneNumber: admission.phoneNumber || "",
+            profile: admission.profile || "",
+            selectCourse: admission.selectCourse || "",
+            selectState: admission.selectState || "",
+            district: admission.district || "",
+            city: admission.city || "",
+          });
+
+          // Set existing photo and documents
+          setExistingPhoto(admission.photo?.url || "");
+          setExistingDocuments(admission.documents || []);
+        }
+      } catch (err) {
+        toast.error("Failed to load admission details.");
+        console.error(err);
+      } finally {
+        setFetching(false);
+      }
+    };
+
+    fetchAdmissionDetails();
+  }, [id]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -42,13 +81,14 @@ const AdmissionForm = () => {
         return;
       }
       setPassportPhoto(file);
+      setExistingPhoto(""); // Clear existing photo when new one is selected
     }
   };
 
   const handleDocuments = (e) => {
     const files = Array.from(e.target.files);
     if (files.length > 0) {
-      const validFiles = files.filter((file) => file.size <= 5 * 1024 * 1024); // 5MB limit
+      const validFiles = files.filter((file) => file.size <= 5 * 1024 * 1024);
 
       if (validFiles.length !== files.length) {
         toast.error("Some files were too large (max 5MB each)");
@@ -57,12 +97,6 @@ const AdmissionForm = () => {
       setDocuments((prev) => [...prev, ...validFiles]);
     }
   };
-
-  const removeDocument = (index) => {
-    setDocuments((prev) => prev.filter((_, i) => i !== index));
-  };
-
-  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -95,24 +129,28 @@ const AdmissionForm = () => {
     try {
       setLoading(true);
 
-      // Create FormData for file uploads
       const formDataObj = new FormData();
       formDataObj.append("name", name);
       formDataObj.append("email", email);
       formDataObj.append("phoneNumber", phoneNumber);
-    formDataObj.append("profile", profile);
+      formDataObj.append("profile", profile);
       formDataObj.append("selectCourse", selectCourse);
       formDataObj.append("selectState", selectState);
       formDataObj.append("district", district);
       formDataObj.append("city", city);
-      formDataObj.append("photo", passportPhoto);
 
-      documents.forEach((doc, index) => {
-        formDataObj.append(`document`, doc);
+      // Only append photo if a new one was selected
+      if (passportPhoto) {
+        formDataObj.append("photo", passportPhoto);
+      }
+
+      // Append new documents
+      documents.forEach((doc) => {
+        formDataObj.append("document", doc);
       });
 
-      const { data } = await axios.post(
-        `${baseUrl}/admission/new-admission`,
+      const { data } = await axios.put(
+        `${baseUrl}/admission/${id}`,
         formDataObj,
         {
           headers: {
@@ -133,13 +171,17 @@ const AdmissionForm = () => {
     }
   };
 
+  if (fetching) {
+    return <div className="updateAdmissionForm">Loading admission data...</div>;
+  }
+
   return (
-    <div className="admissionForm">
+    <div className="updateAdmissionForm">
       <div className="admissionForm-top">
         <Link onClick={() => navigate(-1)} className="back-icon">
           <MdKeyboardBackspace size={35} />
         </Link>
-        <h1>Admission Form</h1>
+        <h1>Update Admission Form</h1>
       </div>
       <div className="admission-wrapper">
         <form
@@ -277,7 +319,7 @@ const AdmissionForm = () => {
           </div>
 
           <div className="form-group">
-            <label>Passport Size Photo (Recommended size : 300 x 300)</label>
+            <label>Passport Size Photo (Recommended size: 300 x 300)</label>
             <div className="file-upload-container">
               <div
                 className="file-upload-box"
@@ -288,7 +330,6 @@ const AdmissionForm = () => {
                   ref={passportRef}
                   onChange={handlePassportPhoto}
                   accept="image/*"
-                  required
                   style={{ display: "none" }}
                 />
                 <label className="upload-label">
@@ -296,12 +337,19 @@ const AdmissionForm = () => {
                   <span>
                     {passportPhoto ? (
                       <strong>{passportPhoto.name}</strong>
+                    ) : existingPhoto ? (
+                      <strong>Current photo: Click to change</strong>
                     ) : (
                       "Click to upload passport photo (max 2MB)"
                     )}
                   </span>
                 </label>
               </div>
+              {existingPhoto && !passportPhoto && (
+                <div className="photo-preview">
+                  <img src={existingPhoto} alt="Current passport" />
+                </div>
+              )}
             </div>
           </div>
 
@@ -317,7 +365,6 @@ const AdmissionForm = () => {
                   ref={documentsRef}
                   onChange={handleDocuments}
                   multiple
-                  required
                   style={{ display: "none" }}
                 />
                 <label className="upload-label">
@@ -332,8 +379,32 @@ const AdmissionForm = () => {
                 </label>
               </div>
 
+              {/* Display existing documents */}
+              {existingDocuments.length > 0 && (
+                <div className="file-preview">
+                  <p>Current Documents:</p>
+                  {existingDocuments.map((doc, index) => (
+                    <div key={doc._id} className="file-item">
+                      <a
+                        href={doc.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="file-name"
+                      >
+                        {doc.name || `Document ${index + 1}`}
+                      </a>
+                      <MdClose
+                        className="remove-file"
+                        onClick={() => removeExistingDocument(doc._id)}
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
+
               {documents.length > 0 && (
                 <div className="file-preview">
+                  <p>New Documents:</p>
                   {documents.map((file, index) => (
                     <div key={index} className="file-item">
                       <span className="file-name">{file.name}</span>
@@ -350,7 +421,7 @@ const AdmissionForm = () => {
 
           <div className="form-group">
             <button type="submit" className="success-btn" disabled={loading}>
-              {loading ? "Processing..." : "Submit Application"}
+              {loading ? "Processing..." : "Update Application"}
             </button>
           </div>
         </form>
@@ -359,4 +430,4 @@ const AdmissionForm = () => {
   );
 };
 
-export default AdmissionForm;
+export default UpdateAdmissionForm;

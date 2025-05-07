@@ -2,6 +2,7 @@
 
 .newMember {
   margin-top: 20px;
+
   .newMember-top {
     text-align: center;
     position: relative;
@@ -28,7 +29,7 @@
       margin-top: 20px;
 
       .member-img {
-        object-fit: contain;
+        object-fit: cover;
         height: 250px;
         width: 250px;
       }

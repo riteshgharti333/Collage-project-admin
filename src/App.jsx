@@ -41,6 +41,7 @@ import Course2 from "./pages/Courses/Course2";
 import Course3 from "./pages/Courses/Course3";
 import UpdateCourse from "./pages/UpdateCourse/UpdateCourse";
 import AdmissionForm from "./pages/AdmissionForm/AdmissionForm";
+import UpdateAdmissionForm from "./pages/UpdateAdmissionForm/UpdateAdmissionForm";
 
 function App() {
   const { user } = useContext(Context);
@@ -108,6 +109,8 @@ function App() {
             <Route path="/staff-member/:id" element={<UpdateStaff />} />
             <Route path="/update-student/:id" element={<UpdateStudent />} />
             <Route path="/update-alumni/:id" element={<UpdateAlumni />} />
+            <Route path="/update-admission/:id" element={<UpdateAdmissionForm />} />
+
 
             <Route
               path="/update-gallery-folder/:id"

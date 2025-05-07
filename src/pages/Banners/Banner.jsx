@@ -40,7 +40,7 @@ const Banner = () => {
     const getBanner = async () => {
       try {
         const { data } = await axios.get(
-          `${baseUrl}/banner/${bannerType}/${id}`,
+          `${baseUrl}/banner/${bannerType}/${id}`
         );
         if (data && data.image) {
           setSingleBanner(data.image);
@@ -74,7 +74,7 @@ const Banner = () => {
           headers: {
             "Content-Type": "multipart/form-data", // Required for FormData
           },
-        },
+        }
       );
 
       if (data) {
@@ -98,12 +98,14 @@ const Banner = () => {
         <h1>{bannerType.split("-").join(" ").toLowerCase()}</h1>
       </div>
 
-      <div className="banner-content">
+    <div className="banner-content">
         <img
           src={preview || singleBanner}
           alt="Banner Preview"
           loading="lazy"
         />
+
+        <p className="rec-size">Recommended Size: 1800 x 600</p>
 
         <div className="banner-btns">
           <input

@@ -43,8 +43,11 @@ const Staff = () => {
     getAllData();
   }, []);
 
+  const [loading, setLoading] = useState(false);
+
   const deleteImage = async (id) => {
     if (!id) return;
+    setLoading(true);
 
     try {
       const { data } = await axios.delete(`${baseUrl}/staff/${id}`);
@@ -59,6 +62,8 @@ const Staff = () => {
     } catch (error) {
       console.error("Error deleting staff:", error);
       toast.error("Failed to delete staff!");
+    }finally{
+      setLoading(false);
     }
   };
 
@@ -94,8 +99,8 @@ const Staff = () => {
       <div className="deleteImage-desc" ref={cardRef}>
         <h3>Delete this image?</h3>
         <div className="deleteImage-btns">
-          <button className="delete-btn" onClick={() => deleteImage(id)}>
-            Yes
+          <button className="delete-btn" disabled={loading} onClick={() => deleteImage(id)}>
+            {loading ? "Deleting..." : "Yes"}
           </button>
           <button className="success-btn" onClick={onClose}>
             No

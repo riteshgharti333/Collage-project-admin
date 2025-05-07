@@ -1,12 +1,12 @@
 import "./UpdateMember.scss";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { RiArrowLeftWideFill } from "react-icons/ri";
 import { FaPlus } from "react-icons/fa6";
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import { baseUrl } from "../../../main";
 import { toast } from "sonner";
 import { MdKeyboardBackspace } from "react-icons/md";
+import ImageCropModal from "../../../components/ImageCropModel/ImageCropModel";
 
 const UpdateFounding = () => {
   const fileInputRef = useRef(null);
@@ -20,21 +20,29 @@ const UpdateFounding = () => {
   const [name, setName] = useState("");
   const [position, setPosition] = useState("");
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
+  const [cropSrc, setCropSrc] = useState(null);
+  const [showCropModal, setShowCropModal] = useState(false);
 
-    if (file) {
-      const maxSize = 2 * 1024 * 1024;
-
-      if (file.size > maxSize) {
-        toast.error("Image must be less than 2MB!");
-        return;
-      }
-
-      const imageUrl = URL.createObjectURL(file);
-      setSelectedImage(imageUrl);
-      setFile(file);
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const maxSize = 2 * 1024 * 1024;
+    if (file.size > maxSize) {
+      toast.error("Image must be less than 2MB!");
+      return;
     }
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setCropSrc(reader.result);
+      setShowCropModal(true);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleCropDone = ({ blob, url }) => {
+    setSelectedImage(url);
+    setFile(new File([blob], "cropped.jpg", { type: "image/jpeg" }));
+    setShowCropModal(false);
   };
 
   const handleButtonClick = () => {
@@ -45,7 +53,6 @@ const UpdateFounding = () => {
     const getSingleData = async () => {
       try {
         const { data } = await axios.get(`${baseUrl}/founder/${id}`);
-
         if (data && data.founder) {
           setSingleData(data.founder);
           setName(data.founder.name);
@@ -61,23 +68,16 @@ const UpdateFounding = () => {
 
   const handleUpdate = async () => {
     setLoading(true);
-
     try {
       const formData = new FormData();
-
       formData.append("name", name);
       formData.append("position", position);
-
       if (file) {
         formData.append("image", file);
       }
-
       const { data } = await axios.put(`${baseUrl}/founder/${id}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+        headers: { "Content-Type": "multipart/form-data" },
       });
-
       toast.success(data.message);
       navigate(-1);
     } catch (error) {
@@ -127,17 +127,30 @@ const UpdateFounding = () => {
             </div>
           </div>
 
+          <p className="rec-size" style={{ color: "#000", marginTop: "20px" }}>
+            Recommended size: 400 x 400
+          </p>
+
           <div className="member-btn">
             <button onClick={handleButtonClick} className="second-btn">
               <FaPlus className="change-icon" /> Add Image
             </button>
+
             <input
               type="file"
               ref={fileInputRef}
               onChange={handleFileChange}
-              style={{ display: "none" }}
               accept="image/*"
+              style={{ display: "none" }}
             />
+
+            {showCropModal && cropSrc && (
+              <ImageCropModal
+                src={cropSrc}
+                onClose={() => setShowCropModal(false)}
+                onCropDone={handleCropDone}
+              />
+            )}
 
             <button
               onClick={handleUpdate}

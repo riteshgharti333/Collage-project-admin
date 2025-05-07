@@ -14,6 +14,7 @@ import { PiStudentBold } from "react-icons/pi";
 import { studentData } from "../../assets/studentData";
 
 import { MdOutlineDashboardCustomize } from "react-icons/md";
+import { FaRegEdit } from "react-icons/fa";
 
 const Sidebar = () => {
   const location = useLocation();
@@ -21,6 +22,7 @@ const Sidebar = () => {
   const [openCourseDropdown, setOpenCourseDropdown] = useState(false);
   const [topBanners, setTopBanners] = useState([]);
   const [courseBanners, setCourseBanners] = useState([]);
+  const [showWebChanges, setShowWebChanges] = useState(false);
 
   const [openStudent, setOpenStudent] = useState(false);
 
@@ -85,10 +87,8 @@ const Sidebar = () => {
         <div className="sidebar-dropdown ">
           <div className="sidebar-items dash-top">
             <Link
-              to={"/"}
-              className={`sidebar-item ${
-                location.pathname.startsWith(`/`) ? "active" : ""
-              }`}
+                to={"/"}
+                className={`sidebar-item ${location.pathname === "/" ? "active" : ""}`}
             >
               <MdOutlineDashboardCustomize className="sidebar-icon" />
               <span>Dashboard</span>
@@ -132,104 +132,124 @@ const Sidebar = () => {
           </AnimatePresence>
         </div>
 
-        <div className="sidebar-desc">Web Changes</div>
+        <div
+  className="sidebar-dropdown-link"
+  onClick={() => setShowWebChanges(!showWebChanges)}
+>
+  <div className="sidebar-dropdown-link-left">
+    <FaRegEdit className="sidebar-icon" />
+    <span>Web Changes</span>
+  </div>
+  <MdKeyboardArrowRight
+    className={`right-arrow ${showWebChanges ? "rotate" : ""}`}
+  />
+</div>
 
-        <div className="sidebar-items">
-          {sidebarItems.map((item, index) => {
-            return (
-              <Link
-                to={`/${item.link}`}
-                key={index}
-                className={`sidebar-item ${
-                  location.pathname.startsWith(`/${item.link}`) ? "active" : ""
-                }`}
-              >
-                <item.icon className="sidebar-icon" />
-                <span>{item.title}</span>
-              </Link>
-            );
-          })}
-        </div>
-
-        <div className="sidebar-dropdown">
-          <div
-            className="sidebar-dropdown-link"
-            onClick={() => setCourses(!courses)}
+<AnimatePresence>
+  {showWebChanges && (
+    <motion.div
+      className="sidebar-dropdown-content"
+      initial="hidden"
+      animate="visible"
+      exit="hidden"
+    >
+      <motion.div className="sidebar-items" variants={dropdownVariants}>
+        {sidebarItems.map((item, index) => (
+          <Link
+            to={`/${item.link}`}
+            key={index}
+            className={`sidebar-item changes-item ${
+              location.pathname.startsWith(`/${item.link}`) ? "active" : ""
+            }`}
           >
-            <div className="sidebar-dropdown-link-left">
-              <IoMdBook className="sidebar-icon" />
-              <span>Courses</span>
-            </div>
-            <MdKeyboardArrowRight
-              className={`right-arrow ${courses ? "rotate" : ""}`}
-            />
-          </div>
+            <item.icon className="sidebar-icon" />
+            <span>{item.title}</span>
+          </Link>
+        ))}
+      </motion.div>
 
-          <AnimatePresence>
-            {courses && (
-              <motion.div
-                className="dropdown-links"
-                initial="hidden"
-                animate="visible"
-                exit="hidden"
-              >
-                {coursesLink.map((item, index) => (
-                  <motion.div
-                    key={index}
-                    variants={dropdownVariants}
-                    custom={index}
-                  >
-                    <Link to={`/${item.link}`} className="dropdown-link">
-                      {item.title}
-                    </Link>
-                  </motion.div>
-                ))}
-              </motion.div>
-            )}
-          </AnimatePresence>
+      <motion.div className="sidebar-dropdown" variants={dropdownVariants}>
+        <div
+          className="sidebar-dropdown-link"
+          onClick={() => setCourses(!courses)}
+        >
+          <div className="sidebar-dropdown-link-left">
+            <IoMdBook className="sidebar-icon" />
+            <span>Courses</span>
+          </div>
+          <MdKeyboardArrowRight
+            className={`right-arrow ${courses ? "rotate" : ""}`}
+          />
         </div>
 
-        {/* Top Banners */}
-        <div className="sidebar-dropdown">
-          <div
-            className="sidebar-dropdown-link"
-            onClick={() => setOpenDropdown(!openDropdown)}
-          >
-            <div className="sidebar-dropdown-link-left">
-              <MdOutlineViewComfy className="sidebar-icon" />
-              <span>Top Banner</span>
-            </div>
-            <MdKeyboardArrowRight
-              className={`right-arrow ${openDropdown ? "rotate" : ""}`}
-            />
-          </div>
+        <AnimatePresence>
+          {courses && (
+            <motion.div
+              className="dropdown-links"
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+            >
+              {coursesLink.map((item, index) => (
+                <motion.div
+                  key={index}
+                  variants={dropdownVariants}
+                  custom={index}
+                >
+                  <Link to={`/${item.link}`} className="dropdown-link">
+                    {item.title}
+                  </Link>
+                </motion.div>
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.div>
 
-          <AnimatePresence>
-            {openDropdown && (
-              <motion.div
-                className="dropdown-links"
-                initial="hidden"
-                animate="visible"
-                exit="hidden"
-              >
-                {topBanners.map((item, index) => (
-                  <motion.div
-                    key={item.id}
-                    variants={dropdownVariants}
-                    custom={index}
-                  >
-                    <Link
-                      to={`banner/${item.type}/${item.id}`}
-                      className="dropdown-link"
-                    >
-                      {item.type.replace(/-/g, " ").toUpperCase()}
-                    </Link>
-                  </motion.div>
-                ))}
-              </motion.div>
-            )}
-          </AnimatePresence>
+      {/* Top Banners */}
+      <motion.div className="sidebar-dropdown" variants={dropdownVariants}>
+        <div
+          className={`sidebar-dropdown-link ${openDropdown && "active-dropdown"}`}
+          onClick={() => setOpenDropdown(!openDropdown)}
+        >
+          <div className="sidebar-dropdown-link-left">
+            <MdOutlineViewComfy className="sidebar-icon" />
+            <span>Top Banner</span>
+          </div>
+          <MdKeyboardArrowRight
+            className={`right-arrow ${openDropdown ? "rotate" : ""}`}
+          />
         </div>
+
+        <AnimatePresence>
+          {openDropdown && (
+            <motion.div
+              className="dropdown-links"
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+            >
+              {topBanners.map((item, index) => (
+                <motion.div
+                  key={item.id}
+                  variants={dropdownVariants}
+                  custom={index}
+                >
+                  <Link
+                    to={`banner/${item.type}/${item.id}`}
+                    className="dropdown-link"
+                  >
+                    {item.type.replace(/-/g, " ").toUpperCase()}
+                  </Link>
+                </motion.div>
+              ))}
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.div>
+    </motion.div>
+  )}
+</AnimatePresence>
       </div>
     </div>
   );

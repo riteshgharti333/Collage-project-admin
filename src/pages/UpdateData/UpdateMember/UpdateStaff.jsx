@@ -7,6 +7,7 @@ import axios from "axios";
 import { baseUrl } from "../../../main";
 import { toast } from "sonner";
 import { MdKeyboardBackspace } from "react-icons/md";
+import ImageCropModal from "../../../components/ImageCropModel/ImageCropModel";
 
 const UpdateStaff = () => {
   const fileInputRef = useRef(null);
@@ -21,28 +22,34 @@ const UpdateStaff = () => {
   const [position, setPosition] = useState("");
   const [location, setLocation] = useState("");
 
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
+  const [cropSrc, setCropSrc] = useState(null);
+  const [showCropModal, setShowCropModal] = useState(false);
 
-    if (file) {
-      const maxSize = 2 * 1024 * 1024;
-
-      if (file.size > maxSize) {
-        toast.error("Image must be less than 2MB!");
-        return;
-      }
-
-      const imageUrl = URL.createObjectURL(file);
-      setSelectedImage(imageUrl);
-      setFile(file);
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const maxSize = 2 * 1024 * 1024;
+    if (file.size > maxSize) {
+      toast.error("Image must be less than 2MB!");
+      return;
     }
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setCropSrc(reader.result);
+      setShowCropModal(true);
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleCropDone = ({ blob, url }) => {
+    setSelectedImage(url);
+    setFile(new File([blob], "cropped.jpg", { type: "image/jpeg" }));
   };
 
   const handleButtonClick = () => {
     fileInputRef.current.click();
   };
 
-  // ✅ Fetch single staff member
   useEffect(() => {
     const getSingleData = async () => {
       try {
@@ -141,17 +148,30 @@ const UpdateStaff = () => {
             </div>
           </div>
 
+          <p className="rec-size" style={{ color: "#000", marginTop: "20px" }}>
+            Recommended size: 400 x 400
+          </p>
+
           <div className="member-btn">
             <button onClick={handleButtonClick} className="second-btn">
               <FaPlus className="change-icon" /> Add Image
             </button>
+
             <input
               type="file"
-              ref={fileInputRef}
               onChange={handleFileChange}
-              style={{ display: "none" }}
               accept="image/*"
+              style={{ display: "none" }}
+              ref={fileInputRef}
             />
+
+            {showCropModal && cropSrc && (
+              <ImageCropModal
+                src={cropSrc}
+                onClose={() => setShowCropModal(false)}
+                onCropDone={handleCropDone}
+              />
+            )}
 
             <button
               onClick={handleUpdate}

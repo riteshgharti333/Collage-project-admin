@@ -28,7 +28,7 @@
       margin-top: 20px;
 
       .member-img {
-        object-fit: contain;
+        object-fit: cover;
         height: 250px;
         width: 250px;
       }
@@ -81,3 +81,4 @@
     }
   }
 }
+

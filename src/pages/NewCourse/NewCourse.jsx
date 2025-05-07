@@ -49,21 +49,20 @@ const NewCourse = () => {
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    const maxSize = 2 * 1024 * 1024; 
-  
+    const maxSize = 2 * 1024 * 1024;
+
     if (file) {
       if (file.size > maxSize) {
         toast.error("Image must be less than 2MB!");
         return;
       }
-  
+
       setSelectedFile(file);
       const imageUrl = URL.createObjectURL(file);
       setBannerImage(imageUrl);
     }
   };
 
-  
   const openFilePicker = () => {
     fileInputRef.current.click();
   };
@@ -213,6 +212,8 @@ const NewCourse = () => {
             style={{ display: "none" }}
           />
         </div>
+
+        <p className="rec-size">Recommended Size: 1800 x 600</p>
 
         <div className="newCourse-banner-btn">
           <button className="success-btn" onClick={openFilePicker}>

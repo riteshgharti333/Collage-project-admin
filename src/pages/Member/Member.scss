@@ -62,8 +62,7 @@
           height: 250px;
           position: relative;
           background: #dddddd;
-          border-radius: 50%;
-          object-position: top;
+          border-radius: 10px;
           display: block;
 
           &.add-filter {
@@ -71,8 +70,7 @@
           }
 
           &.staff-img {
-            border-radius: 50%;
-
+            border-radius: 10px;
           }
         }
       }

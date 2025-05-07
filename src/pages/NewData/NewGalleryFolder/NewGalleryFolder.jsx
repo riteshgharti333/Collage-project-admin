@@ -130,6 +130,8 @@ const NewGalleryFolder = () => {
               />
             </div>
 
+            <p className="rec-size" style={{color: "#fff"}}>Folder image recommended size: 400 x 400</p>
+
             {/* Folder Title */}
             <div className="gallery-folder-input">
               <label htmlFor="folderTitle">Folder Title:</label>
@@ -185,6 +187,7 @@ const NewGalleryFolder = () => {
               />
             </div>
 
+            <p className="rec-size" style={{color: "#fff"}}>Recommended Size: Any size</p>
             {/* Save & Upload Buttons */}
             <div className="photo-add-btn">
               <button

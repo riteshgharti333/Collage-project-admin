@@ -21,6 +21,8 @@ const UpdateGalleryFolder = () => {
 
   const { id } = useParams();
 
+  const [folderTitle, setFolderTitle] = useState("");
+
   // ✅ Fetch Gallery Folder Data
   useEffect(() => {
     const getGalleryData = async () => {
@@ -28,6 +30,7 @@ const UpdateGalleryFolder = () => {
         const { data } = await axios.get(`${baseUrl}/gallery-folder/${id}`);
 
         if (data && data.folder) {
+          setFolderTitle(data?.folder.folderTitle);
           setFolderImage(data.folder.folderImage);
           setExistingImages(data.folder.galleryImages);
         }
@@ -119,6 +122,12 @@ const UpdateGalleryFolder = () => {
           <div className="newGallery-content-details-card">
             <div className="newGallery-content-details-left">
               <img src={folderImage} alt="Folder" />
+
+              <p className="folder-title">{folderTitle}</p>
+              <p className="foler-note">
+                <span>*</span> You can update only images not folder image and
+                folder title
+              </p>
             </div>
           </div>
         </div>
@@ -170,6 +179,10 @@ const UpdateGalleryFolder = () => {
                 onChange={handleGalleryImagesChange}
               />
             </div>
+
+            <p className="rec-size" style={{ color: "#fff" }}>
+              Recommended size: Any size
+            </p>
 
             <button
               onClick={handleUpdate}

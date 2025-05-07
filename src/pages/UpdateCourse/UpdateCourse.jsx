@@ -278,6 +278,13 @@ const UpdateCourse = () => {
           />
         </div>
 
+        <p
+          className="rec-size"
+          style={{ color: "#fff", marginTop: "20px", textAlign: "center" }}
+        >
+          Recommended size: 1800 x 600
+        </p>
+
         <div className="updateCourse-banner-btn">
           <button className="success-btn" onClick={openFilePicker}>
             <FiPlusCircle />

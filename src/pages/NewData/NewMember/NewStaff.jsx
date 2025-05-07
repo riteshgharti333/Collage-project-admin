@@ -1,6 +1,5 @@
 import "./NewMember.scss";
 import { Link, useNavigate } from "react-router-dom";
-import { RiArrowLeftWideFill } from "react-icons/ri";
 import { FaPlus } from "react-icons/fa6";
 import { useRef, useState } from "react";
 import AddImg from "../../../assets/images/addImg.svg";
@@ -8,38 +7,47 @@ import axios from "axios";
 import { baseUrl } from "../../../main";
 import { toast } from "sonner";
 import { MdKeyboardBackspace } from "react-icons/md";
+import ImageCropModal from "../../../components/ImageCropModel/ImageCropModel";
 
 const NewStaff = () => {
   const fileInputRef = useRef(null);
   const navigate = useNavigate();
 
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [file, setFile] = useState(null);
   const [name, setName] = useState("");
   const [position, setPosition] = useState("");
   const [location, setLocation] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const [file, setFile] = useState(null);
+  const [selectedImage, setSelectedImage] = useState(null);
+  const [showCropModal, setShowCropModal] = useState(false);
+  const [cropSrc, setCropSrc] = useState(null);
+
   const handleFileChange = (event) => {
     const file = event.target.files[0];
+    if (!file) return;
 
-    if (file) {
-      const maxSize = 2 * 1024 * 1024;
-
-      if (file.size > maxSize) {
-        toast.error("Image must be less than 2MB!");
-        return;
-      }
-
-      setSelectedImage(URL.createObjectURL(file));
-      setFile(file);
+    const maxSize = 2 * 1024 * 1024;
+    if (file.size > maxSize) {
+      toast.error("Image must be less than 2MB!");
+      return;
     }
+
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setCropSrc(reader.result);
+      setShowCropModal(true);
+    };
+    reader.readAsDataURL(file);
   };
 
-  // ✅ Trigger file input
+  const handleCropDone = ({ blob, url }) => {
+    setSelectedImage(url);
+    setFile(new File([blob], "cropped.jpg", { type: "image/jpeg" }));
+  };
+
   const handleButtonClick = () => fileInputRef.current.click();
 
-  // ✅ Handle form submission
   const handleSubmit = async () => {
     if (!name || !position || !location || !file) {
       toast.error("All fields are required!");
@@ -76,6 +84,14 @@ const NewStaff = () => {
 
   return (
     <div className="newMember">
+      {showCropModal && (
+        <ImageCropModal
+          src={cropSrc}
+          onClose={() => setShowCropModal(false)}
+          onCropDone={handleCropDone}
+        />
+      )}
+
       <div className="newMember-top">
         <Link onClick={() => navigate(-1)} className="back-icon">
           <MdKeyboardBackspace size={35} />
@@ -88,7 +104,7 @@ const NewStaff = () => {
           {selectedImage ? (
             <img
               src={selectedImage}
-              alt="Selected Staff Member"
+              alt="Selected Staff"
               className="member-img"
             />
           ) : (
@@ -136,9 +152,14 @@ const NewStaff = () => {
             </div>
           </div>
 
+          <p className="rec-size" style={{ color: "#000", marginTop: "20px" }}>
+            Recommended size: 400 x 400
+          </p>
+
           <div className="member-btn">
             <button onClick={handleButtonClick} className="second-btn">
-              <FaPlus className="change-icon" /> Add Image
+              <FaPlus className="change-icon" />{" "}
+              {selectedImage ? "Change Image" : "Add Image"}
             </button>
             <input
               type="file"
