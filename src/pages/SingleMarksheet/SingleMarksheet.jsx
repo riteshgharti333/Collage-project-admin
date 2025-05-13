@@ -109,7 +109,6 @@ const SingleMarksheet = () => {
   `);
     printWindow.document.close();
   };
-
   const [showPreview, setShowPreview] = useState(false);
 
   const handlePrint = () => {
