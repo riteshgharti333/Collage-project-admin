@@ -100,7 +100,7 @@ const AdmissionForm = () => {
       formDataObj.append("name", name);
       formDataObj.append("email", email);
       formDataObj.append("phoneNumber", phoneNumber);
-    formDataObj.append("profile", profile);
+      formDataObj.append("profile", profile);
       formDataObj.append("selectCourse", selectCourse);
       formDataObj.append("selectState", selectState);
       formDataObj.append("district", district);

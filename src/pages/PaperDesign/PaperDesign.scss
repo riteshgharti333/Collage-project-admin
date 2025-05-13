@@ -1,0 +1,39 @@
+@use "../../styles/responsive.scss" as *;
+
+.paperDesign {
+  position: relative;
+  padding: 20px 0;
+  margin-bottom: 20px;
+
+  .paperDesign-top {
+    display: flex;
+    justify-content: space-between;
+    h1 {
+      color: #fff;
+      font-size: 30px;
+      margin: 0;
+
+      @include sm {
+        font-size: 1.8rem;
+      }
+    }
+
+    .back-icon {
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #fff;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover {
+        transform: translateY(-50%) scale(1.1);
+      }
+
+      @include sm {
+        left: 10px;
+      }
+    }
+  }
+}

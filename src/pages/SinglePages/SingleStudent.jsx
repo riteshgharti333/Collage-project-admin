@@ -41,11 +41,21 @@ const SingleStudent = () => {
     return `${day}/${month}/${year}`;
   };
 
-  const { _id, name, enrollmentId, certificateNo, course, duration, date } =
-    singleData;
+  const {
+    _id,
+    name,
+    fatherName,
+    enrollmentId,
+    certificateNo,
+    course,
+    duration,
+    date,
+  } = singleData;
 
   const admissionDetails = [
     { label: "Name", value: name },
+    { label: "Father's Name", value: fatherName },
+
     { label: "Enrollment Id", value: enrollmentId },
     { label: "Certificate No", value: certificateNo },
     { label: "Course", value: course },

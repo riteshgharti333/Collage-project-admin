@@ -1,0 +1,37 @@
+.marksheet-print-container {
+  width: 1000px;
+  height: 1400px;
+  background-image: url("../../assets/images/marksheet.jpg");
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.student-name {
+  position: absolute;
+  top: 250px;
+  left: 200px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.student-marks {
+  position: absolute;
+  top: 400px; // Adjust as per your image layout
+  left: 200px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.print-button {
+  margin-top: 20px;
+  display: block;
+}
+
+@media print {
+  .print-button {
+    display: none;
+  }
+}

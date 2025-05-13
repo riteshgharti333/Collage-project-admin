@@ -30,6 +30,8 @@ const Table = ({ data, columns, path }) => {
     path === "contact" && navigate(`/contact/${id}`);
     path === "enquiry" && navigate(`/enquiry/${id}`);
     path === "student" && navigate(`/student/${id}`);
+    path === "paper" && navigate(`/paper/${id}`);
+    path === "marksheet" && navigate(`/marksheet/${id}`);
   };
 
   return (
@@ -45,13 +47,13 @@ const Table = ({ data, columns, path }) => {
                 >
                   {flexRender(
                     header.column.columnDef.header,
-                    header.getContext(),
+                    header.getContext()
                   )}
                   {header.column.getIsSorted() === "asc"
                     ? " 🔼"
                     : header.column.getIsSorted() === "desc"
-                      ? " 🔽"
-                      : ""}
+                    ? " 🔽"
+                    : ""}
                 </th>
               ))}
             </tr>

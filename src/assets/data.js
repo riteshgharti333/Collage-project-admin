@@ -57,6 +57,49 @@ export const sidebarItems = [
   },
 ];
 
+/////////////////////////////////
+
+/// marksheeet form
+
+export const studentDetails = [
+  {
+    label: "Student Name",
+    type: "text",
+    name: "name",
+    placeholder: "Enter full name",
+  },
+  {
+    label: "Father's Name",
+    type: "text",
+    name: "fatherName",
+    placeholder: "Enter father's name",
+  },
+  {
+    label: "Name of Program",
+    type: "text",
+    name: "course",
+    placeholder: "e.g. Computer Science",
+  },
+  {
+    label: "Year",
+    type: "text",
+    name: "duration",
+    placeholder: "e.g. 1 year",
+  },
+  {
+    label: "Enrollment ID",
+    type: "text",
+    name: "enrollmentId",
+    placeholder: "Enter enrollment ID",
+  },
+  {
+    label: "Certificate No",
+    type: "text",
+    name: "certificateNo",
+    placeholder: "Enter certificate number",
+  },
+];
+
 /////////////////////
 export const coursesLink = [
   {
@@ -532,7 +575,6 @@ export const bannerData = {
   },
 };
 
-
 export const formCourse = [
   {
     name: "Fashion Design",
@@ -584,3 +626,37 @@ export const formCourse = [
   },
 ];
 
+/////////////////////////
+
+export const paperData = [
+  {
+    courseCode: "CS101",
+    courseName: "Bachelor of Computer Science",
+    courseMarks: 100,
+    createdAt: "2024-12-10T10:15:00Z",
+  },
+  {
+    courseCode: "ENG202",
+    courseName: "Master of English Literature",
+    courseMarks: 100,
+    createdAt: "2025-01-05T14:30:00Z",
+  },
+  {
+    courseCode: "MBA300",
+    courseName: "MBA - Marketing",
+    courseMarks: 100,
+    createdAt: "2025-02-20T09:00:00Z",
+  },
+  {
+    courseCode: "PHY110",
+    courseName: "Bachelor of Physics",
+    courseMarks: 100,
+    createdAt: "2025-03-12T16:45:00Z",
+  },
+  {
+    courseCode: "LAW210",
+    courseName: "LLB - Criminal Law",
+    courseMarks: 100,
+    createdAt: "2025-04-01T12:20:00Z",
+  },
+];

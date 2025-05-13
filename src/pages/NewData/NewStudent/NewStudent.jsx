@@ -9,6 +9,7 @@ import { MdKeyboardBackspace } from "react-icons/md";
 const NewStudent = () => {
   const [formData, setFormData] = useState({
     name: "",
+    fatherName: "",
     enrollmentId: "",
     certificateNo: "",
     course: "",
@@ -29,7 +30,6 @@ const NewStudent = () => {
     }));
   };
 
-  // ✅ Handle New Student Creation
   const handleNewStudent = async () => {
     setLoading(true);
 
@@ -37,7 +37,7 @@ const NewStudent = () => {
       const { data } = await axios.post(
         `${baseUrl}/student/new-student`,
         formData
-      ); // ✅ No ID in the route
+      );
 
       if (data.result === 1) {
         toast.success(data.message);
@@ -75,6 +75,16 @@ const NewStudent = () => {
                 value={formData.name}
                 onChange={handleInputChange}
                 placeholder="Add name"
+              />
+            </li>
+              <li className="single-page-form-item">
+              <label>Father's Name:</label>
+              <input
+                type="text"
+                name="fatherName"
+                value={formData.fatherName}
+                onChange={handleInputChange}
+                placeholder="Add father's name"
               />
             </li>
 
@@ -119,6 +129,7 @@ const NewStudent = () => {
                 value={formData.duration}
                 onChange={handleInputChange}
                 placeholder="Add duration"
+                min="0"
               />
             </li>
 

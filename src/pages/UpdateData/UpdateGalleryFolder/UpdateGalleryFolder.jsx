@@ -46,11 +46,22 @@ const UpdateGalleryFolder = () => {
   // ✅ Handle Gallery Images Selection
   const handleGalleryImagesChange = (event) => {
     const files = Array.from(event.target.files);
-    const newGalleryImages = files.map((file) => ({
-      imageUrl: URL.createObjectURL(file),
-      file,
-    }));
-    setGalleryImages((prev) => [...prev, ...newGalleryImages]);
+    const validGalleryImages = [];
+
+    files.forEach((file) => {
+      if (file.size > 2 * 1024 * 1024) {
+        toast.error(`Image "${file.name}" exceeds 2MB and was skipped.`);
+      } else {
+        validGalleryImages.push({
+          imageUrl: URL.createObjectURL(file),
+          file,
+        });
+      }
+    });
+
+    if (validGalleryImages.length > 0) {
+      setGalleryImages((prev) => [...prev, ...validGalleryImages]);
+    }
   };
 
   // ✅ Handle Remove Existing Image

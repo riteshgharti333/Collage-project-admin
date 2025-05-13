@@ -55,11 +55,38 @@
 }
 
 .deleteImage {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   .deleteImage-desc {
-    width: 350px;
+    background: #fff;
+    padding: 15px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 5px;
+    width: 300px;
+
     h3 {
-      font-size: 20px;
+      font-size: 20px !important;
+      color: #333;
+      font-weight: 600;
       text-align: center;
+    }
+
+    .deleteImage-btns {
+      display: flex;
+      gap: 20px;
+      margin-top: 30px;
     }
   }
 }

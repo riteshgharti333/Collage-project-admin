@@ -1,0 +1,448 @@
+@use "../../styles/responsive.scss" as *;
+
+.markSheet {
+  min-height: 100vh;
+  color: #333;
+
+  .markSheet-top {
+    text-align: center;
+    position: relative;
+    padding: 20px 0;
+    margin-bottom: 20px;
+
+    h1 {
+      color: #fff;
+      font-size: 2.2rem;
+      margin: 0;
+
+      @include sm {
+        font-size: 1.8rem;
+      }
+    }
+
+    .back-icon {
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #fff;
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      &:hover {
+        transform: translateY(-50%) scale(1.1);
+      }
+
+      @include sm {
+        left: 10px;
+      }
+    }
+  }
+
+  &-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    background: white;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    padding: 10px;
+  }
+
+  .student-info-section {
+    margin-bottom: 2rem;
+    border-radius: 8px;
+
+    .student-info-section-top {
+      display: flex;
+      border-bottom: 1px solid #dee2e6;
+      align-items: center;
+      padding-bottom: 0.5rem;
+      margin-bottom: 1rem;
+      gap: 10px;
+
+      h3 {
+        color: #2c3e50;
+      }
+      .student-info-section-top-right {
+        display: flex;
+        align-items: center;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+        position: relative;
+        .searh-icon {
+          font-size: 20px;
+          margin-left: 5px;
+        }
+        input {
+          border: none;
+          width: 100%;
+          padding: 5px;
+          font-size: 16px;
+          outline: none;
+          width: 500px;
+        }
+
+        //  .no-cust {
+        //   position: absolute;
+        //   top: 44px;
+        //   background: #fff;
+        //   border: 1px solid #ddd;
+        //   width: 100%;
+        //   padding: 10px;
+        //   border-radius: 5px;
+        //   z-index: 200;
+        // }
+
+        .search-data {
+          position: absolute;
+          top: 44px;
+          background: #fff;
+          border: 1px solid #ddd;
+          width: 100%;
+          padding: 10px;
+          border-radius: 5px;
+          z-index: 200;
+
+          .search-results {
+            .search-result-item {
+              cursor: pointer;
+              border-bottom: 1px solid #eee;
+            }
+
+            .search-result-item:hover {
+              background-color: #f1f1f1;
+            }
+
+            .fath-name {
+              font-size: 14px;
+              color: #008000;
+            }
+          }
+        }
+      }
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1rem;
+
+      .info-item {
+        label {
+          display: block;
+          margin-bottom: 0.5rem;
+          font-weight: 500;
+          color: #495057;
+        }
+
+        input {
+          width: 100%;
+          padding: 0.5rem;
+          border: 1px solid #ced4da;
+          border-radius: 4px;
+          font-size: 1rem;
+          transition: border-color 0.3s;
+
+          &:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+          }
+        }
+      }
+    }
+  }
+
+  .marks-table-section {
+    margin-bottom: 2rem;
+
+    .marks-table-section-top {
+      display: flex;
+      border-bottom: 1px solid #dee2e6;
+      align-items: center;
+      padding-bottom: 0.5rem;
+      margin-bottom: 1rem;
+      gap: 10px;
+
+      h3 {
+        color: #2c3e50;
+      }
+      .marks-table-section-top-right {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        .marks-table-section-top-right-search {
+          display: flex;
+          align-items: center;
+          border-radius: 5px;
+          border: 1px solid #ddd;
+          position: relative;
+          .searh-icon {
+            font-size: 20px;
+            margin-left: 5px;
+          }
+          input {
+            border: none;
+            width: 100%;
+            padding: 5px;
+            font-size: 16px;
+            outline: none;
+            width: 500px;
+          }
+
+          .search-data {
+            position: absolute;
+            top: 44px;
+            background: #fff;
+            border: 1px solid #ddd;
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            z-index: 200;
+
+            .search-results {
+              .search-result-item {
+                cursor: pointer;
+                border-bottom: 1px solid #eee;
+              }
+
+              .search-result-item:hover {
+                background-color: #f1f1f1;
+              }
+
+              .fath-name {
+                font-size: 14px;
+                color: #008000;
+              }
+            }
+          }
+        }
+
+        .marks-table-section-top-right-select {
+          select {
+            border: 1px solid #ddd;
+            width: 100%;
+            padding: 5px;
+            font-size: 16px;
+            outline: none;
+            width: 300px;
+          }
+        }
+      }
+    }
+
+    .table-container {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 1rem;
+
+      th,
+      td {
+        padding: 5px;
+        text-align: left;
+        border-bottom: 1px solid #dee2e6;
+      }
+
+      th {
+        background-color: #2c3e50;
+        color: white;
+        font-weight: 500;
+        font-size: 14px;
+      }
+
+      tr:nth-child(even) {
+        background-color: #f8f9fa;
+      }
+
+      input {
+        width: 100%;
+        padding: 0.5rem;
+        border: 1px solid #ced4da;
+        border-radius: 4px;
+        font-size: 0.9rem;
+
+        &:focus {
+          outline: none;
+          border-color: #3498db;
+          box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+      }
+
+      .remove-btn {
+        background-color: #e74c3c;
+        color: white;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.8rem;
+        transition: background-color 0.3s;
+
+        &:hover:not(:disabled) {
+          background-color: #c0392b;
+        }
+
+        &:disabled {
+          background-color: #95a5a6;
+          cursor: not-allowed;
+        }
+      }
+    }
+
+    .add-course-btn {
+      background-color: #2ecc71;
+      color: white;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 1rem;
+      margin-top: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: #27ae60;
+      }
+    }
+  }
+
+  .summary-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    background: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+
+    .summary-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.5rem 1rem;
+      background: white;
+      border-radius: 6px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+
+      span:first-child {
+        font-weight: 500;
+        color: #495057;
+      }
+
+      span:last-child {
+        font-weight: 600;
+        color: #2c3e50;
+      }
+
+      .grade-A + {
+        color: #27ae60;
+      }
+      .grade-A {
+        color: #2ecc71;
+      }
+      .grade-B + {
+        color: #f39c12;
+      }
+      .grade-B {
+        color: #e67e22;
+      }
+      .grade-C {
+        color: #d35400;
+      }
+      .grade-D,
+      .grade-F {
+        color: #e74c3c;
+      }
+    }
+  }
+
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 2px solid #e9ecef;
+
+    .signature-section {
+      display: flex;
+      gap: 3rem;
+
+      .signature {
+        text-align: center;
+
+        .signature-line {
+          width: 150px;
+          height: 1px;
+          background: #333;
+          margin-bottom: 0.5rem;
+        }
+
+        p {
+          margin: 0;
+          font-size: 0.9rem;
+          color: #6c757d;
+        }
+      }
+    }
+
+    .issued-date {
+      p {
+        margin: 0;
+        color: #6c757d;
+        font-size: 0.9rem;
+      }
+    }
+  }
+}
+////////////////
+
+.read-only-input {
+  background-color: #f5f5f5;
+  cursor: not-allowed;
+  border: 1px solid #ddd;
+
+  &:focus {
+    outline: none;
+    border-color: #ddd;
+  }
+}
+
+// Add to your existing search styles
+.search-result-item {
+  cursor: pointer;
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+
+  &:hover {
+    background-color: #f9f9f9;
+  }
+}
+/// /
+.empty-table-message {
+  text-align: center;
+  padding: 20px;
+  color: #666;
+  font-style: italic;
+}
+
+////////
+
+.marksheet-btns {
+  display: flex;
+  gap: 10px;
+
+  button {
+   
+  }
+}

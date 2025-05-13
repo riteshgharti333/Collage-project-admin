@@ -12,7 +12,6 @@ $layout-bg: linear-gradient(135deg, #ffffff, #f0f0f0, #d8b4fe);
 $layout-radius: 10px;
 $primary-color: #0046fd;
 
-
 // $primary-color: #b22222;
 $secondary-color: #654321;
 $heading-font: "Rubik", sans-serif;
@@ -29,6 +28,8 @@ $p-height: 1.5;
   cursor: pointer;
   font-size: 16px;
   transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
   &:hover {
     background-color: #cc0000;
   }
@@ -44,6 +45,8 @@ $p-height: 1.5;
   cursor: pointer;
   font-size: 16px;
   transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
 
   &:hover {
     background-color: #218838;

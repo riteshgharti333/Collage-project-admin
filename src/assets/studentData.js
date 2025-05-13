@@ -17,6 +17,10 @@ export const studentData = [
   },
   {
     title: "Marksheet",
-    link: "contact",
+    link: "marksheets",
+  },
+  {
+    title: "Paper Design",
+    link: "paper-design",
   },
 ];

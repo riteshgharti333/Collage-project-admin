@@ -23,20 +23,37 @@ const NewGalleryFolder = () => {
   const handleFolderImageChange = useCallback((event) => {
     const selectedFile = event.target.files[0];
     if (selectedFile) {
+      if (selectedFile.size > 2 * 1024 * 1024) {
+        toast.error("Folder image must be less than 2MB");
+        return;
+      }
       setFolderImage(URL.createObjectURL(selectedFile));
       setFolderFile(selectedFile);
     }
   }, []);
+  
 
   // ✅ Handle Gallery Images Selection
   const handleGalleryImagesChange = useCallback((event) => {
     const files = Array.from(event.target.files);
-    const newGalleryImages = files.map((file) => ({
-      imageUrl: URL.createObjectURL(file),
-      file,
-    }));
-    setGalleryImages((prev) => [...prev, ...newGalleryImages]);
+    const validImages = [];
+  
+    for (const file of files) {
+      if (file.size > 2 * 1024 * 1024) {
+        toast.error(`Image "${file.name}" exceeds 2MB and was skipped.`);
+      } else {
+        validImages.push({
+          imageUrl: URL.createObjectURL(file),
+          file,
+        });
+      }
+    }
+  
+    if (validImages.length > 0) {
+      setGalleryImages((prev) => [...prev, ...validImages]);
+    }
   }, []);
+  
 
   // ✅ Remove Image
   const handleRemoveImage = useCallback((index) => {
@@ -156,6 +173,7 @@ const NewGalleryFolder = () => {
                   className="delete-btn"
                   onClick={() => handleRemoveImage(index)}
                   aria-label="Delete Photo"
+                  
                 >
                   Remove
                 </button>

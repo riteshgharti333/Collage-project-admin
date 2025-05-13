@@ -42,6 +42,14 @@ import Course3 from "./pages/Courses/Course3";
 import UpdateCourse from "./pages/UpdateCourse/UpdateCourse";
 import AdmissionForm from "./pages/AdmissionForm/AdmissionForm";
 import UpdateAdmissionForm from "./pages/UpdateAdmissionForm/UpdateAdmissionForm";
+import PaperDesign from "./pages/PaperDesign/PaperDesign";
+import NewPaper from "./pages/NewPaper/NewPaper";
+import UpdatePaper from "./pages/UpdatePaper/UpdatePaper";
+import MarkSheet from "./pages/MarkSheet/MarkSheet";
+import MarkSheetTable from "./components/MarksheetTable/MarksheetTable";
+import SingleMarksheet from "./pages/SingleMarksheet/SingleMarksheet";
+import UpdateMarkSheet from "./pages/UpdateMarkSheet/UpdateMarkSheet";
+import MarksheetPreview from "./components/MarksheetPreview/MarksheetPreview";
 
 function App() {
   const { user } = useContext(Context);
@@ -103,22 +111,36 @@ function App() {
             <Route path="/new-student" element={<NewStudent />} />
             <Route path="/new-admission" element={<AdmissionForm />} />
 
-
             {/* update */}
             <Route path="/mentor/:id" element={<UpdateFounding />} />
             <Route path="/staff-member/:id" element={<UpdateStaff />} />
             <Route path="/update-student/:id" element={<UpdateStudent />} />
             <Route path="/update-alumni/:id" element={<UpdateAlumni />} />
-            <Route path="/update-admission/:id" element={<UpdateAdmissionForm />} />
-
+            <Route
+              path="/update-admission/:id"
+              element={<UpdateAdmissionForm />}
+            />
 
             <Route
               path="/update-gallery-folder/:id"
               element={<UpdateGalleryFolder />}
             />
 
+            {/* Paper Design */}
+            <Route path="/paper-design" element={<PaperDesign />} />
+            <Route path="/new-paper" element={<NewPaper />} />
+            <Route path="/paper/:id" element={<UpdatePaper />} />
+            <Route path="/marksheets" element={<MarkSheetTable />} />
+            <Route path="/marksheet/:id" element={<SingleMarksheet />} />
+
+            {/* Marksheet */}
+
             {/* <Route path="*" element={<Navigate to="/" />} /> */}
           </Route>
+          <Route path="/new-marksheet" element={<MarkSheet />} />
+          <Route path="/update-marksheet/:id" element={<UpdateMarkSheet />} />
+          <Route path="/markSheet-preview" element={<MarksheetPreview />} />
+
         </Routes>
       </BrowserRouter>
     </div>
