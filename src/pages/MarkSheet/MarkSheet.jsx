@@ -59,12 +59,24 @@ const MarkSheet = () => {
   const navigate = useNavigate();
 
   const searchRef = useRef(null);
+  const courseSearchRef = useRef(null);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (searchRef.current && !searchRef.current.contains(event.target)) {
+      if (
+        studentSearchRef.current &&
+        !studentSearchRef.current.contains(event.target)
+      ) {
         setSearchResults([]);
         setSearchKeyword("");
+      }
+
+      if (
+        courseSearchRef.current &&
+        !courseSearchRef.current.contains(event.target)
+      ) {
+        setSearchCourseResults([]);
+        setSearchCourseKeyword("");
       }
     };
 
@@ -140,26 +152,6 @@ const MarkSheet = () => {
 
   const [singleCourseData, setSingleCourseData] = useState(null);
 
-  const handleCourseData = (data) => {
-    if (courses.some((course) => course.code === data.courseCode)) {
-      toast.error("This course is already added");
-      return;
-    }
-
-    setCourses([
-      {
-        code: data.courseCode,
-        name: data.courseName,
-        marks: data.marks,
-        marks: "",
-        grade: "",
-      },
-    ]);
-    setSearchCourseKeyword("");
-    setSearchCourseResults([]);
-    setCourses([...courses, newCourse]);
-  };
-
   const handleSelectChange = (e) => {
     const selectedOption = e.target.value;
     if (selectedOption === "Select Course") return;
@@ -186,6 +178,24 @@ const MarkSheet = () => {
       };
       setCourses([...courses, newCourse]);
     }
+  };
+
+  const handleCourseData = (data) => {
+    if (courses.some((course) => course.code === data.courseCode)) {
+      toast.error("This course is already added");
+      return;
+    }
+
+    const newCourse = {
+      code: data.courseCode,
+      name: data.courseName,
+      maxMarks: data.marks,
+      marks: "",
+      grade: "",
+    };
+    setCourses((prevCourses) => [...prevCourses, newCourse]);
+    setSearchCourseKeyword("");
+    setSearchCourseResults([]);
   };
 
   const handleSearchCourseChange = async (e) => {
@@ -387,7 +397,7 @@ const MarkSheet = () => {
                 />
 
                 {searchCourseKeyword && (
-                  <div className="search-data" ref={searchRef}>
+                  <div className="search-data" ref={courseSearchRef}>
                     {searchCourseResults?.length > 0 ? (
                       <div className="search-results">
                         {searchCourseResults?.map((item) => (
@@ -402,7 +412,7 @@ const MarkSheet = () => {
                         ))}
                       </div>
                     ) : (
-                      <p className="no-cust" ref={searchRef}>
+                      <p className="no-cust" ref={courseSearchRef}>
                         No courses found
                       </p>
                     )}
@@ -527,7 +537,7 @@ const MarkSheet = () => {
             <span>Maxs Marks:</span>
             <span>
               {courses.reduce(
-                (sum, course) => sum + (parseFloat(course.marks) || 0),
+                (sum, course) => sum + (parseFloat(course.maxMarks) || 0),
                 0
               )}
             </span>
@@ -536,7 +546,7 @@ const MarkSheet = () => {
             <span>Maxs Obtained:</span>
             <span>
               {courses.reduce(
-                (sum, course) => sum + (parseFloat(course.maxMarks) || 0),
+                (sum, course) => sum + (parseFloat(course.marks) || 0),
                 0
               )}
             </span>

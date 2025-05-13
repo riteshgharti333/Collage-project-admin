@@ -172,13 +172,27 @@ const UpdateMarkSheet = () => {
   const percentage = calculatePercentage();
   const overallGrade = calculateGrade(percentage); // Renamed from 'grade' to avoid conflict with course.grade
 
+  const courseSearchRef = useRef(null);
+
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (searchRef.current && !searchRef.current.contains(event.target)) {
+      if (
+        studentSearchRef.current &&
+        !studentSearchRef.current.contains(event.target)
+      ) {
         setSearchResults([]);
-        // setSearchKeyword(""); // Keep keyword if user clicks outside then back in
+        setSearchKeyword("");
+      }
+
+      if (
+        courseSearchRef.current &&
+        !courseSearchRef.current.contains(event.target)
+      ) {
+        setSearchCourseResults([]);
+        setSearchCourseKeyword("");
       }
     };
+
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
@@ -478,7 +492,7 @@ const UpdateMarkSheet = () => {
                   onChange={handleSearchCourseChange}
                 />
                 {searchCourseKeyword && (
-                  <div className="search-data" ref={searchRef}>
+                  <div className="search-data" ref={courseSearchRef}>
                     {" "}
                     {/* You might need another ref for course search results dropdown */}
                     {searchCourseResults?.length > 0 ? (
@@ -495,7 +509,9 @@ const UpdateMarkSheet = () => {
                         ))}
                       </div>
                     ) : (
-                      <p className="no-cust">No courses found</p>
+                      <p className="no-cust" ref={courseSearchRef}>
+                        No courses found
+                      </p>
                     )}
                   </div>
                 )}
