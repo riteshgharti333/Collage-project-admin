@@ -178,7 +178,6 @@ const SingleMarksheet = () => {
     setLoading(true);
     try {
       const { data } = await axios.delete(`${baseUrl}/marksheet/${id}`);
-      console.log(data)
 
       if (data && data.result == 1) {
         toast.success(data.message);
