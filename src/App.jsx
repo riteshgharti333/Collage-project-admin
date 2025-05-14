@@ -50,6 +50,8 @@ import MarkSheetTable from "./components/MarksheetTable/MarksheetTable";
 import SingleMarksheet from "./pages/SingleMarksheet/SingleMarksheet";
 import UpdateMarkSheet from "./pages/UpdateMarkSheet/UpdateMarkSheet";
 import MarksheetPreview from "./components/MarksheetPreview/MarksheetPreview";
+import Affiliated from "./pages/Affiliated/Affiliated";
+import NewAffiliated from "./pages/Affiliated/NewAffiliated";
 
 function App() {
   const { user } = useContext(Context);
@@ -135,6 +137,12 @@ function App() {
             <Route path="/marksheet/:id" element={<SingleMarksheet />} />
 
             {/* Marksheet */}
+
+            {/* Affiliated */}
+            <Route path="/affiliated-colleges" element={<Affiliated />} />
+            <Route path="/new-affiliated-colleges" element={<NewAffiliated />} />
+
+
 
             {/* <Route path="*" element={<Navigate to="/" />} /> */}
           </Route>

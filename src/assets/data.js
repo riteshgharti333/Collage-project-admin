@@ -7,6 +7,7 @@ import { LuGalleryHorizontalEnd } from "react-icons/lu";
 import { MdOutlineStars } from "react-icons/md";
 import { PiStudentBold } from "react-icons/pi";
 import { LiaUniversitySolid } from "react-icons/lia";
+import { FaRegImages } from "react-icons/fa";
 
 export const sidebarItems = [
   // {
@@ -54,6 +55,11 @@ export const sidebarItems = [
     icon: LiaUniversitySolid,
     title: "Alumni",
     link: "alumni",
+  },
+  {
+    icon: FaRegImages,
+    title: "Affiliated Colleges",
+    link: "affiliated-colleges",
   },
 ];
 
@@ -659,4 +665,21 @@ export const paperData = [
     courseMarks: 100,
     createdAt: "2025-04-01T12:20:00Z",
   },
+];
+
+////////////////////////////
+
+const slider_img =
+  "https://images.pexels.com/photos/430205/pexels-photo-430205.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1";
+
+export const sliderImage = [
+  slider_img,
+  slider_img,
+  slider_img,
+  slider_img,
+  slider_img,
+  slider_img,
+  slider_img,
+  slider_img,
+  slider_img,
 ];

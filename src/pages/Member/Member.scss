@@ -1,6 +1,7 @@
 @use "../../styles/responsive.scss" as *;
 
 .member {
+ 
   .member-top {
     display: flex;
     justify-content: space-between;
@@ -107,6 +108,10 @@
         align-items: center;
         margin-top: 20px;
 
+        h3{
+          color: #fff;
+        }
+
         p {
           color: #fff;
           text-align: center;
@@ -157,7 +162,7 @@
 }
 
 ////////////////
-///
+
 .deleteImage {
   position: fixed;
   top: 0;
