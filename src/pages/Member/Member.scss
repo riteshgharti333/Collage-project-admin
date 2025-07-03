@@ -1,14 +1,13 @@
 @use "../../styles/responsive.scss" as *;
 
 .member {
- 
   .member-top {
     display: flex;
     justify-content: space-between;
   }
 
   .member-imgs {
-    display: grid;
+    // display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 30px;
     grid-auto-rows: 1fr;
@@ -108,7 +107,7 @@
         align-items: center;
         margin-top: 20px;
 
-        h3{
+        h3 {
           color: #fff;
         }
 

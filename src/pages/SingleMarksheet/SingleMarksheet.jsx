@@ -177,7 +177,9 @@ const SingleMarksheet = () => {
   const handleDelete = async () => {
     setLoading(true);
     try {
-      const { data } = await axios.delete(`${baseUrl}/marksheet/${id}`);
+      const { data } = await axios.delete(`${baseUrl}/marksheet/${id}`, {
+        withCredentials: true,
+      });
 
       if (data && data.result == 1) {
         toast.success(data.message);
@@ -185,15 +187,15 @@ const SingleMarksheet = () => {
       }
     } catch (error) {
       console.log(error);
-      toast.error(error.response.data.messaage);
+      toast.error(error?.response?.data?.message);
     } finally {
       setLoading(false);
     }
   };
 
-    const cardRef = useRef();
-  
-   useEffect(() => {
+  const cardRef = useRef();
+
+  useEffect(() => {
     const handleClickOutside = (event) => {
       if (cardRef.current && !cardRef.current.contains(event.target)) {
         setShowDeleteModal(false);
@@ -203,9 +205,9 @@ const SingleMarksheet = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-    const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
 
-     const DeleteModal = () => (
+  const DeleteModal = () => (
     <div className="deleteImage">
       <div className="deleteImage-desc" ref={cardRef}>
         <h3>Are you sure you want to delete this?</h3>
@@ -227,8 +229,6 @@ const SingleMarksheet = () => {
       </div>
     </div>
   );
-
-
 
   return (
     <div className="singleMarksheet">
@@ -429,7 +429,6 @@ const SingleMarksheet = () => {
         )}
       </div>
       {showDeleteModal && <DeleteModal />}
-
     </div>
   );
 };

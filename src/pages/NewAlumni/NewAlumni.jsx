@@ -8,7 +8,7 @@ import axios from "axios";
 import { baseUrl } from "../../main";
 import { toast } from "sonner";
 import { MdKeyboardBackspace } from "react-icons/md";
-import ImageCropModal from "../../components/ImageCropModel/ImageCropModel";  // Import the image crop modal
+import ImageCropModal from "../../components/ImageCropModel/ImageCropModel"; // Import the image crop modal
 
 const NewAlumni = () => {
   const fileInputRef = useRef(null);
@@ -39,16 +39,16 @@ const NewAlumni = () => {
     const reader = new FileReader();
     reader.onloadend = () => {
       setCropSrc(reader.result);
-      setShowCropModal(true);  // Show crop modal
+      setShowCropModal(true); // Show crop modal
     };
     reader.readAsDataURL(file);
   };
 
   // Handle cropping action
   const handleCropDone = ({ blob, url }) => {
-    setSelectedImage(url);  // Set the cropped image
+    setSelectedImage(url); // Set the cropped image
     setFile(new File([blob], "cropped.jpg", { type: "image/jpeg" }));
-    setShowCropModal(false);  // Close crop modal
+    setShowCropModal(false); // Close crop modal
   };
 
   // Handle image upload button click
@@ -74,6 +74,9 @@ const NewAlumni = () => {
       const { data } = await axios.post(
         `${baseUrl}/alumni/new-alumni`,
         formData,
+        {
+          withCredentials: true,
+        },
         {
           headers: {
             "Content-Type": "multipart/form-data",

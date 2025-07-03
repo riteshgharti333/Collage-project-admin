@@ -63,7 +63,9 @@ const UpdateStudent = () => {
     setLoading(true);
 
     try {
-      const { data } = await axios.put(`${baseUrl}/student/${id}`, formData);
+      const { data } = await axios.put(`${baseUrl}/student/${id}`, formData, {
+        withCredentials: true,
+      });
 
       if (data.result === 1) {
         toast.success("Student updated successfully!");
@@ -73,7 +75,7 @@ const UpdateStudent = () => {
       }
     } catch (error) {
       console.error("Error during update:", error);
-      toast.error("Failed to update student. Please try again.");
+      toast.error(error.response.data.message);
     } finally {
       setLoading(false);
     }

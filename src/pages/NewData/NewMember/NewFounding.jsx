@@ -73,6 +73,9 @@ const NewFounding = () => {
         `${baseUrl}/founder/new-founder`,
         formData,
         {
+          withCredentials: true,
+        },
+        {
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -82,7 +85,7 @@ const NewFounding = () => {
       navigate("/mentor");
     } catch (error) {
       console.error("Error creating staff:", error);
-      toast.error("Failed to add mentor.");
+      toast.error(error.response.data.message);
     } finally {
       setLoading(false);
     }

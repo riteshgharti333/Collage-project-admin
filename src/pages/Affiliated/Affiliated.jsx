@@ -53,7 +53,9 @@ const Affiliated = () => {
     setLoading(true);
 
     try {
-      const { data } = await axios.delete(`${baseUrl}/affiliate/${id}`);
+      const { data } = await axios.delete(`${baseUrl}/affiliate/${id}`, {
+        withCredentials: true,
+      });
 
       if (data && data.result == 1) {
         toast.success(data.message);
@@ -63,7 +65,7 @@ const Affiliated = () => {
       setAllData((prev) => prev.filter((item) => item._id !== id));
     } catch (error) {
       console.error("Error deleting affiliate:", error);
-      toast.error("Failed to delete affiliate!");
+      toast.error(error.response.data.message);
     } finally {
       setLoading(false);
     }
@@ -92,7 +94,7 @@ const Affiliated = () => {
   return (
     <div className="affiliated">
       <div className="affiliated-top">
-        <h1>New Affiliated Image</h1>
+        <h1>Affiliated Images</h1>
         <Link to={"/new-affiliated-colleges"} className="success-btn">
           Add new affiliated colleges
         </Link>

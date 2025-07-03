@@ -13,9 +13,13 @@ import { IoTrashBin } from "react-icons/io5";
 const NewCourse = () => {
   const navigate = useNavigate();
   const fileInputRef = useRef(null);
+  const fileSmInputRef = useRef(null);
 
   const [bannerImage, setBannerImage] = useState(null);
+  const [courseSmImage, setCourseSmImage] = useState(null);
+
   const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedSmFile, setSelectedSmFile] = useState(null);
 
   const [bannerTitle, setBannerTitle] = useState("");
   const [courseType, setCourseType] = useState("UG Course");
@@ -63,8 +67,28 @@ const NewCourse = () => {
     }
   };
 
+  const handleSmImageChange = (e) => {
+    const file = e.target.files[0];
+    const maxSize = 2 * 1024 * 1024;
+
+    if (file) {
+      if (file.size > maxSize) {
+        toast.error("Image must be less than 2MB!");
+        return;
+      }
+
+      setSelectedSmFile(file);
+      const imageUrl = URL.createObjectURL(file);
+      setCourseSmImage(imageUrl);
+    }
+  };
+
   const openFilePicker = () => {
     fileInputRef.current.click();
+  };
+
+  const openSmFilePicker = () => {
+    fileSmInputRef.current.click();
   };
 
   const deleteHighlight = (indexToRemove) => {
@@ -136,6 +160,8 @@ const NewCourse = () => {
 
     const formData = new FormData();
     formData.append("bannerImage", selectedFile);
+    formData.append("smCourseImage", selectedSmFile);
+
     formData.append("bannerTitle", bannerTitle);
     formData.append("courseType", courseType);
     formData.append("courseTitle", courseTitle);
@@ -163,7 +189,10 @@ const NewCourse = () => {
     try {
       const { data } = await axios.post(
         `${baseUrl}/course/new-course`,
-        formData
+        formData,
+        {
+          withCredentials: true,
+        }
       );
       if (data) {
         toast.success(data.message);
@@ -230,6 +259,40 @@ const NewCourse = () => {
             value={bannerTitle}
             onChange={(e) => setBannerTitle(e.target.value)}
           />
+        </div>
+      </div>
+
+      <div className="newCourse-smImg">
+        <div className="newCourse-smImg-banner">
+          {courseSmImage ? (
+            <img
+              src={courseSmImage}
+              alt="Course Image"
+              className="banner-preview"
+            />
+          ) : (
+            <div className="newCourse-banner-desc" onClick={openSmFilePicker}>
+              <BiImageAdd className="add-image-icon" />
+              <p>Add Home Course Image</p>
+            </div>
+          )}
+          <input
+            type="file"
+            accept="image/*"
+            ref={fileSmInputRef}
+            name="courseSmImage"
+            onChange={handleSmImageChange}
+            style={{ display: "none" }}
+          />
+        </div>
+
+        <p className="rec-size">Recommended Size: 250 x 370</p>
+
+        <div className="newCourse-banner-btn">
+          <button className="success-btn" onClick={openSmFilePicker}>
+            <FiPlusCircle />
+            Add Course Image
+          </button>
         </div>
       </div>
 

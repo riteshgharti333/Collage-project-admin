@@ -7,6 +7,7 @@ import { MdKeyboardBackspace } from "react-icons/md";
 
 import { useState } from "react";
 import { baseUrl } from "../../main";
+import axios from "axios";
 
 const Profile = () => {
   const { user } = useContext(Context);
@@ -29,7 +30,7 @@ const Profile = () => {
     fetchProfile();
   }, []);
 
-  const displayUser = profile || user?.user;
+  const displayUser = profile;
 
   return (
     <div className="profile">

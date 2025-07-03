@@ -14,7 +14,8 @@ const UpdatePassword = () => {
     newPassword: "",
     confirmPassword: "",
   });
-  const [loading, setLoading] = useState();
+  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false); // 👈 New state
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -23,7 +24,6 @@ const UpdatePassword = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Basic validation
     if (formData.newPassword !== formData.confirmPassword) {
       toast.error("New password and confirm password do not match!");
       return;
@@ -74,7 +74,7 @@ const UpdatePassword = () => {
             <div className="formData">
               <label htmlFor="currentPassword">Current Password</label>
               <input
-                type="password"
+                type={showPassword ? "text" : "password"} // 👈 Toggle here
                 name="oldPassword"
                 placeholder="Enter Current Password"
                 value={formData.oldPassword}
@@ -85,7 +85,7 @@ const UpdatePassword = () => {
             <div className="formData">
               <label htmlFor="newPassword">New Password</label>
               <input
-                type="password"
+                type={showPassword ? "text" : "password"} // 👈 Toggle here
                 name="newPassword"
                 placeholder="Enter New Password"
                 value={formData.newPassword}
@@ -96,7 +96,7 @@ const UpdatePassword = () => {
             <div className="formData">
               <label htmlFor="confirmPassword">Confirm New Password</label>
               <input
-                type="password"
+                type={showPassword ? "text" : "password"} // 👈 Toggle here
                 name="confirmPassword"
                 placeholder="Confirm New Password"
                 value={formData.confirmPassword}
@@ -104,8 +104,21 @@ const UpdatePassword = () => {
                 required
               />
             </div>
+
+            {/* ✅ Show Password Checkbox */}
+            <div className="formData check">
+              <label>
+                <input
+                  type="checkbox"
+                  checked={showPassword}
+                  onChange={() => setShowPassword(!showPassword)}
+                />
+                Show Password
+              </label>
+            </div>
+
             <button type="submit" className="success-btn" disabled={loading}>
-              {loading ? "Changing password..." : "  Change Password"}
+              {loading ? "Changing password..." : "Change Password"}
             </button>
           </form>
         </div>

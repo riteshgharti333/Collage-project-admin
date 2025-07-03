@@ -67,6 +67,9 @@ const NewStaff = () => {
         `${baseUrl}/staff/new-staff`,
         formData,
         {
+          withCredentials: true,
+        },
+        {
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -76,7 +79,7 @@ const NewStaff = () => {
       navigate(-1);
     } catch (error) {
       console.error("Error creating staff:", error);
-      toast.error("Failed to add staff member.");
+      toast.error(error.response.data.message);
     } finally {
       setLoading(false);
     }

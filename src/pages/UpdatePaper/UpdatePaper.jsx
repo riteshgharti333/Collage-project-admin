@@ -93,7 +93,9 @@ const UpdatePaper = () => {
     }
 
     try {
-      const { data } = await axios.put(`${baseUrl}/exam/${id}`, formData);
+      const { data } = await axios.put(`${baseUrl}/exam/${id}`, formData, {
+        withCredentials: true,
+      });
       if (data && data.result === 1) {
         toast.success(data.message);
         navigate("/paper-design");
@@ -108,7 +110,9 @@ const UpdatePaper = () => {
   const handleDelete = async () => {
     setLoading(true);
     try {
-      const { data } = await axios.delete(`${baseUrl}/exam/${id}`);
+      const { data } = await axios.delete(`${baseUrl}/exam/${id}`, {
+        withCredentials: true,
+      });
       if (data) {
         toast.success(data.message);
         setShowDeleteModal(false);
@@ -116,7 +120,7 @@ const UpdatePaper = () => {
       }
     } catch (error) {
       console.error("Error deleting exam:", error);
-      toast.error("Failed to delete exam!");
+      toast.error(error?.response?.data?.message || "Something went wrong.");
     } finally {
       setLoading(false);
     }

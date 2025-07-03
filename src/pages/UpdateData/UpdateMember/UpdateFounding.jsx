@@ -75,14 +75,21 @@ const UpdateFounding = () => {
       if (file) {
         formData.append("image", file);
       }
-      const { data } = await axios.put(`${baseUrl}/founder/${id}`, formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
+      const { data } = await axios.put(
+        `${baseUrl}/founder/${id}`,
+        formData,
+        {
+          withCredentials: true,
+        },
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
       toast.success(data.message);
       navigate(-1);
     } catch (error) {
       console.error("Error updating founding member:", error);
-      toast.error("Failed to update founding member!");
+      toast.error(error.response.data.message);
     } finally {
       setLoading(false);
     }

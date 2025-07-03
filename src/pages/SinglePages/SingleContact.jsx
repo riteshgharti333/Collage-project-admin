@@ -19,11 +19,11 @@ const SingleContact = () => {
 
   const { id } = useParams();
 
-  // ✅ Fetch Single Contact
   useEffect(() => {
     const getSingleData = async () => {
       try {
         const { data } = await axios.get(`${baseUrl}/contact/${id}`);
+        console.log(data);
         if (data && data.contact) {
           setSingleData(data.contact);
         }
@@ -48,22 +48,22 @@ const SingleContact = () => {
     },
   ];
 
-  // ✅ Approve Contact Handler
   const handleApprove = async () => {
     if (approved) {
-      toast.info("Form is already approved."); // ✅ Toast if already approved
+      toast.info("Form is already approved.");
       return;
     }
 
     setApproving(true);
 
     try {
-      const { data } = await axios.put(`${baseUrl}/contact/approve/${_id}`);
+      const { data } = await axios.put(`${baseUrl}/contact/approve/${_id}`, {
+        withCredentials: true,
+      });
 
       if (data && data.result === 1) {
         toast.success(data.message);
 
-        // ✅ Update local state
         setSingleData((prev) => ({
           ...prev,
           approved: true,
@@ -73,7 +73,7 @@ const SingleContact = () => {
       }
     } catch (error) {
       console.error("Error approving form:", error);
-      toast.error("Failed to approve the form. Please try again.");
+      toast.error(error.response.data.message);
     } finally {
       setApproving(false);
       setApproveCard(false);
@@ -149,7 +149,6 @@ const SingleContact = () => {
         </button>
       </div>
 
-      {/* ✅ Confirmation Modal */}
       {approveCard && (
         <div className="approve-card">
           <div className="approve-desc" ref={cardRef}>

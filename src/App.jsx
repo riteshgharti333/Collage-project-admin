@@ -2,7 +2,6 @@ import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import Login from "./pages/Login/Login";
-import Register from "./pages/Register/Register";
 import Admission from "./pages/TablePages/Admission";
 import Enquiry from "./pages/TablePages/Enquiry";
 import Contact from "./pages/TablePages/Contact";
@@ -26,7 +25,7 @@ import UpdateStudent from "./pages/UpdateData/UpdateStudent/UpdateStudent";
 import GalleryFolder from "./pages/GalleryFolder/GalleryFolder";
 import NewGalleryFolder from "./pages/NewData/NewGalleryFolder/NewGalleryFolder";
 import UpdateGalleryFolder from "./pages/UpdateData/UpdateGalleryFolder/UpdateGalleryFolder";
-import Alumini from "./pages/Alumini/Alumini";
+import Alumni from "./pages/Alumni/Alumni";
 import NewAlumni from "./pages/NewAlumni/NewAlumni";
 import UpdateAlumni from "./pages/UpdateData/UpdateAlumni/UpdateAlumni";
 import NewStudent from "./pages/NewData/NewStudent/NewStudent";
@@ -52,23 +51,38 @@ import UpdateMarkSheet from "./pages/UpdateMarkSheet/UpdateMarkSheet";
 import MarksheetPreview from "./components/MarksheetPreview/MarksheetPreview";
 import Affiliated from "./pages/Affiliated/Affiliated";
 import NewAffiliated from "./pages/Affiliated/NewAffiliated";
+import AboutContent from "./pages/AboutContent/AboutContent";
+import UpdateAbout from "./pages/AboutContent/UpdateAbout";
+import HomeContent from "./pages/HomeContent/HomeContent";
+import UpdateHomeContent from "./pages/HomeContent/UpdateHomeContent";
+import ContactDetails from "./pages/ContactDetails/ContactDetails";
+
+import { toast } from "sonner";
 
 function App() {
   const { user } = useContext(Context);
 
+  const shown = new Set();
+  const originalToastError = toast.error;
+
+  toast.error = (message, opts = {}) => {
+    const key = typeof message === "string" ? message : JSON.stringify(message);
+    if (shown.has(key)) return;
+    shown.add(key);
+    originalToastError(message, opts);
+    setTimeout(() => shown.delete(key), 2000);
+  };
+
   return (
     <div className="app">
-       {/* <BrowserRouter basename="/admin">  */}
-      <BrowserRouter>
+      <BrowserRouter basename="/admin">
+        {/* <BrowserRouter> */}
         <Toaster position="top-center" richColors />
         <Routes>
-          <Route
-            path="/login"
-            element={user ? <Navigate to="/" /> : <Login />}
-          />
+          <Route path="/login" element={<Login />} />
           {/* <Route path="/register" element={<Register />} /> */}
 
-          <Route element={user ? <Layout /> : <Navigate to="/login" />}>
+          <Route element={<Layout />}>
             <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/" element={<Dashboard />} />
 
@@ -79,7 +93,7 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/gallery-folder" element={<GalleryFolder />} />
             <Route path="/certificate" element={<Student />} />
-            <Route path="/alumni" element={<Alumini />} />
+            <Route path="/alumni" element={<Alumni />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/update-password" element={<UpdatePassword />} />
 
@@ -140,16 +154,31 @@ function App() {
 
             {/* Affiliated */}
             <Route path="/affiliated-colleges" element={<Affiliated />} />
-            <Route path="/new-affiliated-colleges" element={<NewAffiliated />} />
+            <Route
+              path="/new-affiliated-colleges"
+              element={<NewAffiliated />}
+            />
 
+            {/* About Content */}
 
+            <Route path="/about-content" element={<AboutContent />} />
+            <Route path="/update-about-content" element={<UpdateAbout />} />
+
+            {/* Course image */}
+            <Route path="/home-content-image" element={<HomeContent />} />
+            <Route
+              path="/update-home-content-image/:id"
+              element={<UpdateHomeContent />}
+            />
+
+            {/* Contact  */}
+            <Route path="/contact-details" element={<ContactDetails />} />
 
             {/* <Route path="*" element={<Navigate to="/" />} /> */}
           </Route>
           <Route path="/new-marksheet" element={<MarkSheet />} />
           <Route path="/update-marksheet/:id" element={<UpdateMarkSheet />} />
           <Route path="/markSheet-preview" element={<MarksheetPreview />} />
-
         </Routes>
       </BrowserRouter>
     </div>

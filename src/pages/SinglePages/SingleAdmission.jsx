@@ -97,7 +97,10 @@ const SingleAdmission = () => {
 
     try {
       const { data } = await axios.put(
-        `${baseUrl}/admission/admission-approve/${_id}`
+        `${baseUrl}/admission/admission-approve/${_id}`,
+        {
+          withCredentials: true,
+        }
       );
 
       if (data && data.result === 1) {
@@ -112,7 +115,7 @@ const SingleAdmission = () => {
       }
     } catch (error) {
       console.error("Error approving form:", error);
-      toast.error("Failed to approve the form. Please try again.");
+      toast.error(error.response.data.message);
     } finally {
       setApproving(false);
       setApproveCard(false);

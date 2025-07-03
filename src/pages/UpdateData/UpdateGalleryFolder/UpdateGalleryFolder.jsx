@@ -8,12 +8,33 @@ import { baseUrl } from "../../../main";
 import { toast } from "sonner";
 import axios from "axios";
 import { MdKeyboardBackspace } from "react-icons/md";
+import { FaPlus } from "react-icons/fa6";
 
 const UpdateGalleryFolder = () => {
   const [folderImage, setFolderImage] = useState(null);
   const [galleryImages, setGalleryImages] = useState([]); // New images
   const [existingImages, setExistingImages] = useState([]); // Existing images
   const [imagesToRemove, setImagesToRemove] = useState([]); // Images to remove
+
+  const fileInputRef = useRef(null);
+
+  const handleFileInputClick = () => {
+    fileInputRef.current.click();
+  };
+  const [folderImageFile, setFolderImageFile] = useState(null);
+
+  const handleFolderImageChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    if (file.size > 2 * 1024 * 1024) {
+      toast.error("Folder image exceeds 2MB");
+      return;
+    }
+
+    setFolderImage(URL.createObjectURL(file));
+    setFolderImageFile(file); // Save file to send to server
+  };
 
   const galleryInputRef = useRef(null);
   const navigate = useNavigate();
@@ -23,7 +44,6 @@ const UpdateGalleryFolder = () => {
 
   const [folderTitle, setFolderTitle] = useState("");
 
-  // ✅ Fetch Gallery Folder Data
   useEffect(() => {
     const getGalleryData = async () => {
       try {
@@ -43,7 +63,7 @@ const UpdateGalleryFolder = () => {
     getGalleryData();
   }, [id]);
 
-  // ✅ Handle Gallery Images Selection
+  //  Handle Gallery Images Selection
   const handleGalleryImagesChange = (event) => {
     const files = Array.from(event.target.files);
     const validGalleryImages = [];
@@ -63,43 +83,47 @@ const UpdateGalleryFolder = () => {
       setGalleryImages((prev) => [...prev, ...validGalleryImages]);
     }
   };
-
-  // ✅ Handle Remove Existing Image
   const handleRemoveExistingImage = (index) => {
     const imgToRemove = existingImages[index];
     setImagesToRemove((prev) => [...prev, imgToRemove.imageUrl]); // Store image URL to remove
     setExistingImages((prev) => prev.filter((_, i) => i !== index));
   };
 
-  // ✅ Handle Remove New Images (unsaved images)
   const handleRemoveNewImage = (index) => {
     setGalleryImages((prev) => prev.filter((_, i) => i !== index));
   };
 
   const handleUpdate = async () => {
-    if (galleryImages.length === 0 && imagesToRemove.length === 0) {
-      toast.error("No changes made. Add or remove images.");
+    setLoading(true);
+
+    if (!folderTitle.trim()) {
+      toast.error("Folder title is required");
       return;
     }
 
-    setLoading(true);
-
     const formData = new FormData();
 
-    // ✅ Append new images properly
     galleryImages.forEach((img) => {
       formData.append("galleryImages", img.file);
     });
 
-    // ✅ Append imagesToRemove as an array correctly
+    if (folderImageFile) {
+      formData.append("folderImage", folderImageFile);
+    }
+
     imagesToRemove.forEach((imgUrl) => {
-      formData.append("imagesToRemove[]", imgUrl); // ✅ Send as array
+      formData.append("imagesToRemove[]", imgUrl);
     });
+
+    formData.append("folderTitle", folderTitle);
 
     try {
       const response = await axios.put(
         `${baseUrl}/gallery-folder/${id}`,
         formData,
+        {
+          withCredentials: true,
+        },
         {
           headers: {
             "Content-Type": "multipart/form-data",
@@ -121,24 +145,46 @@ const UpdateGalleryFolder = () => {
 
   return (
     <div className="updateGalleryFolder">
-      <div className="newGallery-top">
+      <div className="updateGallery-top">
         <Link onClick={() => navigate(-1)} className="back-icon">
           <MdKeyboardBackspace size={35} />
         </Link>
         <h1>Update Gallery Images</h1>
       </div>
 
-      <div className="newGallery-content">
-        <div className="newGallery-content-details">
-          <div className="newGallery-content-details-card">
-            <div className="newGallery-content-details-left">
+      <div className="updateGallery-content">
+        <div className="updateGallery-content-details">
+          <div className="updateGallery-content-details-card">
+            <div className="updateGallery-content-details-left">
               <img src={folderImage} alt="Folder" />
+              <div className="updateGallery-new-btn">
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  accept="image/*"
+                  multiple
+                  style={{ display: "none" }}
+                  onChange={handleFolderImageChange}
+                />
 
-              <p className="folder-title">{folderTitle}</p>
-              <p className="foler-note">
-                <span>*</span> You can update only images not folder image and
-                folder title
-              </p>
+                <button
+                  type="button"
+                  className="success-btn"
+                  onClick={handleFileInputClick}
+                >
+                  <FaPlus /> Change folder image
+                </button>
+              </div>
+
+              <div className="updateGallery-title">
+                <p>Folder Title:</p>
+                <input
+                  type="text"
+                  value={folderTitle}
+                  onChange={(e) => setFolderTitle(e.target.value)}
+                  placeholder="Enter folder title"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -173,8 +219,8 @@ const UpdateGalleryFolder = () => {
           ))}
         </div>
 
-        <div className="newGallery-content-details">
-          <div className="newGallery-content-details-card">
+        <div className="updateGallery-content-details">
+          <div className="updateGallery-content-details-card">
             <div
               className="update-gallery"
               onClick={() => galleryInputRef.current.click()}

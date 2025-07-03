@@ -1,0 +1,121 @@
+.homeContent {
+  .homeContent-top {
+    display: flex;
+    justify-content: space-between;
+
+    h1 {
+      font-size: 30px;
+    }
+  }
+
+  .home-content-detail {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 2rem;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+    margin-top: 20px;
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+
+      label {
+        font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: #333;
+      }
+
+      textarea,
+      input {
+        padding: 0.75rem 1rem;
+        font-size: 1rem;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        outline: none;
+
+        &:focus {
+          border-color: #3b82f6; // Blue border
+          box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+        }
+      }
+    }
+
+    .home-content-detail-btns {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+    }
+  }
+
+  .homeContent-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    margin-top: 30px;
+
+    .homeContent-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      border-radius: 10px;
+      img {
+        width: 200px;
+        height: 250px;
+        object-fit: cover;
+        border-radius: 10px;
+      }
+
+      h2 {
+        color: #fff;
+        font-size: 20px;
+      }
+
+      button {
+        padding: 5px;
+        font-size: 14px;
+      }
+    }
+  }
+}
+///////////////////
+
+.deleteImage {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .deleteImage-desc {
+    background: #fff;
+    padding: 15px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 5px;
+    width: 300px;
+
+    h3 {
+      font-size: 25px;
+      color: #333;
+      font-weight: 600;
+    }
+
+    .deleteImage-btns {
+      display: flex;
+      gap: 20px;
+      margin-top: 30px;
+    }
+  }
+}

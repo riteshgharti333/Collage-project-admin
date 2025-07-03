@@ -1,18 +1,17 @@
 @use "../../styles/responsive.scss" as *;
 
-
 .sidebar {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-height: 100%;
+  min-height: 100vh;
+  background: #2e2e2e;
+  border-radius: $layout-radius;
 
   .sidebar-dropdown-link {
     margin-top: 8px;
     display: flex;
     align-items: center;
-   
-    
 
     .right-arrow {
       font-size: 25px;
@@ -49,8 +48,6 @@
         background: #000;
         color: #fff;
         position: relative;
-
-      
       }
     }
     &:hover {
@@ -80,7 +77,7 @@
       align-items: center;
       gap: 8px;
 
-      &.dash-top{
+      &.dash-top {
         margin-top: 50px;
       }
 
@@ -214,7 +211,7 @@
   }
 }
 
-/////////////////        
+/////////////////
 
 .sidebar-dropdown-content {
   overflow: hidden;
@@ -237,7 +234,7 @@
   color: #555;
   text-decoration: none;
   transition: all 0.3s ease;
-  
+
   &:hover {
     background-color: #f0f0f0;
     color: #000;
@@ -246,7 +243,7 @@
 
 .right-arrow {
   transition: transform 0.3s ease;
-  
+
   &.rotate {
     transform: rotate(90deg);
   }

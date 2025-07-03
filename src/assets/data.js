@@ -1,13 +1,16 @@
 import { MdOutlineDashboardCustomize } from "react-icons/md";
 import { MdOutlineGroup } from "react-icons/md";
 import { FaRegAddressCard } from "react-icons/fa";
-import { LuMailQuestion } from "react-icons/lu";
+import { LuContact, LuMailQuestion } from "react-icons/lu";
 import { MdOutlineQuestionAnswer } from "react-icons/md";
 import { LuGalleryHorizontalEnd } from "react-icons/lu";
 import { MdOutlineStars } from "react-icons/md";
 import { PiStudentBold } from "react-icons/pi";
 import { LiaUniversitySolid } from "react-icons/lia";
 import { FaRegImages } from "react-icons/fa";
+import { IoPersonOutline } from "react-icons/io5";
+import { MdOutlineImageAspectRatio } from "react-icons/md";
+
 
 export const sidebarItems = [
   // {
@@ -60,6 +63,21 @@ export const sidebarItems = [
     icon: FaRegImages,
     title: "Affiliated Colleges",
     link: "affiliated-colleges",
+  },
+   {
+    icon: IoPersonOutline,
+    title: "About Content",
+    link: "about-content",
+  },
+   {
+    icon: MdOutlineImageAspectRatio,
+    title: "Home Content Image",
+    link: "home-content-image",
+  },
+    {
+    icon: LuContact,
+    title: "Contct Details",
+    link: "contact-details",
   },
 ];
 

@@ -19,7 +19,7 @@ const NewGalleryFolder = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
-  // ✅ Handle Folder Image Selection
+  //  Handle Folder Image Selection
   const handleFolderImageChange = useCallback((event) => {
     const selectedFile = event.target.files[0];
     if (selectedFile) {
@@ -31,13 +31,12 @@ const NewGalleryFolder = () => {
       setFolderFile(selectedFile);
     }
   }, []);
-  
 
-  // ✅ Handle Gallery Images Selection
+  //  Handle Gallery Images Selection
   const handleGalleryImagesChange = useCallback((event) => {
     const files = Array.from(event.target.files);
     const validImages = [];
-  
+
     for (const file of files) {
       if (file.size > 2 * 1024 * 1024) {
         toast.error(`Image "${file.name}" exceeds 2MB and was skipped.`);
@@ -48,19 +47,18 @@ const NewGalleryFolder = () => {
         });
       }
     }
-  
+
     if (validImages.length > 0) {
       setGalleryImages((prev) => [...prev, ...validImages]);
     }
   }, []);
-  
 
-  // ✅ Remove Image
+  //  Remove Image
   const handleRemoveImage = useCallback((index) => {
     setGalleryImages((prev) => prev.filter((_, i) => i !== index));
   }, []);
 
-  // ✅ Form Submission with Cloudinary Upload
+  //  Form Submission with Cloudinary Upload
   const handleSaveToDatabase = useCallback(async () => {
     if (!folderTitle || !folderFile || galleryImages.length === 0) {
       toast.error(
@@ -84,6 +82,9 @@ const NewGalleryFolder = () => {
         `${baseUrl}/gallery-folder/new-gallery-folder`,
         formData,
         {
+          withCredentials: true,
+        },
+        {
           headers: {
             "Content-Type": "multipart/form-data",
           },
@@ -96,7 +97,7 @@ const NewGalleryFolder = () => {
       }
     } catch (error) {
       console.error("Error creating gallery folder:", error);
-      toast.error("Failed to create gallery folder.");
+      toast.error(error.response.data.message)
     } finally {
       setLoading(false);
     }
@@ -147,7 +148,9 @@ const NewGalleryFolder = () => {
               />
             </div>
 
-            <p className="rec-size" style={{color: "#fff"}}>Folder image recommended size: 400 x 400</p>
+            <p className="rec-size" style={{ color: "#fff" }}>
+              Folder image recommended size: 400 x 400
+            </p>
 
             {/* Folder Title */}
             <div className="gallery-folder-input">
@@ -173,7 +176,6 @@ const NewGalleryFolder = () => {
                   className="delete-btn"
                   onClick={() => handleRemoveImage(index)}
                   aria-label="Delete Photo"
-                  
                 >
                   Remove
                 </button>
@@ -205,7 +207,9 @@ const NewGalleryFolder = () => {
               />
             </div>
 
-            <p className="rec-size" style={{color: "#fff"}}>Recommended Size: Any size</p>
+            <p className="rec-size" style={{ color: "#fff" }}>
+              Recommended Size: Any size
+            </p>
             {/* Save & Upload Buttons */}
             <div className="photo-add-btn">
               <button

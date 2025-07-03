@@ -74,12 +74,13 @@ const SingleEnquiry = () => {
     setApproving(true);
 
     try {
-      const { data } = await axios.put(`${baseUrl}/enquiry/approve/${_id}`);
+      const { data } = await axios.put(`${baseUrl}/enquiry/approve/${_id}`, {
+        withCredentials: true,
+      });
 
       if (data && data.result === 1) {
         toast.success(data.message);
 
-        // ✅ Update local state
         setSingleData((prev) => ({
           ...prev,
           approved: true,
@@ -89,7 +90,7 @@ const SingleEnquiry = () => {
       }
     } catch (error) {
       console.error("Error approving enquiry:", error);
-      toast.error("Failed to approve the enquiry. Please try again.");
+      toast.error(error.response.data.message);
     } finally {
       setApproving(false);
       setApproveCard(false);

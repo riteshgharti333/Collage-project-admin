@@ -18,9 +18,17 @@ const MarkSheet = () => {
     const { name, value } = e.target;
     const newCourses = [...courses];
     newCourses[index][name] = value;
+
+    // Auto-calculate grade when marks are changed
+    if (name === "marks" && value !== "") {
+      const maxMarks = parseFloat(newCourses[index].maxMarks) || 0;
+      const obtainedMarks = parseFloat(value) || 0;
+      const percentage = maxMarks > 0 ? (obtainedMarks / maxMarks) * 100 : 0;
+      newCourses[index].grade = calculateGrade(percentage);
+    }
+
     setCourses(newCourses);
   };
-
   const removeCourse = (index) => {
     if (courses.length > 1) {
       const newCourses = [...courses];
@@ -30,26 +38,33 @@ const MarkSheet = () => {
   };
 
   const calculatePercentage = () => {
-    const totalMarks = courses.reduce(
+    // Filter out absent courses
+    const presentCourses = courses.filter((course) => course.grade !== "Ab");
+
+    const totalMarks = presentCourses.reduce(
       (sum, course) => sum + (parseFloat(course.marks) || 0),
       0
     );
-    const totalMaxMarks = courses.reduce(
+    const totalMaxMarks = presentCourses.reduce(
       (sum, course) => sum + (parseFloat(course.maxMarks) || 0),
       0
     );
+
     return totalMaxMarks > 0
       ? ((totalMarks / totalMaxMarks) * 100).toFixed(2)
       : "0.00";
   };
 
   const calculateGrade = (percentage) => {
-    if (percentage >= 90) return "A+";
-    if (percentage >= 80) return "A";
-    if (percentage >= 70) return "B+";
-    if (percentage >= 60) return "B";
-    if (percentage >= 50) return "C";
-    if (percentage >= 40) return "D";
+    const percent = parseFloat(percentage);
+    if (percent === 0) return "Ab.";
+    if (percent >= 90) return "O";
+    if (percent >= 80) return "A+";
+    if (percent >= 70) return "A";
+    if (percent >= 60) return "B+";
+    if (percent >= 50) return "B";
+    if (percent >= 40) return "C";
+    if (percent >= 35) return "P";
     return "F";
   };
 
@@ -248,49 +263,54 @@ const MarkSheet = () => {
       }
 
       for (const course of courses) {
+        if (course.grade === "Ab") continue; // Skip validation for absent students
+
         if (!course.marks || isNaN(course.marks)) {
           toast.error(`Obtained marks missing for course: ${course.name}`);
           return;
         }
-
-        if (!course.grade || course.grade.trim() === "") {
-          toast.error(`Grade missing for course: ${course.name}`);
-          return;
-        }
       }
 
-      // Calculate totals
-      const totalObtainedMarks = courses.reduce(
+      // Calculate totals (excluding absent courses)
+      const presentCourses = courses.filter((course) => course.grade !== "Ab");
+
+      const totalObtainedMarks = presentCourses.reduce(
         (sum, course) => sum + (parseFloat(course.marks) || 0),
         0
       );
-      const totalMaxMarks = courses.reduce(
+      const totalMaxMarks = presentCourses.reduce(
         (sum, course) => sum + (parseFloat(course.maxMarks) || 0),
         0
       );
+
+      const percentage =
+        totalMaxMarks > 0 ? (totalObtainedMarks / totalMaxMarks) * 100 : 0;
+      const overallGrade = calculateGrade(percentage);
 
       const subjects = courses.map((course) => ({
         courseCode: course.code,
         courseName: course.name,
         maxMarks: course.maxMarks,
-        obtainedMarks: course.marks,
+        obtainedMarks: course.grade === "Ab" ? 0 : course.marks,
         grade: course.grade,
       }));
-
-      console.log(subjects);
 
       const requestBody = {
         studentId: singleStudentData._id,
         subjects,
         totalMaxMarks,
         totalObtainedMarks,
-        overallGrade: grade,
+        percentage: parseFloat(percentage),
+        overallGrade,
       };
 
       // Make API call
       const { data } = await axios.post(
         `${baseUrl}/marksheet/new-marksheet`,
-        requestBody
+        requestBody,
+        {
+          withCredentials: true,
+        }
       );
 
       if (data && data.result === 1) {
@@ -506,14 +526,23 @@ const MarkSheet = () => {
                         />
                       </td>
                       <td>
-                        <input
-                          type="text"
+                        <select
                           name="grade"
                           value={course.grade}
                           onChange={(e) => handleCourseChange(index, e)}
-                          placeholder="A, B, C..."
                           required
-                        />
+                        >
+                          <option value="">Select Grade</option>
+                          <option value="O">O (10) - 90-100</option>
+                          <option value="A+">A+ (9) - 80-89</option>
+                          <option value="A">A (8) - 70-79</option>
+                          <option value="B+">B+ (7) - 60-69</option>
+                          <option value="B">B (6) - 50-59</option>
+                          <option value="C">C (5) - 40-49</option>
+                          <option value="P">P (4) - 35-39</option>
+                          <option value="F">F (0) - 0-34</option>
+                          <option value="Ab">Ab (0) - Absent</option>
+                        </select>
                       </td>
                       <td>
                         <button

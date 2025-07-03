@@ -44,7 +44,85 @@ $error-color: #e74c3c;
       }
     }
 
-    .rec-size{
+    .rec-size {
+      color: #fff;
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .newCourse-banner-btn {
+      display: flex;
+      justify-content: center;
+      margin-top: 15px;
+      button {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+    }
+
+    .newCourse-title {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+      gap: 20px;
+      label {
+        color: #fff;
+        font-size: 18px;
+      }
+      input {
+        background: transparent;
+        border: none;
+        border-bottom: 1px solid #fff;
+        font-size: 18px;
+        color: #fff;
+        outline: none;
+      }
+    }
+  }
+
+  .newCourse-smImg {
+    margin-top: 20px;
+    .newCourse-smImg-banner {
+      background: #fff;
+      width: 250px;
+      height: 370px;
+      position: relative;
+      margin: auto;
+       border-radius: 10px;
+
+      img {
+        width: 250px;
+        height: 370px;
+        display: block;
+        border-radius: 10px;
+        object-fit: cover;
+      }
+
+      .newCourse-banner-desc {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        .add-image-icon {
+          font-size: 70px;
+        }
+
+        p {
+          font-size: 20px;
+          font-weight: 500;
+          margin-top: 10px;
+          text-align: center;
+        }
+      }
+    }
+
+    .rec-size {
       color: #fff;
       text-align: center;
       margin-top: 10px;

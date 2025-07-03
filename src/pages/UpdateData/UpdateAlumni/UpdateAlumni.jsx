@@ -86,16 +86,22 @@ const UpdateAlumni = () => {
       formData.append("location", location);
       formData.append("designation", designation);
 
-
       if (file) {
         formData.append("image", file);
       }
 
-      const { data } = await axios.put(`${baseUrl}/alumni/${id}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
+      const { data } = await axios.put(
+        `${baseUrl}/alumni/${id}`,
+        formData,
+        {
+          withCredentials: true,
         },
-      });
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
 
       toast.success(data.message);
       navigate(-1);

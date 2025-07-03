@@ -153,6 +153,9 @@ const UpdateAdmissionForm = () => {
         `${baseUrl}/admission/${id}`,
         formDataObj,
         {
+          withCredentials: true,
+        },
+        {
           headers: {
             "Content-Type": "multipart/form-data",
           },

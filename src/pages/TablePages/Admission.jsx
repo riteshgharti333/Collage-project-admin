@@ -48,9 +48,27 @@ const Admission = () => {
             .replace(" ", " ");
         },
       },
+      {
+        accessorKey: "approved",
+        header: "Status",
+        cell: (info) => {
+          const isApproved = info.getValue();
+          return (
+            <span
+              style={{
+                color: isApproved ? "green" : "orange",
+                fontWeight: 600,
+              }}
+            >
+              {isApproved ? "Approved" : "Pending"}
+            </span>
+          );
+        },
+      },
     ],
     []
   );
+  
 
   return (
     <div className="admission">

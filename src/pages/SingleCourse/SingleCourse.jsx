@@ -2,7 +2,6 @@ import "./SingleCourse.scss";
 
 import { useEffect, useRef, useState } from "react";
 
-
 import { MdKeyboardBackspace } from "react-icons/md";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { baseUrl } from "../../main";
@@ -42,7 +41,9 @@ const SingleCourse = () => {
   const handleDelete = async (id) => {
     try {
       setLoading(true);
-      const { data } = await axios.delete(`${baseUrl}/course/${id}`);
+      const { data } = await axios.delete(`${baseUrl}/course/${id}`, {
+        withCredentials: true,
+      });
 
       if (data) {
         toast.success(data?.message || "Course deleted successfully");
@@ -86,6 +87,7 @@ const SingleCourse = () => {
     careerLists,
     overviewTitle,
     overviewDesc,
+    smCourseImage,
   } = course;
 
   const DeleteCourse = ({ id, onClose }) => (
@@ -118,7 +120,9 @@ const SingleCourse = () => {
         </Link>
         <div className="singleCourse-btns">
           <Link
-            to={`/course/update-course/${course._id}/${course.bannerTitle || ""}`}
+            to={`/course/update-course/${course._id}/${
+              course.bannerTitle || ""
+            }`}
             className="success-btn"
           >
             Update Course
@@ -153,7 +157,6 @@ const SingleCourse = () => {
         <div className="singleCourse-content-left">
           <h2>{courseTitle}</h2>
           <p style={{ whiteSpace: "pre-line" }}>{courseDescription}</p>
-
 
           <h3>{courseOfCoursesTitle}</h3>
 

@@ -36,7 +36,10 @@ const NewStudent = () => {
     try {
       const { data } = await axios.post(
         `${baseUrl}/student/new-student`,
-        formData
+        formData,
+        {
+          withCredentials: true,
+        }
       );
 
       if (data.result === 1) {
@@ -47,7 +50,7 @@ const NewStudent = () => {
       }
     } catch (error) {
       console.error("Error during creation:", error);
-      toast.error(error.response?.data?.message || "Failed to add student.");
+      toast.error(error.response?.data?.message);
     } finally {
       setLoading(false);
     }
@@ -77,7 +80,7 @@ const NewStudent = () => {
                 placeholder="Add name"
               />
             </li>
-              <li className="single-page-form-item">
+            <li className="single-page-form-item">
               <label>Father's Name:</label>
               <input
                 type="text"

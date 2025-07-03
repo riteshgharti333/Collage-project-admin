@@ -20,7 +20,9 @@ const Navbar = () => {
   const handleLogout = async () => {
     setLoading(true);
     try {
-      await axios.post(`${baseUrl}/auth/logout`, { withCredentials: true });
+      await axios.post(`${baseUrl}/auth/logout`, null, {
+        withCredentials: true,
+      });
 
       localStorage.removeItem("user");
       dispatch({ type: "LOGOUT" });
@@ -51,17 +53,19 @@ const Navbar = () => {
     fetchProfile();
   }, []);
 
-  const displayUser = profile || user?.user;
+  const displayUser = profile;
 
   return (
     <div className="navbar">
       <div className="navbar-left">
-        <Link to={"/profile"} className="user-link">
-          <FaRegUser className="user-icon" />
-          <div className="user">
-            <p>{displayUser?.name}</p>
-          </div>
-        </Link>
+        {user && (
+          <Link to={"/profile"} className="user-link">
+            <FaRegUser className="user-icon" />
+            <div className="user">
+              <p>{displayUser?.name}</p>
+            </div>
+          </Link>
+        )}
       </div>
       <div className="navbar-right">
         <div className="sidebar-button">
@@ -72,8 +76,8 @@ const Navbar = () => {
             </button>
           ) : (
             <Link to={"/login"}>
-              <button onClick={handleLogout} disabled={loading}>
-                {loading ? "Loading..." : "Logout"}
+              <button>
+                Login
                 <HiLogin className="login-icon" />
               </button>
             </Link>

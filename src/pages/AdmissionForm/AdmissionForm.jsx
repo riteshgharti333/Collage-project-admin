@@ -105,7 +105,11 @@ const AdmissionForm = () => {
       formDataObj.append("selectState", selectState);
       formDataObj.append("district", district);
       formDataObj.append("city", city);
-      formDataObj.append("photo", passportPhoto);
+      console.log(passportPhoto);
+
+      if (passportPhoto) {
+        formDataObj.append("photo", passportPhoto);
+      }
 
       documents.forEach((doc, index) => {
         formDataObj.append(`document`, doc);
@@ -114,6 +118,9 @@ const AdmissionForm = () => {
       const { data } = await axios.post(
         `${baseUrl}/admission/new-admission`,
         formDataObj,
+        {
+          withCredentials: true,
+        },
         {
           headers: {
             "Content-Type": "multipart/form-data",
@@ -288,7 +295,6 @@ const AdmissionForm = () => {
                   ref={passportRef}
                   onChange={handlePassportPhoto}
                   accept="image/*"
-                  required
                   style={{ display: "none" }}
                 />
                 <label className="upload-label">
@@ -317,7 +323,6 @@ const AdmissionForm = () => {
                   ref={documentsRef}
                   onChange={handleDocuments}
                   multiple
-                  required
                   style={{ display: "none" }}
                 />
                 <label className="upload-label">

@@ -19,19 +19,21 @@ const NewPaper = () => {
 
   const generateCourseCode = () => {
     // Generate random 3 numbers (0-9) with NAD prefix and # suffix
-    const numbers = '0123456789';
-    
-    let randomNumbers = '';
+    const numbers = "0123456789";
+
+    let randomNumbers = "";
     for (let i = 0; i < 3; i++) {
-      randomNumbers += numbers.charAt(Math.floor(Math.random() * numbers.length));
+      randomNumbers += numbers.charAt(
+        Math.floor(Math.random() * numbers.length)
+      );
     }
-    
+
     return `NAD${randomNumbers}#`; // Format: NAD123#
   };
 
   const handleGenerateCode = () => {
     const newCode = generateCourseCode();
-    setFormData(prev => ({ ...prev, courseCode: newCode }));
+    setFormData((prev) => ({ ...prev, courseCode: newCode }));
     toast.success(`Generated new code: ${newCode}`);
   };
 
@@ -59,7 +61,9 @@ const NewPaper = () => {
     }
 
     try {
-      const { data } = await axios.post(`${baseUrl}/exam/new-exam`, formData);
+      const { data } = await axios.post(`${baseUrl}/exam/new-exam`, formData, {
+        withCredentials: true,
+      });
 
       if (data && data.result === 1) {
         toast.success(data.message);
@@ -109,8 +113,8 @@ const NewPaper = () => {
                 className="course-code"
                 readOnly
               />
-              <button 
-                type="button" 
+              <button
+                type="button"
                 onClick={handleGenerateCode}
                 className="generate-btn"
               >

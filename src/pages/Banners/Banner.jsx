@@ -62,14 +62,18 @@ const Banner = () => {
     setLoading(true);
 
     try {
-      // ✅ Create FormData
+      //  Create FormData
       const formData = new FormData();
       formData.append("image", selectedFile); // Image file
 
-      // ✅ Send FormData to the API
+      //  Send FormData to the API
       const { data } = await axios.put(
         `${baseUrl}/banner/${bannerType}/${id}`,
         formData,
+        {
+          withCredentials: true,
+        },
+
         {
           headers: {
             "Content-Type": "multipart/form-data", // Required for FormData
@@ -80,7 +84,7 @@ const Banner = () => {
       if (data) {
         toast.success(data.message);
 
-        // ✅ Display the updated image
+        //  Display the updated image
         const tempUrl = URL.createObjectURL(selectedFile);
         setSingleBanner(tempUrl);
       }
@@ -98,7 +102,7 @@ const Banner = () => {
         <h1>{bannerType.split("-").join(" ").toLowerCase()}</h1>
       </div>
 
-    <div className="banner-content">
+      <div className="banner-content">
         <img
           src={preview || singleBanner}
           alt="Banner Preview"

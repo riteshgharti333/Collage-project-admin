@@ -44,6 +44,9 @@ const NewAffiliated = () => {
         `${baseUrl}/affiliate/new-affiliate`,
         formData,
         {
+          withCredentials: true,
+        },
+        {
           headers: { "Content-Type": "multipart/form-data" },
         }
       );
@@ -90,7 +93,7 @@ const NewAffiliated = () => {
           />
 
           <p className="rec-size" style={{ color: "#fff" }}>
-            Recommended size: 300 × 170 
+            Recommended size: 300 × 170
           </p>
 
           <div className="button-group">

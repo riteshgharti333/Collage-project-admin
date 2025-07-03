@@ -4,6 +4,7 @@ import { useEffect, useRef, useState, useCallback } from "react";
 import axios from "axios";
 import { baseUrl } from "../../main";
 import { toast } from "sonner";
+import DragDropWrapper from "../../components/DragDropWrapper/DragDropWrapper";
 
 const GalleryFolder = () => {
   const [folders, setFolders] = useState([]);
@@ -11,17 +12,20 @@ const GalleryFolder = () => {
   const [selectedFolderId, setSelectedFolderId] = useState(null);
   const cardRef = useRef(null);
   const [loading, setLoading] = useState(false);
+  const [reorderLoading, setReorderLoading] = useState(false);
 
-  // ✅ Fetch All Folders
   const getAllFolder = useCallback(async () => {
     try {
       const { data } = await axios.get(
-        `${baseUrl}/gallery-folder/all-gallery-folders`,
+        `${baseUrl}/gallery-folder/all-gallery-folders`
       );
-      setFolders(data.folders);
+
+      if (data && data.result === 1) {
+        setFolders(data.folders);
+      }
     } catch (error) {
       console.error("Error fetching folders:", error);
-      toast.error("Failed to fetch gallery folders. Please try again.");
+      toast.error(error.response?.data?.message || "Failed to fetch folders.");
     }
   }, []);
 
@@ -29,26 +33,51 @@ const GalleryFolder = () => {
     getAllFolder();
   }, [getAllFolder]);
 
-  // ✅ Handle Folder Deletion
+  // ✅ Handle Drag Drop Reorder
+  const handleDrop = async (fromIndex, toIndex) => {
+    if (fromIndex === toIndex) return;
+    const updated = [...folders];
+    const [moved] = updated.splice(fromIndex, 1);
+    updated.splice(toIndex, 0, moved);
+    setFolders(updated);
+    await updateBackendOrder(updated);
+  };
+
+  const updateBackendOrder = async (updatedFolders) => {
+    setReorderLoading(true);
+    try {
+      const order = updatedFolders.map((folder) => folder._id);
+      const { data } = await axios.patch(`${baseUrl}/gallery-folder/reorder`, {
+        order,
+      });
+      if (data.result === 1) {
+        toast.success("Gallery folders reordered successfully!");
+      }
+    } catch (error) {
+      toast.error("Reordering failed.");
+    } finally {
+      setReorderLoading(false);
+    }
+  };
+
   const handleDelete = useCallback(async () => {
     if (!selectedFolderId) return;
-
     setLoading(true);
-
     try {
       const { data } = await axios.delete(
         `${baseUrl}/gallery-folder/${selectedFolderId}`,
+        {
+          withCredentials: true,
+        }
       );
-
       if (data.result === 1) {
         toast.success("Folder deleted successfully!");
         setFolders((prev) =>
-          prev.filter((folder) => folder._id !== selectedFolderId),
+          prev.filter((folder) => folder._id !== selectedFolderId)
         );
       }
     } catch (error) {
-      console.error("Error deleting folder:", error);
-      toast.error("Failed to delete the folder. Please try again.");
+      toast.error(error.response.data.message);
     } finally {
       setDeleteCard(false);
       setSelectedFolderId(null);
@@ -56,18 +85,15 @@ const GalleryFolder = () => {
     }
   }, [selectedFolderId]);
 
-  // ✅ Click Outside to Close Modal
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (cardRef.current && !cardRef.current.contains(event.target)) {
         setDeleteCard(false);
       }
     };
-
     if (deleteCard) {
       document.addEventListener("mousedown", handleClickOutside);
     }
-
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
@@ -103,29 +129,33 @@ const GalleryFolder = () => {
       </div>
 
       <div className="galleryFolder-cards">
-        {folders.length > 0 ? (
-          folders.map((item) => (
-            <div className="galleryFolder-card" key={item._id}>
-              <Link
-                to={`/gallery-folder/${item._id}?title=${encodeURIComponent(
-                  item.folderTitle,
-                )}`}
-              >
-                <img src={item.folderImage} alt={item.folderTitle} />
-                <p>{item.folderTitle}</p>
-              </Link>
+        {folders?.length > 0 ? (
+          <DragDropWrapper
+            items={folders}
+            onDrop={handleDrop}
+            renderItem={(item, index) => (
+              <div className="galleryFolder-card" key={item._id}>
+                <Link
+                  to={`/gallery-folder/${item._id}?title=${encodeURIComponent(
+                    item.folderTitle
+                  )}`}
+                >
+                  <img src={item.folderImage} alt={item.folderTitle} />
+                  <p>{item.folderTitle}</p>
+                </Link>
 
-              <button
-                className="delete-btn"
-                onClick={() => {
-                  setSelectedFolderId(item._id);
-                  setDeleteCard(true);
-                }}
-              >
-                Delete Folder
-              </button>
-            </div>
-          ))
+                <button
+                  className="delete-btn"
+                  onClick={() => {
+                    setSelectedFolderId(item._id);
+                    setDeleteCard(true);
+                  }}
+                >
+                  Delete Folder
+                </button>
+              </div>
+            )}
+          />
         ) : (
           <p>No folders found. Add new folders!</p>
         )}

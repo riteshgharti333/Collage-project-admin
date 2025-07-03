@@ -31,7 +31,6 @@ const SingleStudent = () => {
     getSingleData();
   }, [id]);
 
-  // ✅ Utility function to format date to `DD/MM/YYYY`
   const formatDate = (isoDate) => {
     if (!isoDate) return "";
     const dateObj = new Date(isoDate);

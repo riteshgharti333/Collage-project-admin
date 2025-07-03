@@ -1,0 +1,44 @@
+.drag {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  grid-auto-rows: minmax(100px, auto);
+  margin-top: 30px;
+  overflow-y: auto;
+  max-height: 80vh;
+  padding: 10px;
+  will-change: transform;
+  -webkit-overflow-scrolling: touch; // For smoother scrolling on iOS
+
+  .drag-container {
+    transition: transform 0.2s ease, opacity 0.2s ease;
+    cursor: grab;
+    will-change: transform;
+    transform: translateZ(0); // Force GPU acceleration
+    backface-visibility: hidden;
+    perspective: 1000px;
+    
+    &:active {
+      cursor: grabbing;
+    }
+    
+    &.dragging {
+      opacity: 0.5;
+      transition: none; // Disable transition while dragging
+    }
+  }
+}
+
+// Optimize for smaller screens
+@media (max-width: 768px) {
+  .drag {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .drag {
+    grid-template-columns: 1fr;
+  }
+}

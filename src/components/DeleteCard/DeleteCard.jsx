@@ -2,7 +2,7 @@ import { useRef, useEffect, useState } from "react";
 import "./DeleteCard.scss";
 import axios from "axios";
 import { baseUrl } from "../../main";
-import { toast } from "sonner"; // ✅ Import toast for notifications
+import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 
 const DeleteCard = ({ onClose, id, path, onDeleteSuccess }) => {
@@ -16,7 +16,9 @@ const DeleteCard = ({ onClose, id, path, onDeleteSuccess }) => {
     setLoading(true);
 
     try {
-      const { data } = await axios.delete(`${baseUrl}/${path}/${id}`);
+      const { data } = await axios.delete(`${baseUrl}/${path}/${id}`, {
+        withCredentials : true
+      });
 
       if (data.result === 1) {
         toast.success(data.message);
@@ -31,7 +33,7 @@ const DeleteCard = ({ onClose, id, path, onDeleteSuccess }) => {
       }
     } catch (error) {
       console.error(`Error:`, error);
-      toast.error(`Failed to delete. Please try again.`);
+      toast.error(error.response.data.message);
     } finally {
       setLoading(false);
     }
