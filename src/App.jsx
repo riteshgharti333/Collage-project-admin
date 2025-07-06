@@ -75,8 +75,8 @@ function App() {
 
   return (
     <div className="app">
-      <BrowserRouter basename="/admin">
-        {/* <BrowserRouter> */}
+      {/* <BrowserRouter basename="/admin"> */}
+        <BrowserRouter>
         <Toaster position="top-center" richColors />
         <Routes>
           <Route path="/login" element={<Login />} />
