@@ -29,7 +29,6 @@ const Sidebar = () => {
   const [courses, setCourses] = useState(false);
 
   const { user, dispatch } = useContext(Context);
-  console.log(user)
 
   const dropdownVariants = {
     hidden: { opacity: 0, x: -50 },
