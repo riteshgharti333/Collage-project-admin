@@ -39,7 +39,7 @@ const UpdatePassword = () => {
         },
         { withCredentials: true }
       );
-      if (response.data.success) {
+      if (response.data.result === 1) {
         toast.success(
           response.data.message || "Password updated successfully!"
         );

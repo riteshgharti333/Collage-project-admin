@@ -69,11 +69,11 @@ export const sidebarItems = [
     title: "About Content",
     link: "about-content",
   },
-   {
-    icon: MdOutlineImageAspectRatio,
-    title: "Home Content Image",
-    link: "home-content-image",
-  },
+  //  {
+  //   icon: MdOutlineImageAspectRatio,
+  //   title: "Home Content Image",
+  //   link: "home-content-image",
+  // },
     {
     icon: LuContact,
     title: "Contct Details",

@@ -57,6 +57,8 @@ import HomeContent from "./pages/HomeContent/HomeContent";
 import UpdateHomeContent from "./pages/HomeContent/UpdateHomeContent";
 import ContactDetails from "./pages/ContactDetails/ContactDetails";
 
+import Register from "./pages/Register/Register";
+
 import { toast } from "sonner";
 
 function App() {
@@ -76,11 +78,11 @@ function App() {
   return (
     <div className="app">
       {/* <BrowserRouter basename="/admin"> */}
-        <BrowserRouter>
+      <BrowserRouter>
         <Toaster position="top-center" richColors />
         <Routes>
           <Route path="/login" element={<Login />} />
-          {/* <Route path="/register" element={<Register />} /> */}
+          <Route path="/register" element={<Register />} />
 
           <Route element={<Layout />}>
             <Route path="/dashboard" element={<Dashboard />} />

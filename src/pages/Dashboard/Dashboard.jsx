@@ -3,6 +3,7 @@ import "./Dashboard.scss";
 import axios from "axios";
 import { baseUrl } from "../../main";
 import { toast } from "sonner";
+import { Link } from "react-router-dom";
 
 const Dashboard = () => {
   const [admissionCount, setAdmissionCount] = useState(0);
@@ -44,37 +45,37 @@ const Dashboard = () => {
   return (
     <div className="dashboard">
       <div className="dashboard-cards">
-        <div className="dashboard-card">
+        <Link to="/admission" className="dashboard-card">
           <h4>Admissions</h4>
           <div className="dashboard-card-desc">
             <h1>{admissionCount}</h1>
             <span>Forms</span>
           </div>
-        </div>
+        </Link>
 
-        <div className="dashboard-card">
+        <Link to="/enquiry" className="dashboard-card">
           <h4>Enquiries</h4>
           <div className="dashboard-card-desc">
             <h1>{enquiryCount}</h1>
             <span>Forms</span>
           </div>
-        </div>
+        </Link>
 
-        <div className="dashboard-card">
+        <Link to="/contact" className="dashboard-card">
           <h4>Contacts</h4>
           <div className="dashboard-card-desc">
             <h1>{contactCount}</h1>
             <span>Forms</span>
           </div>
-        </div>
+        </Link>
 
-        <div className="dashboard-card">
+        <Link to="/members" className="dashboard-card">
           <h4>Members</h4>
           <div className="dashboard-card-desc">
             <h1>{memberCount}</h1>
             <span>Members</span>
           </div>
-        </div>
+        </Link>
       </div>
     </div>
   );

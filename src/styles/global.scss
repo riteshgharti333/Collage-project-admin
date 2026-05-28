@@ -14,7 +14,7 @@ a {
 }
 
 .app {
-  background: #000;
+  background: radial-gradient(circle at top left, #1a1a1a, #000000);
 
   .delete-btn {
     background-color: #ff4444;
@@ -88,4 +88,13 @@ a {
       cursor: not-allowed !important;
     }
   }
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 5px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 10px;
 }
