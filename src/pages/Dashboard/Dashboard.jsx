@@ -12,7 +12,6 @@ const Dashboard = () => {
   const [memberCount, setMemberCount] = useState(0);
   const [loading, setLoading] = useState(true);
 
-  // ✅ Fetch all data in parallel
   useEffect(() => {
     const fetchData = async () => {
       try {
